@@ -24,6 +24,7 @@
 		18B6EAA027F1214F00E15BDE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9F27F1214F00E15BDE /* FirebaseStorage */; };
 		18B6EAA227F1214F00E15BDE /* FirebaseStorageSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EAA127F1214F00E15BDE /* FirebaseStorageSwift-Beta */; };
 		18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAA427F1230300E15BDE /* ImagePicker.swift */; };
+		18B6EAA727F1260100E15BDE /* iTalk_ChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		18B6EA8D27F1202F00E15BDE /* View */ = {isa = PBXFileReference; lastKnownFileType = folder; path = View; sourceTree = "<group>"; };
 		18B6EA8F27F1203B00E15BDE /* ViewController */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ViewController; sourceTree = "<group>"; };
 		18B6EAA427F1230300E15BDE /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTalk_ChatApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				18B6EA8D27F1202F00E15BDE /* View */,
 				18B6EAA327F122EA00E15BDE /* Support */,
 				18B6EA7827F11F9A00E15BDE /* Assets.xcassets */,
+				18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */,
 				18B6EA7A27F11F9A00E15BDE /* Preview Content */,
 			);
 			path = "iTalk Chat";
@@ -205,6 +208,7 @@
 				18B6EA8927F11FD800E15BDE /* FirebaseManager.swift in Sources */,
 				18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */,
 				18B6EA8827F11FD800E15BDE /* FirebaseConstants.swift in Sources */,
+				18B6EAA727F1260100E15BDE /* iTalk_ChatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
