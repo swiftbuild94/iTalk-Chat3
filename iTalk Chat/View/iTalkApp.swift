@@ -1,14 +1,14 @@
 //
-//  iTalk_ChatApp.swift
-//  iTalk Chat
+//  iTalkApp.swift
+//  iTalk
 //
-//  Created by Patricio Benavente on 27/03/2022.
+//  Created by Patricio Benavente on 24/03/2022.
 //
 
 import SwiftUI
 
 @main
-struct iTalk_ChatApp: App {
+struct iTalkApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
