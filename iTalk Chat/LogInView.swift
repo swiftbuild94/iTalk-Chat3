@@ -89,7 +89,9 @@ struct LogInView: View {
                  
                   Button(action: {
                       vm.handleAction()
-                      presentationMode.wrappedValue.dismiss()
+                      if !vm.isUserLoggedOut {
+                          presentationMode.wrappedValue.dismiss()
+                      }
                   }, label: {
                       Text(isLoginMode ? "Create Account" : "Log In")
                           .font(.system(size: 32))

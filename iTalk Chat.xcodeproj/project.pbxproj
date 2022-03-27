@@ -14,7 +14,6 @@
 		18B6EA8927F11FD800E15BDE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EA8727F11FD800E15BDE /* FirebaseManager.swift */; };
 		18B6EA8C27F1200000E15BDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA8B27F1200000E15BDE /* GoogleService-Info.plist */; };
 		18B6EA8E27F1202F00E15BDE /* View in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA8D27F1202F00E15BDE /* View */; };
-		18B6EA9027F1203B00E15BDE /* ViewController in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA8F27F1203B00E15BDE /* ViewController */; };
 		18B6EA9327F1209B00E15BDE /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9227F1209B00E15BDE /* SDWebImageSwiftUI */; };
 		18B6EA9627F1214F00E15BDE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9527F1214F00E15BDE /* FirebaseAuth */; };
 		18B6EA9827F1214F00E15BDE /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9727F1214F00E15BDE /* FirebaseDatabase */; };
@@ -25,10 +24,15 @@
 		18B6EAA227F1214F00E15BDE /* FirebaseStorageSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EAA127F1214F00E15BDE /* FirebaseStorageSwift-Beta */; };
 		18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAA427F1230300E15BDE /* ImagePicker.swift */; };
 		18B6EAA727F1260100E15BDE /* iTalk_ChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */; };
+		18B6EAA927F127C200E15BDE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAA827F127C200E15BDE /* ContentView.swift */; };
+		18B6EAAD27F129D500E15BDE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAAA27F129D400E15BDE /* SettingsView.swift */; };
+		18B6EAAF27F129D500E15BDE /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAAB27F129D400E15BDE /* LogInView.swift */; };
+		18B6EAB127F12A3200E15BDE /* LogInSignInVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */; };
+		18B6EAB327F12A8700E15BDE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAB227F12A8700E15BDE /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		18B6EA7127F11F9900E15BDE /* iTalk Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTalk Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18B6EA7127F11F9900E15BDE /* iTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B6EA7827F11F9A00E15BDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		18B6EA8427F11FBD00E15BDE /* Model */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Model; sourceTree = "<group>"; };
@@ -36,9 +40,13 @@
 		18B6EA8727F11FD800E15BDE /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		18B6EA8B27F1200000E15BDE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18B6EA8D27F1202F00E15BDE /* View */ = {isa = PBXFileReference; lastKnownFileType = folder; path = View; sourceTree = "<group>"; };
-		18B6EA8F27F1203B00E15BDE /* ViewController */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ViewController; sourceTree = "<group>"; };
 		18B6EAA427F1230300E15BDE /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTalk_ChatApp.swift; sourceTree = "<group>"; };
+		18B6EAA827F127C200E15BDE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		18B6EAAA27F129D400E15BDE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		18B6EAAB27F129D400E15BDE /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInSignInVM.swift; sourceTree = "<group>"; };
+		18B6EAB227F12A8700E15BDE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +79,7 @@
 		18B6EA7227F11F9900E15BDE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				18B6EA7127F11F9900E15BDE /* iTalk Chat.app */,
+				18B6EA7127F11F9900E15BDE /* iTalk.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,10 +90,14 @@
 				18B6EA8B27F1200000E15BDE /* GoogleService-Info.plist */,
 				18B6EA8A27F11FE800E15BDE /* Firebase */,
 				18B6EA8427F11FBD00E15BDE /* Model */,
-				18B6EA8F27F1203B00E15BDE /* ViewController */,
 				18B6EA8D27F1202F00E15BDE /* View */,
 				18B6EAA327F122EA00E15BDE /* Support */,
 				18B6EA7827F11F9A00E15BDE /* Assets.xcassets */,
+				18B6EAB227F12A8700E15BDE /* User.swift */,
+				18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */,
+				18B6EAAB27F129D400E15BDE /* LogInView.swift */,
+				18B6EAAA27F129D400E15BDE /* SettingsView.swift */,
+				18B6EAA827F127C200E15BDE /* ContentView.swift */,
 				18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */,
 				18B6EA7A27F11F9A00E15BDE /* Preview Content */,
 			);
@@ -144,7 +156,7 @@
 				18B6EAA127F1214F00E15BDE /* FirebaseStorageSwift-Beta */,
 			);
 			productName = "iTalk Chat";
-			productReference = 18B6EA7127F11F9900E15BDE /* iTalk Chat.app */;
+			productReference = 18B6EA7127F11F9900E15BDE /* iTalk.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -192,7 +204,6 @@
 				18B6EA7C27F11F9A00E15BDE /* Preview Assets.xcassets in Resources */,
 				18B6EA8C27F1200000E15BDE /* GoogleService-Info.plist in Resources */,
 				18B6EA7927F11F9A00E15BDE /* Assets.xcassets in Resources */,
-				18B6EA9027F1203B00E15BDE /* ViewController in Resources */,
 				18B6EA8E27F1202F00E15BDE /* View in Resources */,
 				18B6EA8527F11FBD00E15BDE /* Model in Resources */,
 			);
@@ -206,8 +217,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B6EA8927F11FD800E15BDE /* FirebaseManager.swift in Sources */,
+				18B6EAA927F127C200E15BDE /* ContentView.swift in Sources */,
+				18B6EAB127F12A3200E15BDE /* LogInSignInVM.swift in Sources */,
 				18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */,
+				18B6EAAD27F129D500E15BDE /* SettingsView.swift in Sources */,
+				18B6EAB327F12A8700E15BDE /* User.swift in Sources */,
 				18B6EA8827F11FD800E15BDE /* FirebaseConstants.swift in Sources */,
+				18B6EAAF27F129D500E15BDE /* LogInView.swift in Sources */,
 				18B6EAA727F1260100E15BDE /* iTalk_ChatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,7 +369,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "swiftbuild94.iTalk-Chat";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = iTalk;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -382,7 +398,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "swiftbuild94.iTalk-Chat";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = iTalk;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

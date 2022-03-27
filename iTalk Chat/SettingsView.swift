@@ -28,11 +28,9 @@ struct SettingsView: View {
                 Divider()
                 Text("Chat Background")
                 Toggle("Auto play audio message", isOn: $isAutoPlayAudio)
-}
                 Toggle("Auto record audio message", isOn: $isAutoRecordAudio)
-}
-Divider()
-Text("Blocked Users")
+                Divider()
+                Text("Blocked Users")
                 Divider()
                 Button {
                     vmLogin.shouldShowLogOutOptions.toggle()
@@ -42,7 +40,7 @@ Text("Blocked Users")
                         .foregroundColor(Color.red)
                 }
             }
-//            .padding()
+            //            .padding()
             .actionSheet(isPresented: $vmLogin.shouldShowLogOutOptions) {
                 .init(title: Text("Log Out"), message: Text("Are you sure you want to Log Out"), buttons: [
                         .destructive(Text("Log Out"), action: {
@@ -59,6 +57,8 @@ Text("Blocked Users")
 //        .navigationBarTitle(Text("Settings"), displayMode: .inline)
 
 //}
+    }    
+}
 
 struct userInfo: View {
     let shadowRadius: CGFloat = 15
