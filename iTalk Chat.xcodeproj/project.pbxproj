@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18B6EA7527F11F9900E15BDE /* iTalk_ChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EA7427F11F9900E15BDE /* iTalk_ChatApp.swift */; };
 		18B6EA7927F11F9A00E15BDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7827F11F9A00E15BDE /* Assets.xcassets */; };
 		18B6EA7C27F11F9A00E15BDE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */; };
 		18B6EA8527F11FBD00E15BDE /* Model in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA8427F11FBD00E15BDE /* Model */; };
@@ -29,7 +28,6 @@
 
 /* Begin PBXFileReference section */
 		18B6EA7127F11F9900E15BDE /* iTalk Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTalk Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		18B6EA7427F11F9900E15BDE /* iTalk_ChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTalk_ChatApp.swift; sourceTree = "<group>"; };
 		18B6EA7827F11F9A00E15BDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		18B6EA8427F11FBD00E15BDE /* Model */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Model; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 				18B6EA8F27F1203B00E15BDE /* ViewController */,
 				18B6EA8D27F1202F00E15BDE /* View */,
 				18B6EAA327F122EA00E15BDE /* Support */,
-				18B6EA7427F11F9900E15BDE /* iTalk_ChatApp.swift */,
 				18B6EA7827F11F9A00E15BDE /* Assets.xcassets */,
 				18B6EA7A27F11F9A00E15BDE /* Preview Content */,
 			);
@@ -207,7 +204,6 @@
 			files = (
 				18B6EA8927F11FD800E15BDE /* FirebaseManager.swift in Sources */,
 				18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */,
-				18B6EA7527F11F9900E15BDE /* iTalk_ChatApp.swift in Sources */,
 				18B6EA8827F11FD800E15BDE /* FirebaseConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

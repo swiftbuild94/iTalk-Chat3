@@ -11,7 +11,7 @@ import SwiftUI
 struct iTalk_ChatApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            ContentView()
         }
     }
 }
