@@ -9,7 +9,7 @@ import SwiftUI
 
 class LogInSignInVM: ObservableObject {
 	@Published var isLoginMode = true
-	@Published var isUserLoggedOut = true
+	@Published var isUserLoggedOut = false
 	@Published var name = ""
 	@Published var email = ""
 	@Published var password = ""
@@ -17,7 +17,7 @@ class LogInSignInVM: ObservableObject {
 	@Published var phoneNumber = ""
 	@Published var errorMessage = " "
 	@Published var image: UIImage?
-	@Published var shouldShowLogOutOptions = true
+	@Published var shouldShowLogOutOptions = false
 //    @Published var didCompleateLoginProcess: (()?) -> ()
     
     init() {
@@ -27,7 +27,9 @@ class LogInSignInVM: ObservableObject {
 	func handleAction() {
 		if isLoginMode {
             loginUser()
+            print("Login")
 		} else {
+            print("CreateUser")
             createAccount()
 		}
 	}

@@ -6,14 +6,21 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestoreSwift
 
 struct User: Identifiable, Equatable, Codable {
-    var id = UUID()
+    @DocumentID var id: String?
     var uid: String
     var name: String
     var photo: String?
     var phoneNumber: String?
     var email: String?
+    
+    init(uid: String, name:String){
+        self.uid = uid
+        self.name = name
+    }
     
 //    init(data: [String:Any]){
 //        self.uid = data["uid"] as? String ?? ""

@@ -24,14 +24,14 @@ struct ContentView: View {
 //                    }
 //            }
 //            .tag(0)
-//            HistoryView()
-//                .tabItem {
-//                    VStack {
-//                        Image(systemName: "clock.fill")
-//                        Text("History")
-//                    }
-//            }
-//            .tag(1)
+            HistoryView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "clock.fill")
+                        Text("History")
+                    }
+            }
+            .tag(1)
             SettingsView()
                 .tabItem {
                     VStack {
@@ -41,8 +41,9 @@ struct ContentView: View {
             }
             .tag(2)
         }
-        .fullScreenCover(isPresented: $vm.isUserLoggedOut, onDismiss: nil) {
-            LogInView()
+        .fullScreenCover(isPresented: $vm.isUserLoggedOut) {
+            LogInView(isPresented: $vm.isUserLoggedOut)
+//            print("isPresented: \( $vm.isUserLoggedOut)")
         }
     }
 }
@@ -50,6 +51,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        ContentView()
     }
 }

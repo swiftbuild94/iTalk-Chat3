@@ -10,7 +10,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct SettingsView: View {
-//    @ObservedObject private var vmContacts = ContactsVM()
+    @ObservedObject private var vmContacts = ContactsVM()
     @ObservedObject private var vmLogin = LogInSignInVM()
     @State var shouldShowLogOutOptions = true
     @State private var shouldShowImagePicker = false
@@ -24,7 +24,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-//                userInfo(currentUser: vm.currentUser!)
+//                userInfo(currentUser: vmContacts.currentUser)
                 Divider()
                 Text("Chat Background")
                 Toggle("Auto play audio message", isOn: $isAutoPlayAudio)

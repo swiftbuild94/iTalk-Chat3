@@ -9,24 +9,24 @@ import SwiftUI
 
 struct LogInView: View {
     @ObservedObject var vm = LogInSignInVM()
-    @Environment(\.presentationMode) var presentationMode
+    @Binding var isPresented: Bool
 //    @State private var name = ""
 //    @State private var email = ""
 //    @State private var password = ""
 //    @State private var passwordRetype = ""
 //    @State private var phoneNumber = ""
 //    @State private var errorMessage = "Error"
-  @State private var isLoginMode = true
+//  @State private var isLoginMode = true
     @State private var shouldShowImagePicker = false
     @State private var image: UIImage?
 //    @State var didCompleateLoginProcess: () -> ()
     
     var body: some View {
           VStack {
-              Picker(selection: $isLoginMode, label: Text("Picker")) {
-                  Text("Create Account")
-                      .tag(true)
+              Picker(selection: $vm.isLoginMode, label: Text("Picker")) {
                   Text("Login")
+                      .tag(true)
+                  Text("Create Account")
                       .tag(false)
               }.pickerStyle(SegmentedPickerStyle())
                   .padding()
@@ -89,11 +89,8 @@ struct LogInView: View {
                  
                   Button(action: {
                       vm.handleAction()
-                      if !vm.isUserLoggedOut {
-                          presentationMode.wrappedValue.dismiss()
-                      }
                   }, label: {
-                      Text(isLoginMode ? "Create Account" : "Log In")
+                      Text(vm.isLoginMode ? "Log In" : "Create Account" )
                           .font(.system(size: 32))
                           .foregroundColor(.white)
                           .padding(.vertical, 10)
@@ -111,8 +108,8 @@ struct LogInView: View {
         
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        ContentView()
     }
 }
