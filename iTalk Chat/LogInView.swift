@@ -38,7 +38,7 @@ struct LogInView: View {
                               shouldShowImagePicker.toggle()
                           } label: {
                               VStack {
-                                  if let image = self.image {
+                                  if let image = vm.image {
                                       Image(uiImage: image)
                                           .resizable()
                                           .scaledToFill()
@@ -70,7 +70,7 @@ struct LogInView: View {
                               .padding(12)
                               .background(Color.white)
                               .disableAutocorrection(true)
-                              .font(.system(size: 32))
+                              .font(.system(size: 24))
                           Spacer()
                       } else {
                           Group {
@@ -83,7 +83,7 @@ struct LogInView: View {
                               .padding(12)
                               .background(Color.white)
                               .disableAutocorrection(true)
-                              .font(.system(size: 32))
+                              .font(.system(size: 24))
                       }
                   }
                  
@@ -91,18 +91,22 @@ struct LogInView: View {
                       vm.handleAction()
                   }, label: {
                       Text(vm.isLoginMode ? "Log In" : "Create Account" )
-                          .font(.system(size: 32))
+                          .font(.headline)
                           .foregroundColor(.white)
                           .padding(.vertical, 10)
                   })
-                      .background(Color.blue)
+//                      .buttonStyle(.bordered)
+//                      .background(Color.blue)
+                      .buttonStyle(.borderedProminent)
+                      .buttonBorderShape(.roundedRectangle(radius: 10))
+                      .controlSize(.regular)
                       .padding()
                   Text(vm.errorMessage)
                       .foregroundColor(.red)
               }
           }
           .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
-              ImagePicker(selectedImage: $image, didSet: $shouldShowImagePicker)
+              ImagePicker(selectedImage: $vm.image, didSet: $shouldShowImagePicker)
           }
     }
         
@@ -110,6 +114,6 @@ struct LogInView: View {
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(isUserLoggedOut: true)
     }
 }

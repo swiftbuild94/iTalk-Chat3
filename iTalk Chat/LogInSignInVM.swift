@@ -9,7 +9,7 @@ import SwiftUI
 
 class LogInSignInVM: ObservableObject {
 	@Published var isLoginMode = true
-	@Published var isUserLoggedOut = false
+	@Published var isUserLoggedOut = true
 	@Published var name = ""
 	@Published var email = ""
 	@Published var password = ""
@@ -52,7 +52,7 @@ class LogInSignInVM: ObservableObject {
 	func createAccount() {
         if self.image == nil {
             self.errorMessage = "You must select an image"
-//            return
+            return
         }
         if ((name != "") && (email != "") && (password != "")) {
 			if (password == passwordRetype) {
@@ -63,12 +63,7 @@ class LogInSignInVM: ObservableObject {
 						return
 					}
 					print("Succefully created user:  \(result?.user.uid ?? "")")
-                    if self.image == nil {
-                        self.errorMessage = "You must select an image"
-                        self.storeUserInformation()
-                    } else {
-                        self.persistImageToStorage()
-                    }
+                    self.persistImageToStorage()
 				}
 			} else {
 				self.errorMessage = "Passwords do not match"
@@ -101,20 +96,15 @@ class LogInSignInVM: ObservableObject {
 	}
 	   
 	private func storeUserInformation(_ imageURL: URL? = nil) {
-        var userData = [String : Any]()
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-        if imageURL == nil {
-            userData = [FirebaseConstants.uid: uid,
-                            FirebaseConstants.name: self.name,
-                            FirebaseConstants.email: self.email,
-                            FirebaseConstants.phone: self.phoneNumber]
-        } else {
-            userData = [FirebaseConstants.uid: uid,
+        guard let image = imageURL else { return }
+        
+        let userData: [String : Any] = [FirebaseConstants.uid: uid,
                             FirebaseConstants.name: self.name,
                             FirebaseConstants.email: self.email,
                             FirebaseConstants.phone: self.phoneNumber,
-                            FirebaseConstants.photo: imageURL!]
-        }
+                            FirebaseConstants.photo:  image.absoluteString]
+        print(userData)
 		FirebaseManager.shared.firestore.collection("users")
 			.document(uid).setData(userData) { error in
 				if let err = error {

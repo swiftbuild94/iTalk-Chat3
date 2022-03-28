@@ -14,7 +14,7 @@ struct MainView: View {
     @ObservedObject var vm = LogInSignInVM()
     
     var body: some View {
-        Text("Connected")
+//        Text("Connected")
         TabView(selection: $selection){
 //            iTalkView()
 //                .tabItem {

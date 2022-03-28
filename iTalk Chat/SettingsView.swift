@@ -24,7 +24,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-//                userInfo(currentUser: vmContacts.currentUser)
+                userInfo(currentUser: vmContacts.currentUser)
                 Divider()
                 Text("Chat Background")
                 Toggle("Auto play audio message", isOn: $isAutoPlayAudio)
@@ -75,20 +75,16 @@ struct userInfo: View {
         NavigationView {
             VStack {
                 HStack(spacing: hstackSpacing) {
+                    Text((currentUser?.photo)!)
                     Button {
                         shouldShowImagePicker.toggle()
                     } label: {
-                        if currentUser?.photo != "" {
-                            WebImage(url: URL(string: (currentUser?.photo)!))
+                        WebImage(url: URL(string: (currentUser?.photo)!))
                                 .resizable()
                                 .scaledToFill()
                                 .clipped()
                                 .cornerRadius(imageSize)
                                 .frame(width: imageSize, height: imageSize)
-                        } else {
-                            Image(systemName: "person.circle.fill")
-                                .font(.system(size: imageSize, weight: .heavy))
-                        }
                     }
                     .clipShape(Circle())
                         .shadow(radius: shadowRadius)

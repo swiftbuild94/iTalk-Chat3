@@ -12,9 +12,10 @@ struct ContentView: View {
 //    @ObservedObject private var vmContacts = ContactsVM()
 //    @ObservedObject private var vmChats = ChatsVM(chatUser: nil)
     @ObservedObject var vm = LogInSignInVM()
+    @State var isUserLoggedOut: Bool
     
     var body: some View {
-        Text("Connected")
+//        Text("Connected")
         TabView(selection: $selection){
 //            iTalkView()
 //                .tabItem {
@@ -41,8 +42,8 @@ struct ContentView: View {
             }
             .tag(2)
         }
-        .fullScreenCover(isPresented: $vm.isUserLoggedOut) {
-            LogInView(isPresented: $vm.isUserLoggedOut)
+        .fullScreenCover(isPresented: $isUserLoggedOut) {
+            LogInView(isPresented: $isUserLoggedOut)
 //            print("isPresented: \( $vm.isUserLoggedOut)")
         }
     }
@@ -51,6 +52,8 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView(isUserLoggedOut: false)
+        }
     }
 }
