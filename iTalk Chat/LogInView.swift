@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LogInView: View {
     @ObservedObject var vm = LogInSignInVM()
-    @Binding var isPresented: Bool
+    @Binding var isUserLoggedOut: Bool
 //    @State private var name = ""
 //    @State private var email = ""
 //    @State private var password = ""
@@ -114,6 +114,6 @@ struct LogInView: View {
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(isUserLoggedOut: true)
+        ContentView(isUserLoggedOut: false)
     }
 }

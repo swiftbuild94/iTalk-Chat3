@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class LogInSignInVM: ObservableObject {
+final class LogInSignInVM: ObservableObject {
 	@Published var isLoginMode = true
 	@Published var isUserLoggedOut = true
 	@Published var name = ""
@@ -45,6 +45,7 @@ class LogInSignInVM: ObservableObject {
 			print("Succefully login user:  \(result?.user.uid ?? "")")
 //			self.didCompleateLoginProcess()
             self.isUserLoggedOut = false
+            print("isUserLoggedOut: \(self.isUserLoggedOut)")
 		}
 	}
 	
@@ -121,7 +122,7 @@ class LogInSignInVM: ObservableObject {
 	
 	// MARK: - SignOut
 	 func handleSignOut() {
-		self.isUserLoggedOut.toggle()
+		self.isUserLoggedOut = true
 		try? FirebaseManager.shared.auth.signOut()
 	}
 }

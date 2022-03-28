@@ -37,7 +37,7 @@ struct HistoryView: View {
 ////						}
 ////					}
 //				}
-			}
+//			}
 //			.navigationBarHidden(true)
 //			.fullScreenCover(isPresented: $shouldShowNewUserScreen) {
 ////				ContactsView(didSelectNewUser: { user in
@@ -48,7 +48,8 @@ struct HistoryView: View {
 			}
 		}
 	}
-//}
+}
+
 
 
 

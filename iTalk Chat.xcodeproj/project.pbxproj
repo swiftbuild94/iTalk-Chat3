@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		18B6EA7927F11F9A00E15BDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7827F11F9A00E15BDE /* Assets.xcassets */; };
 		18B6EA7C27F11F9A00E15BDE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */; };
-		18B6EA8527F11FBD00E15BDE /* Model in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA8427F11FBD00E15BDE /* Model */; };
 		18B6EA8827F11FD800E15BDE /* FirebaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */; };
 		18B6EA8927F11FD800E15BDE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EA8727F11FD800E15BDE /* FirebaseManager.swift */; };
 		18B6EA8C27F1200000E15BDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA8B27F1200000E15BDE /* GoogleService-Info.plist */; };
-		18B6EA8E27F1202F00E15BDE /* View in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA8D27F1202F00E15BDE /* View */; };
 		18B6EA9327F1209B00E15BDE /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9227F1209B00E15BDE /* SDWebImageSwiftUI */; };
 		18B6EA9627F1214F00E15BDE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9527F1214F00E15BDE /* FirebaseAuth */; };
 		18B6EA9827F1214F00E15BDE /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9727F1214F00E15BDE /* FirebaseDatabase */; };
@@ -28,31 +26,43 @@
 		18B6EAAD27F129D500E15BDE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAAA27F129D400E15BDE /* SettingsView.swift */; };
 		18B6EAAF27F129D500E15BDE /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAAB27F129D400E15BDE /* LogInView.swift */; };
 		18B6EAB127F12A3200E15BDE /* LogInSignInVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */; };
-		18B6EAB527F12FB000E15BDE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAB427F12FB000E15BDE /* MainView.swift */; };
 		18B6EAB727F1304600E15BDE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAB627F1304600E15BDE /* User.swift */; };
 		18B6EAB927F13C1500E15BDE /* ContactsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAB827F13C1500E15BDE /* ContactsVM.swift */; };
 		18B6EABB27F13C6400E15BDE /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EABA27F13C6400E15BDE /* HistoryView.swift */; };
+		18CC953427F2577B008EAE87 /* iTalkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953327F2577B008EAE87 /* iTalkView.swift */; };
+		18CC953627F2649D008EAE87 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953527F2649D008EAE87 /* ContactsView.swift */; };
+		18CC953827F264B0008EAE87 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953727F264AF008EAE87 /* ContactCell.swift */; };
+		18CC953A27F26608008EAE87 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953927F26608008EAE87 /* ChatView.swift */; };
+		18CC953C27F2665C008EAE87 /* ChatsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953B27F2665C008EAE87 /* ChatsVM.swift */; };
+		18CC953F27F26686008EAE87 /* RecentMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953E27F26686008EAE87 /* RecentMessage.swift */; };
+		18CC954027F26686008EAE87 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953D27F26685008EAE87 /* Chat.swift */; };
+		18CC954327F266EC008EAE87 /* TypeOfContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC954227F266EC008EAE87 /* TypeOfContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		18B6EA7127F11F9900E15BDE /* iTalk-Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTalk-Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B6EA7827F11F9A00E15BDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		18B6EA8427F11FBD00E15BDE /* Model */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Model; sourceTree = "<group>"; };
 		18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConstants.swift; sourceTree = "<group>"; };
 		18B6EA8727F11FD800E15BDE /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		18B6EA8B27F1200000E15BDE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		18B6EA8D27F1202F00E15BDE /* View */ = {isa = PBXFileReference; lastKnownFileType = folder; path = View; sourceTree = "<group>"; };
 		18B6EAA427F1230300E15BDE /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTalk_ChatApp.swift; sourceTree = "<group>"; };
 		18B6EAA827F127C200E15BDE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		18B6EAAA27F129D400E15BDE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		18B6EAAB27F129D400E15BDE /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInSignInVM.swift; sourceTree = "<group>"; };
-		18B6EAB427F12FB000E15BDE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		18B6EAB627F1304600E15BDE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		18B6EAB827F13C1500E15BDE /* ContactsVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsVM.swift; sourceTree = "<group>"; };
 		18B6EABA27F13C6400E15BDE /* HistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		18CC953327F2577B008EAE87 /* iTalkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTalkView.swift; sourceTree = "<group>"; };
+		18CC953527F2649D008EAE87 /* ContactsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		18CC953727F264AF008EAE87 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		18CC953927F26608008EAE87 /* ChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		18CC953B27F2665C008EAE87 /* ChatsVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatsVM.swift; sourceTree = "<group>"; };
+		18CC953D27F26685008EAE87 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		18CC953E27F26686008EAE87 /* RecentMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessage.swift; sourceTree = "<group>"; };
+		18CC954227F266EC008EAE87 /* TypeOfContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeOfContent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,19 +103,23 @@
 		18B6EA7327F11F9900E15BDE /* iTalk Chat */ = {
 			isa = PBXGroup;
 			children = (
-				18B6EA8427F11FBD00E15BDE /* Model */,
-				18B6EA8D27F1202F00E15BDE /* View */,
-				18B6EAA327F122EA00E15BDE /* Support */,
-				18B6EA7827F11F9A00E15BDE /* Assets.xcassets */,
+				18CC954127F266A3008EAE87 /* Support */,
 				18B6EAB827F13C1500E15BDE /* ContactsVM.swift */,
 				18B6EAB627F1304600E15BDE /* User.swift */,
+				18CC953B27F2665C008EAE87 /* ChatsVM.swift */,
 				18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */,
+				18CC953D27F26685008EAE87 /* Chat.swift */,
+				18CC953E27F26686008EAE87 /* RecentMessage.swift */,
 				18B6EA8727F11FD800E15BDE /* FirebaseManager.swift */,
+				18CC953527F2649D008EAE87 /* ContactsView.swift */,
+				18CC953927F26608008EAE87 /* ChatView.swift */,
+				18CC953727F264AF008EAE87 /* ContactCell.swift */,
+				18CC954227F266EC008EAE87 /* TypeOfContent.swift */,
 				18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */,
 				18B6EA8B27F1200000E15BDE /* GoogleService-Info.plist */,
-				18B6EAB427F12FB000E15BDE /* MainView.swift */,
 				18B6EABA27F13C6400E15BDE /* HistoryView.swift */,
 				18B6EAAB27F129D400E15BDE /* LogInView.swift */,
+				18CC953327F2577B008EAE87 /* iTalkView.swift */,
 				18B6EAAA27F129D400E15BDE /* SettingsView.swift */,
 				18B6EAA827F127C200E15BDE /* ContentView.swift */,
 				18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */,
@@ -122,10 +136,11 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		18B6EAA327F122EA00E15BDE /* Support */ = {
+		18CC954127F266A3008EAE87 /* Support */ = {
 			isa = PBXGroup;
 			children = (
 				18B6EAA427F1230300E15BDE /* ImagePicker.swift */,
+				18B6EA7827F11F9A00E15BDE /* Assets.xcassets */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -205,8 +220,6 @@
 				18B6EA7C27F11F9A00E15BDE /* Preview Assets.xcassets in Resources */,
 				18B6EA8C27F1200000E15BDE /* GoogleService-Info.plist in Resources */,
 				18B6EA7927F11F9A00E15BDE /* Assets.xcassets in Resources */,
-				18B6EA8E27F1202F00E15BDE /* View in Resources */,
-				18B6EA8527F11FBD00E15BDE /* Model in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,13 +234,20 @@
 				18B6EABB27F13C6400E15BDE /* HistoryView.swift in Sources */,
 				18B6EAA927F127C200E15BDE /* ContentView.swift in Sources */,
 				18B6EAB127F12A3200E15BDE /* LogInSignInVM.swift in Sources */,
-				18B6EAB527F12FB000E15BDE /* MainView.swift in Sources */,
 				18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */,
 				18B6EAB927F13C1500E15BDE /* ContactsVM.swift in Sources */,
+				18CC953427F2577B008EAE87 /* iTalkView.swift in Sources */,
+				18CC953A27F26608008EAE87 /* ChatView.swift in Sources */,
+				18CC953F27F26686008EAE87 /* RecentMessage.swift in Sources */,
 				18B6EAAD27F129D500E15BDE /* SettingsView.swift in Sources */,
 				18B6EA8827F11FD800E15BDE /* FirebaseConstants.swift in Sources */,
 				18B6EAAF27F129D500E15BDE /* LogInView.swift in Sources */,
+				18CC953627F2649D008EAE87 /* ContactsView.swift in Sources */,
+				18CC954027F26686008EAE87 /* Chat.swift in Sources */,
 				18B6EAB727F1304600E15BDE /* User.swift in Sources */,
+				18CC954327F266EC008EAE87 /* TypeOfContent.swift in Sources */,
+				18CC953827F264B0008EAE87 /* ContactCell.swift in Sources */,
+				18CC953C27F2665C008EAE87 /* ChatsVM.swift in Sources */,
 				18B6EAA727F1260100E15BDE /* iTalk_ChatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

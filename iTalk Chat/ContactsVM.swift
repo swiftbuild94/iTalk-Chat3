@@ -15,7 +15,7 @@ final class ContactsVM: ObservableObject {
 	@Published var usersDictionary = [String: User]()
 	@Published var currentUser: User?
 	@Published var errorMessage = ""
-	@Published var isUserLoggedOut = false
+	@Published var isUserLoggedOut = true
 //    @Published var recentMessages = [RecentMessage].self
 	var selectedUser: String?
     private var firestoreListener: ListenerRegistration?
@@ -34,9 +34,7 @@ final class ContactsVM: ObservableObject {
 				self.isUserLoggedOut = true
 			} else {
                 self.selectedUser = FirebaseManager.shared.auth.currentUser?.uid
-//                let name = FirebaseManager.shared.auth.currentUser?.name
 				self.fethCurrentUser(self.selectedUser!)
-//                self.currentUser = User(uid: selectedUser!, name: name)
 			}
 		}
 	}
@@ -56,8 +54,9 @@ final class ContactsVM: ObservableObject {
 				print(self.errorMessage)
 				return
 			}
-			print("Current User data: \(data)")
-//            currentUser = .init(data)
+//			print("Current User data: \(data)")
+            currentUser = User(data: data)
+            print("Current User \(String(describing: currentUser))")
 		}
 	}
 	

@@ -8,23 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject private var vmContacts = ContactsVM()
+    @ObservedObject var vmLogin = LogInSignInVM()
+    //    @ObservedObject private var vmChats = ChatsVM(chatUser: nil)
+    @State var isUserLoggedOut: Bool = false
     @State private var selection = 0
-//    @ObservedObject private var vmContacts = ContactsVM()
-//    @ObservedObject private var vmChats = ChatsVM(chatUser: nil)
-    @ObservedObject var vm = LogInSignInVM()
-    @State var isUserLoggedOut: Bool
     
     var body: some View {
-//        Text("Connected")
         TabView(selection: $selection){
-//            iTalkView()
-//                .tabItem {
-//                    VStack {
-//                        Image(systemName: "bubble.left.and.bubble.right.fill")
-//                        Text("iTalk")
-//                    }
-//            }
-//            .tag(0)
+            iTalkView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "bubble.left.and.bubble.right.fill")
+                        Text("iTalk")
+                    }
+            }
+            .tag(0)
             HistoryView()
                 .tabItem {
                     VStack {
@@ -33,7 +32,7 @@ struct ContentView: View {
                     }
             }
             .tag(1)
-            SettingsView()
+            SettingsView(currentUser: vmContacts.currentUser)
                 .tabItem {
                     VStack {
                         Image(systemName: "gear")
@@ -43,8 +42,7 @@ struct ContentView: View {
             .tag(2)
         }
         .fullScreenCover(isPresented: $isUserLoggedOut) {
-            LogInView(isPresented: $isUserLoggedOut)
-//            print("isPresented: \( $vm.isUserLoggedOut)")
+            LogInView(isUserLoggedOut: $vmLogin.isUserLoggedOut)
         }
     }
 }

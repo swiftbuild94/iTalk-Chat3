@@ -10,21 +10,20 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct SettingsView: View {
-    @ObservedObject private var vmContacts = ContactsVM()
     @ObservedObject private var vmLogin = LogInSignInVM()
     @State var shouldShowLogOutOptions = true
     @State private var shouldShowImagePicker = false
     @State private var image: UIImage?
-     @State private var isAutoPlayAudio = true
-     @State private var isAutoRecordAudio = true
-//    @State private var isUserLoggedOut = true
+    @State private var isAutoPlayAudio = true
+    @State private var isAutoRecordAudio = true
+    @State var currentUser: User?
 
     let optionsSize: CGFloat = 16
     
     var body: some View {
         NavigationView {
             Form {
-                userInfo(currentUser: vmContacts.currentUser)
+                userInfo(currentUser: currentUser)
                 Divider()
                 Text("Chat Background")
                 Toggle("Auto play audio message", isOn: $isAutoPlayAudio)
@@ -54,7 +53,7 @@ struct SettingsView: View {
 //        .fullScreenCover(isPresented: vm.$shouldShowImagePicker, onDismiss: nil) {
 //            ImagePicker(selectedImage: vm.$image, didSet: vm.$shouldShowImagePicker)
 //        }
-//        .navigationBarTitle(Text("Settings"), displayMode: .inline)
+        .navigationBarTitle(Text("Settings"), displayMode: .inline)
 
 //}
     }    
@@ -75,7 +74,7 @@ struct userInfo: View {
         NavigationView {
             VStack {
                 HStack(spacing: hstackSpacing) {
-                    Text((currentUser?.photo)!)
+                   /* Text((currentUser?.photo)!)
                     Button {
                         shouldShowImagePicker.toggle()
                     } label: {
@@ -90,6 +89,7 @@ struct userInfo: View {
                         .shadow(radius: shadowRadius)
                         .overlay(Circle().stroke(Color.blue, lineWidth: circleLineWidth))
                     Spacer()
+                    */
                     VStack(alignment: .leading, spacing: spacing) {
                         Text(currentUser?.name ?? "Name not Registered")
                             .font(.system(size: usernameSize, weight: .bold))
@@ -113,6 +113,6 @@ struct userInfo: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        ContentView(isUserLoggedOut: false)
     }
 }

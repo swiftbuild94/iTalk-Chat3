@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 
-struct User: Identifiable, Equatable, Codable {
+struct User: Identifiable, Codable {
     @DocumentID var id: String?
     var uid: String
     var name: String
@@ -17,18 +17,13 @@ struct User: Identifiable, Equatable, Codable {
     var phoneNumber: String?
     var email: String?
     
-    init(uid: String, name:String){
-        self.uid = uid
-        self.name = name
+    init(data: [String:Any]){
+        self.uid = data["uid"] as? String ?? ""
+        self.name = data["name"] as? String ?? ""
+        self.email = data["email"] as? String
+        self.photo = data["photo"] as? String
+        self.phoneNumber = data["phone"] as? String
     }
-    
-//    init(data: [String:Any]){
-//        self.uid = data["uid"] as? String ?? ""
-//        self.name = data["name"] as? String ?? ""
-//        self.email = data["email"] as? String
-//        self.photo = data["photo"] as? String
-//        self.phoneNumber = data["phone"] as? String
-//    }
     
     // MARK: - Mutating User Func
 //    mutating func changName(_ name: String){
