@@ -15,9 +15,9 @@ struct iTalkView: View {
 		NavigationView {
                 ScrollView {
                     ForEach(vm.users) { contact in
-//                        NavigationLink(destination: ChatView(contact: contact)) {
+                        NavigationLink(destination: ChatView(chatUser: contact)) {
                             ContactCell(contact: contact)
-//                        }
+                        }
                     }
                 }
 //			if $vm.contacts != [] {

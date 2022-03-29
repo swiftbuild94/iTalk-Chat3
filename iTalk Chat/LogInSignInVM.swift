@@ -17,25 +17,70 @@ final class LogInSignInVM: ObservableObject {
 	@Published var phoneNumber = ""
 	@Published var errorMessage = " "
 	@Published var image: UIImage?
+    @Published var myUser: User?
+    @Published var myUserUid = ""
+    @Published var myUserName = ""
+    @Published var myUserPhoto = ""
 	@Published var shouldShowLogOutOptions = false
-//    @Published var didCompleateLoginProcess: (()?) -> ()
+//    @Published var didCompleateLoginProcess = (() -> ()).self
+//    var didCompleateLoginProcess: () -> ()
+
+    var selectedUser: String?
     
     init() {
-        
+        getCurrentUser()
     }
     
-	func handleAction() {
-		if isLoginMode {
+    func handleAction() {
+        if isLoginMode {
             loginUser()
             print("Login")
-		} else {
+        } else {
             print("CreateUser")
             createAccount()
-		}
-	}
+        }
+    }
+    
+    
+//    MARK: - Get Current User
+    func getCurrentUser() {
+//        print("CheckCurrentUser")
+        DispatchQueue.main.async {
+            if FirebaseManager.shared.auth.currentUser?.uid == nil {
+                self.isUserLoggedOut = true
+            } else {
+                self.isUserLoggedOut = false
+                self.selectedUser = FirebaseManager.shared.auth.currentUser?.uid
+                self.fethCurrentUser(self.selectedUser!)
+            }
+        }
+    }
+    
+    private func fethCurrentUser(_ uid: String) {
+//        print("Fetch Current User: \(uid)")
+//        let name = FirebaseManager.shared.auth.currentUser?.name
+//        currentUser = User(uid: uid, name: name)
+        FirebaseManager.shared.firestore.collection("users").document(uid).getDocument { [self] snapshot, error in
+            if let err = error {
+                self.errorMessage = "Failed getting current user: \(err)"
+                print(self.errorMessage)
+                return
+            }
+            guard let data = snapshot?.data() else {
+                self.errorMessage = "No data found"
+                print(self.errorMessage)
+                return
+            }
+            self.myUser = User(data: data)
+//            self.errorMessage = String(describing: data)
+            self.myUserName = self.myUser?.name ?? ""
+            self.myUserPhoto = self.myUser?.profileImageURL ?? ""
+            print("Current User: \(String(describing: self.myUser!))")
+        }
+    }
 	
 	
-	// MARK: LogIn User
+	// MARK: - LogIn User
 	func loginUser() {
 		FirebaseManager.shared.auth.signIn(withEmail: email, password: password) { result, error in
 			if let error = error {
@@ -44,12 +89,11 @@ final class LogInSignInVM: ObservableObject {
 			}
 			print("Succefully login user:  \(result?.user.uid ?? "")")
 //			self.didCompleateLoginProcess()
-            self.isUserLoggedOut = false
             print("isUserLoggedOut: \(self.isUserLoggedOut)")
 		}
 	}
 	
-	// MARK: Create Account
+	// MARK: - Create Account
 	func createAccount() {
         if self.image == nil {
             self.errorMessage = "You must select an image"

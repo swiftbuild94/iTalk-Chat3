@@ -9,7 +9,6 @@ import SwiftUI
 
 struct LogInView: View {
     @ObservedObject var vm = LogInSignInVM()
-    @Binding var isUserLoggedOut: Bool
 //    @State private var name = ""
 //    @State private var email = ""
 //    @State private var password = ""
@@ -19,7 +18,13 @@ struct LogInView: View {
 //  @State private var isLoginMode = true
     @State private var shouldShowImagePicker = false
     @State private var image: UIImage?
-//    @State var didCompleateLoginProcess: () -> ()
+    var didCompleateLoginProcess: () -> ()
+    
+//    init(){
+//        if !vm.isUserLoggedOut {
+//            self.didCompleateLoginProcess()
+//        }
+//    }
     
     var body: some View {
           VStack {
@@ -114,6 +119,8 @@ struct LogInView: View {
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(isUserLoggedOut: false)
+        LogInView(didCompleateLoginProcess: {
+            
+        })
     }
 }

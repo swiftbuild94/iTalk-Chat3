@@ -19,52 +19,53 @@ final class ContactsVM: ObservableObject {
     @Published var myUserName = ""
     @Published var myUserPhoto = ""
 	@Published var errorMessage = ""
-	@Published var isUserLoggedOut = true
+//	@Published var isUserLoggedOut = true
 //    @Published var recentMessages = [RecentMessage].self
 	var selectedUser: String?
     private var firestoreListener: ListenerRegistration?
 	
 	init() {
-		getCurrentUser()
+//		getCurrentUser()
 		getAllUsers()
 		getRecentMessagges()
 	}
 	
 	// MARK: - Get Current User
-	 func getCurrentUser() {
-        print("Current User")
-		DispatchQueue.main.async {
-			if FirebaseManager.shared.auth.currentUser?.uid == nil {
-				self.isUserLoggedOut = true
-			} else {
-                self.selectedUser = FirebaseManager.shared.auth.currentUser?.uid
-				self.fethCurrentUser(self.selectedUser!)
-			}
-		}
-	}
-	
-	private func fethCurrentUser(_ uid: String) {
-        print("Fetch Current User: \(uid)")
-//        let name = FirebaseManager.shared.auth.currentUser?.name
-//        currentUser = User(uid: uid, name: name)
-		FirebaseManager.shared.firestore.collection("users").document(uid).getDocument { [self] snapshot, error in
-			if let err = error {
-				self.errorMessage = "Failed getting current user: \(err)"
-				print(self.errorMessage)
-				return
-			}
-			guard let data = snapshot?.data() else {
-				self.errorMessage = "No data found"
-				print(self.errorMessage)
-				return
-			}
-            self.myUser = User(data: data)
-//            self.errorMessage = String(describing: data)
-            self.myUserName = self.myUser?.name ?? ""
-            self.myUserPhoto = self.myUser?.profileImageURL ?? ""
-            print("Current User: \(String(describing: self.myUser!))")
-		}
-	}
+//	 func getCurrentUser() {
+//        print("Current User")
+//		DispatchQueue.main.async {
+//			if FirebaseManager.shared.auth.currentUser?.uid == nil {
+////				self.isUserLoggedOut = true
+//			} else {
+////              self.isUserLoggedOut = false
+//                self.selectedUser = FirebaseManager.shared.auth.currentUser?.uid
+//				self.fethCurrentUser(self.selectedUser!)
+//			}
+//		}
+//	}
+//	
+//	private func fethCurrentUser(_ uid: String) {
+//        print("Fetch Current User: \(uid)")
+////        let name = FirebaseManager.shared.auth.currentUser?.name
+////        currentUser = User(uid: uid, name: name)
+//		FirebaseManager.shared.firestore.collection("users").document(uid).getDocument { [self] snapshot, error in
+//			if let err = error {
+//				self.errorMessage = "Failed getting current user: \(err)"
+//				print(self.errorMessage)
+//				return
+//			}
+//			guard let data = snapshot?.data() else {
+//				self.errorMessage = "No data found"
+//				print(self.errorMessage)
+//				return
+//			}
+//            self.myUser = User(data: data)
+////            self.errorMessage = String(describing: data)
+//            self.myUserName = self.myUser?.name ?? ""
+//            self.myUserPhoto = self.myUser?.profileImageURL ?? ""
+//            print("Current User: \(String(describing: self.myUser!))")
+//		}
+//	}
 	
 	
 	// MARK: - Get All Users
@@ -84,12 +85,12 @@ final class ContactsVM: ObservableObject {
 			}
 			documentsSnapshot?.documents.forEach({ snapshot in
 				let data = snapshot.data()
-//                let user = User(from: data)
-//				if user.uid != self.selectedUser {
-//					self.users.append(.init(data: data))
-//                    self.usersDictionary[user.uid] = (.init(data: data))
-//					print(usersDictionary)
-//				}
+                let user = User(data: data)
+				if user.uid != self.selectedUser {
+					self.users.append(.init(data: data))
+                    self.usersDictionary[user.uid] = (.init(data: data))
+					print(usersDictionary)
+				}
 			})
 		}
 	}

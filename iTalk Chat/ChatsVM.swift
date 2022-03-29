@@ -41,11 +41,11 @@ class ChatsVM: ObservableObject {
 		
 		let snapResult = snapshotLister(firebaseLocation, order: order)
         let data = snapResult?.data()
-        do {
-           chat = try snapResult?.data(as: Chat.self)
-        } catch {
-            print(error)
-        }
+//        do {
+//           chat = try snapResult?.data(as: Chat.self)
+//        } catch {
+//            print(error)
+//        }
         self.chatMessages.append(chat!)
         print("Chat Message Appended \(String(describing: chat))")
 		

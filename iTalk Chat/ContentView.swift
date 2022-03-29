@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var vmLogin = LogInSignInVM()
-//    @ObservedObject private var vmContacts = ContactsVM()
+    @ObservedObject private var vmContacts = ContactsVM()
     //    @ObservedObject private var vmChats = ChatsVM(chatUser: nil)
-    @State var isUserLoggedOut: Bool = false
+//    @State var isUserLoggedOut = false
     @State private var selection = 0
     
     var body: some View {
@@ -41,8 +41,11 @@ struct ContentView: View {
             }
             .tag(2)
         }
-        .fullScreenCover(isPresented: $isUserLoggedOut) {
-            LogInView(isUserLoggedOut: $vmLogin.isUserLoggedOut)
+        .fullScreenCover(isPresented: $vmLogin.isUserLoggedOut) {
+            LogInView(didCompleateLoginProcess: {
+                self.vmLogin.isUserLoggedOut = false
+                self.vmLogin.getCurrentUser()
+            })
         }
     }
 }
@@ -51,7 +54,9 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView(isUserLoggedOut: false)
+            ContentView()
+            ContentView()
+                .preferredColorScheme(.dark)
         }
     }
 }

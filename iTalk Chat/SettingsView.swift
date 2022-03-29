@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 
 struct SettingsView: View {
     @ObservedObject private var vmLogin = LogInSignInVM()
-    @ObservedObject private var vmContacts = ContactsVM()
+//    @ObservedObject private var vmContacts = ContactsVM()
     @State var shouldShowLogOutOptions = true
     @State private var shouldShowImagePicker = false
     @State private var image: UIImage?
@@ -26,15 +26,36 @@ struct SettingsView: View {
             Form {
 //                userInfo(currentUser: vmContacts.myUser)
                 HStack {
-                    Image(vmContacts.myUser?.profileImageURL ?? "")
-                    WebImage(url: URL(string: vmContacts.myUser?.profileImageURL ?? "" ))
-                        .resizable()
-                        .scaledToFill()
-                        .clipped()
-                        .cornerRadius(52)
-                        .frame(width: 52, height: 52)
-                    Text(vmContacts.myUser?.name ?? "")
-                        .font(.system(size: 16, weight: .bold))
+                    Button {
+                        shouldShowImagePicker.toggle()
+                    } label: {
+//                          Image(vmLogin.myUser?.profileImageURL ?? "")
+                            WebImage(url: URL(string: vmLogin.myUser?.profileImageURL ?? "" ))
+                            .resizable()
+                            .scaledToFill()
+                            .clipped()
+                            .cornerRadius(64)
+                            .frame(width: 64, height: 64)
+                    }
+                    .clipShape(Circle())
+                    .shadow(radius: 1)
+                    .overlay(Circle().stroke(Color.blue, lineWidth: 1))
+                    Spacer()
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(vmLogin.myUser?.name ?? "")
+                            .font(.system(size: 24, weight: .bold))
+                        HStack {
+                            Circle()
+                                .foregroundColor(.green)
+                                .frame(width: 14, height: 14)
+                            Text("online")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            
+                        }
+                        Spacer()
+                    }
+                    Spacer()
                 }
                 Divider()
                 Text("Chat Background")
@@ -43,7 +64,7 @@ struct SettingsView: View {
                 Divider()
                 Text("Blocked Users")
 //                Text("Error: \(vmContacts.errorMessage)")
-                Text(vmContacts.myUser?.profileImageURL ?? "")
+//                Text(vmLogin.myUser?.profileImageURL ?? "")
                 Divider()
                 Button {
                     vmLogin.shouldShowLogOutOptions.toggle()
@@ -103,7 +124,7 @@ struct userInfo: View {
                         .overlay(Circle().stroke(Color.blue, lineWidth: circleLineWidth))
                     Spacer()
                     */
-                    VStack(alignment: .leading, spacing: spacing) {
+                    VStack(alignment: .leading, spacing: 4) {
                         Text(currentUser?.name ?? "Name not Registered")
                             .font(.system(size: usernameSize, weight: .bold))
                         HStack {
@@ -126,6 +147,6 @@ struct userInfo: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(isUserLoggedOut: false)
+        SettingsView()
     }
 }

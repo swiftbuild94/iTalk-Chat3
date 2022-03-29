@@ -11,17 +11,18 @@ import SDWebImageSwiftUI
 
 struct ChatView: View {
 	@Environment(\.presentationMode) var chatMode
-	@ObservedObject private var vm: ChatsVM
+    @ObservedObject private var vmLogin = LogInSignInVM()
+    @ObservedObject private var vmChat: ChatsVM
 	@State private var shouldShowImagePicker = false
 	@State private var zoomed = false
 	@State private var typeOfContent: TypeOfContent = .text
 	var contact: User
 	private let topPadding: CGFloat = 8
 	
-//	init(chatUser: User){
-//		self.contact = chatUser
-//		self.vm = .init(chatUser: chatUser)
-//	}
+	init(chatUser: User){
+		self.contact = chatUser
+		self.vmChat = .init(chatUser: chatUser)
+	}
 	
 	var body: some View {
 //		NavigationView {
@@ -285,10 +286,7 @@ struct ChatTextBar: View {
 
 
 struct ChatView_Previews: PreviewProvider {
-	let contacts = ContactsVM()
-	
 	static var previews: some View {
-		HistoryView()
-			.preferredColorScheme(.dark)
+        ContentView()
 	}
 }
