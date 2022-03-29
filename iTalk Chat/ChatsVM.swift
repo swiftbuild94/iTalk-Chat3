@@ -46,7 +46,7 @@ class ChatsVM: ObservableObject {
 //        } catch {
 //            print(error)
 //        }
-        self.chatMessages.append(chat!)
+//        self.chatMessages.append(chat!)
         print("Chat Message Appended \(String(describing: chat))")
 		
 		DispatchQueue.main.async {

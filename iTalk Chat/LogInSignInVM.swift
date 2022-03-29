@@ -9,7 +9,7 @@ import SwiftUI
 
 final class LogInSignInVM: ObservableObject {
 	@Published var isLoginMode = true
-	@Published var isUserLoggedOut = true
+	@Published var isUserLoggedOut = false
 	@Published var name = ""
 	@Published var email = ""
 	@Published var password = ""
@@ -75,7 +75,7 @@ final class LogInSignInVM: ObservableObject {
 //            self.errorMessage = String(describing: data)
             self.myUserName = self.myUser?.name ?? ""
             self.myUserPhoto = self.myUser?.profileImageURL ?? ""
-            print("Current User: \(String(describing: self.myUser!))")
+//            print("Current User: \(String(describing: self.myUser!))")
         }
     }
 	

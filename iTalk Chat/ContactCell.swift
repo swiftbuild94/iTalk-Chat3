@@ -22,10 +22,12 @@ struct ContactCell: View {
 	
 	var body: some View {
 		return
-			VStack {
+        VStack {
 				HStack(spacing: contactSpacing) {
-					if contact.photo != nil {
-						WebImage(url: URL(string: contact.profileImageURL!))
+					if contact.profileImageURL != nil {
+//                        Text(contact.profileImageURL ?? "Empty")
+                        Image(contact.profileImageURL ?? "")
+						WebImage(url: URL(string: contact.profileImageURL ?? ""))
 							.resizable()
 							.scaledToFill()
 							.frame(width: imageSize, height: imageSize)
@@ -39,9 +41,13 @@ struct ContactCell: View {
 					VStack(alignment: .leading) {
 						Text(contact.name)
 							.font(.system(size: contactSize, weight: .bold))
+                        Text(contact.uid)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
 					}
                     Spacer()
 				}.padding(.horizontal)
+                Spacer()
 				Divider()
 					.padding(.vertical, imagePadding)
 			}

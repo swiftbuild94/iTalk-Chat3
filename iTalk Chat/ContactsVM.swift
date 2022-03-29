@@ -88,8 +88,12 @@ final class ContactsVM: ObservableObject {
                 let user = User(data: data)
 				if user.uid != self.selectedUser {
 					self.users.append(.init(data: data))
+//                    print(users)
                     self.usersDictionary[user.uid] = (.init(data: data))
-					print(usersDictionary)
+////					print(usersDictionary)
+//                    for(userId, infor) in usersDictionary {
+//                        print(userId)
+//                    }
 				}
 			})
 		}

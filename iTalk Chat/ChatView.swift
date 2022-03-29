@@ -16,7 +16,7 @@ struct ChatView: View {
 	@State private var shouldShowImagePicker = false
 	@State private var zoomed = false
 	@State private var typeOfContent: TypeOfContent = .text
-	var contact: User
+	private var contact: User
 	private let topPadding: CGFloat = 8
 	
 	init(chatUser: User){
@@ -25,37 +25,37 @@ struct ChatView: View {
 	}
 	
 	var body: some View {
-//		NavigationView {
-//			VStack {
-//				ContactImage(contact: contact)
-////				MessagesView(chatUser: contact)
-//						.padding(.bottom, topPadding)
-//				InputsButtons(typeOfContent: typeOfContent)
-//				if typeOfContent == .text {
-////					ChatTextBar(chatUser: contact)
-//				} else if typeOfContent == .audio {
-//					ChatAudioBar()
-//				}
-//			}
-//			.navigationTitle(Text(contact.name))
-//			.navigationBarTitleDisplayMode(.inline)
-//			.toolbar {
+		NavigationView {
+			VStack() {
+				ContactImage(contact: contact)
+                Spacer()
+				MessagesView(vm: vmChat)
+						.padding(.bottom, topPadding)
+				InputsButtons(typeOfContent: typeOfContent)
+				if typeOfContent == .text {
+					ChatTextBar(vmChat: vmChat)
+				} else if typeOfContent == .audio {
+					ChatAudioBar()
+				}
+			}
+			.navigationTitle(Text(contact.name))
+            .navigationBarTitleDisplayMode(.automatic)
+			.toolbar {
 //				ToolbarItemGroup(placement: .navigationBarLeading) {
 //					Button {
 //						chatMode.wrappedValue.dismiss()
 //					} label: {
-//						Text("<")
+//						Text("")
 //					}
-//				}
-//			}
-//			.onDisappear {
-//				vm.stopFirestoreListener()
+				}
+			}
+//			.onDisappear {
+////                $vmChat.stopFirestoreListener()
 //			}
 //			.fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
 //				//			ImagePicker(selectedImage: $image, didSet: $shouldShowImagePicker)
 //			}
 //		}
-        Text("Hello World!")
 	}
 }
 
@@ -70,7 +70,7 @@ struct ContactImage: View {
 	
 	var body: some View {
 		HStack {
-			if contact.photo == nil {
+			if contact.profileImageURL == nil {
 				Image(systemName: "person.fill")
 					.clipShape(Circle())
 					.shadow(radius: shadowRadius)
@@ -78,7 +78,8 @@ struct ContactImage: View {
 					.font(.system(size: imageSize))
 					.padding(imagePadding)
 			} else {
-				WebImage(url: URL(string: contact.photo!))
+                Image(contact.profileImageURL!)
+                WebImage(url: URL(string: contact.profileImageURL!))
 					.resizable()
 					.scaledToFill()
 					.frame(width: imageSize, height: imageSize)
@@ -95,10 +96,10 @@ struct ContactImage: View {
 
 
 struct MessagesView: View {
-	@ObservedObject private var vm: ChatsVM
+	@ObservedObject var vm: ChatsVM
 	private let topPadding: CGFloat = 10
 	static let bottomAnchor = "BottomAnchor"
-	var chatUser: User
+//	var chatUser: User
 	
 //	init(chatUser: User){
 //		self.chatUser = chatUser
@@ -252,25 +253,26 @@ struct ChatAudioBar: View {
 }
 
 struct ChatTextBar: View {
-	@ObservedObject private var vm: ChatsVM
+    @ObservedObject var vmChat: ChatsVM
 //	@ObservedObject private var chatText = vm.chatText
+//    @State var chatText: String?
 	private let buttonsSize: CGFloat = 24
 	private let topPadding: CGFloat = 8
-	var chatUser: User
-	
-//	init(chatUser: User){
-//		self.chatUser = chatUser
-//		self.vm = .init(chatUser: chatUser)
-//	}
+//	var chatUser: User
 	
 	var body: some View {
-		Text(vm.errorMessage)
+//		Text(vm.errorMessage)
 		HStack {
 //			DescriptionPlaceholder()
-			TextEditor(text: $vm.chatText)
-				.opacity(vm.chatText.isEmpty ? 0.5 : 1)
+            TextField("", text: $vmChat.chatText)
+//            TextEditor(text: $vmChat.chatText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.top)
+                .opacity(vmChat.chatText.isEmpty ? 0.5 : 1)
+                .foregroundColor(Color.gray)
+                .border(.blue)
 			Button {
-				vm.sendText()
+                vmChat.sendText()
 			} label: {
 				Image(systemName: "arrow.up.circle.fill")
 					.foregroundColor(Color.blue)
@@ -284,9 +286,10 @@ struct ChatTextBar: View {
 }
 
 
-
+let data: [String: Any] = ["name": "Test"]
+let userTest = User(data: data)
 struct ChatView_Previews: PreviewProvider {
 	static var previews: some View {
-        ContentView()
+        ChatView(chatUser: userTest)
 	}
 }

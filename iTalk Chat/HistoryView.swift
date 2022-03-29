@@ -9,11 +9,17 @@
 import SwiftUI
 
 struct HistoryView: View {
-	@ObservedObject private var vm = ContactsVM()
+    @ObservedObject private var vmConctacts = ContactsVM()
+//    @ObservedObject private var vmChat: ChatsVM
 	@State private var shouldShowNewUserScreen = false
 	@State private var shouldNavigateToChatView = false
 	@State private var userSelected: User?
 	
+//    init(chatUser: User) {
+//        self.vmChat = .init(chatUser: chatUser)
+//        self.userSelected = chatUser
+//    }
+//    
     var body: some View {
 		NavigationLink("", isActive: $shouldNavigateToChatView) {
 //            ChatView(contact: vm.$userSelected)
@@ -28,23 +34,24 @@ struct HistoryView: View {
 					Image(systemName: "plus.message.fill")
 						.foregroundColor(Color.blue)
 				}
-//				ScrollView {
-//					List(vm.recentMessages) { recentMessage in
-//						let uid = recentMessage.fromId
-//						let user = vm.usersDictionary[uid]
-////                        NavigationLink(destination: ChatView(contact: vm.user!)) {
-////							HistoryCell(recentMessage: recentMessage, user: user!)
-////						}
-////					}
-//				}
-//			}
-//			.navigationBarHidden(true)
-//			.fullScreenCover(isPresented: $shouldShowNewUserScreen) {
-////				ContactsView(didSelectNewUser: { user in
-////					print(user.name)
-////					self.userSelected = user
-//					self.shouldNavigateToChatView.toggle()
-////				})
+				ScrollView {
+//                    List(vmChat.recentMessages) { recentMessage in
+////                    ForEach(0...10) {
+//                    let uid = recentMessage.fromId
+//						let user = vmChat.usersDictionary[uid]
+//                        NavigationLink(destination: ChatView(contact: vm.user)) {
+//							HistoryCell(recentMessage: recentMessage, user: user!)
+//						}
+//					}
+				}
+			}
+			.navigationBarHidden(true)
+			.fullScreenCover(isPresented: $shouldShowNewUserScreen) {
+				ContactsView(didSelectNewUser: { user in
+					print(user.name)
+					self.userSelected = user
+					self.shouldNavigateToChatView.toggle()
+				})
 			}
 		}
 	}
@@ -55,8 +62,8 @@ struct HistoryView: View {
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-		HistoryView()
+		ContentView()
 			.preferredColorScheme(.dark)
-		HistoryView()
+        ContentView()
     }
 }

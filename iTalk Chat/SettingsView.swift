@@ -29,17 +29,17 @@ struct SettingsView: View {
                     Button {
                         shouldShowImagePicker.toggle()
                     } label: {
-//                          Image(vmLogin.myUser?.profileImageURL ?? "")
+                           Image(vmLogin.myUser?.profileImageURL ?? "")
                             WebImage(url: URL(string: vmLogin.myUser?.profileImageURL ?? "" ))
                             .resizable()
                             .scaledToFill()
                             .clipped()
-                            .cornerRadius(64)
-                            .frame(width: 64, height: 64)
+                            .cornerRadius(72)
+                            .frame(width: 72, height: 72)
                     }
                     .clipShape(Circle())
-                    .shadow(radius: 1)
-                    .overlay(Circle().stroke(Color.blue, lineWidth: 1))
+                    .shadow(radius: 10)
+                    .overlay(Circle().stroke(Color.blue, lineWidth: 2))
                     Spacer()
                     VStack(alignment: .leading, spacing: 4) {
                         Text(vmLogin.myUser?.name ?? "")
