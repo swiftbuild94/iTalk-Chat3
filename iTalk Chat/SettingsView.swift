@@ -11,25 +11,39 @@ import SDWebImageSwiftUI
 
 struct SettingsView: View {
     @ObservedObject private var vmLogin = LogInSignInVM()
+    @ObservedObject private var vmContacts = ContactsVM()
     @State var shouldShowLogOutOptions = true
     @State private var shouldShowImagePicker = false
     @State private var image: UIImage?
     @State private var isAutoPlayAudio = true
     @State private var isAutoRecordAudio = true
-    @State var currentUser: User?
+//    @State var currentUser: User?
 
     let optionsSize: CGFloat = 16
     
     var body: some View {
         NavigationView {
             Form {
-                userInfo(currentUser: currentUser)
+//                userInfo(currentUser: vmContacts.myUser)
+                HStack {
+                    Image(vmContacts.myUser?.profileImageURL ?? "")
+                    WebImage(url: URL(string: vmContacts.myUser?.profileImageURL ?? "" ))
+                        .resizable()
+                        .scaledToFill()
+                        .clipped()
+                        .cornerRadius(52)
+                        .frame(width: 52, height: 52)
+                    Text(vmContacts.myUser?.name ?? "")
+                        .font(.system(size: 16, weight: .bold))
+                }
                 Divider()
                 Text("Chat Background")
                 Toggle("Auto play audio message", isOn: $isAutoPlayAudio)
                 Toggle("Auto record audio message", isOn: $isAutoRecordAudio)
                 Divider()
                 Text("Blocked Users")
+//                Text("Error: \(vmContacts.errorMessage)")
+                Text(vmContacts.myUser?.profileImageURL ?? "")
                 Divider()
                 Button {
                     vmLogin.shouldShowLogOutOptions.toggle()
@@ -43,8 +57,7 @@ struct SettingsView: View {
             .actionSheet(isPresented: $vmLogin.shouldShowLogOutOptions) {
                 .init(title: Text("Log Out"), message: Text("Are you sure you want to Log Out"), buttons: [
                         .destructive(Text("Log Out"), action: {
-                            print("Logged Out")
-                            vmLogin.handleSignOut()
+                           vmLogin.handleSignOut()
                         }),
                         .cancel()
                 ])

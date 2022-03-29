@@ -14,6 +14,10 @@ final class ContactsVM: ObservableObject {
 	@Published var users =  [User]()
 	@Published var usersDictionary = [String: User]()
 	@Published var currentUser: User?
+    @Published var myUser: User?
+    @Published var myUserUid = ""
+    @Published var myUserName = ""
+    @Published var myUserPhoto = ""
 	@Published var errorMessage = ""
 	@Published var isUserLoggedOut = true
 //    @Published var recentMessages = [RecentMessage].self
@@ -27,7 +31,7 @@ final class ContactsVM: ObservableObject {
 	}
 	
 	// MARK: - Get Current User
-	private func getCurrentUser() {
+	 func getCurrentUser() {
         print("Current User")
 		DispatchQueue.main.async {
 			if FirebaseManager.shared.auth.currentUser?.uid == nil {
@@ -54,9 +58,11 @@ final class ContactsVM: ObservableObject {
 				print(self.errorMessage)
 				return
 			}
-//			print("Current User data: \(data)")
-            currentUser = User(data: data)
-            print("Current User \(String(describing: currentUser))")
+            self.myUser = User(data: data)
+//            self.errorMessage = String(describing: data)
+            self.myUserName = self.myUser?.name ?? ""
+            self.myUserPhoto = self.myUser?.profileImageURL ?? ""
+            print("Current User: \(String(describing: self.myUser!))")
 		}
 	}
 	

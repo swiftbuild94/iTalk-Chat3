@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject private var vmContacts = ContactsVM()
     @ObservedObject var vmLogin = LogInSignInVM()
+//    @ObservedObject private var vmContacts = ContactsVM()
     //    @ObservedObject private var vmChats = ChatsVM(chatUser: nil)
     @State var isUserLoggedOut: Bool = false
     @State private var selection = 0
@@ -32,7 +32,7 @@ struct ContentView: View {
                     }
             }
             .tag(1)
-            SettingsView(currentUser: vmContacts.currentUser)
+            SettingsView()
                 .tabItem {
                     VStack {
                         Image(systemName: "gear")

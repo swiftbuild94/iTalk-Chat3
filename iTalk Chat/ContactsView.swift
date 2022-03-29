@@ -17,7 +17,6 @@ struct ContactsView: View {
 		Text("List of Contacts")
 		NavigationView {
 			ScrollView {
-				#warning("TODO: get only users in contacts app")
 				ForEach(viewModel.users) { contact in
 					Button {
 						presentationMode.wrappedValue.dismiss()

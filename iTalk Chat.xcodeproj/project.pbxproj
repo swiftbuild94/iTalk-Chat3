@@ -104,12 +104,12 @@
 			isa = PBXGroup;
 			children = (
 				18CC954127F266A3008EAE87 /* Support */,
-				18B6EAB827F13C1500E15BDE /* ContactsVM.swift */,
-				18B6EAB627F1304600E15BDE /* User.swift */,
 				18CC953B27F2665C008EAE87 /* ChatsVM.swift */,
-				18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */,
+				18B6EAB627F1304600E15BDE /* User.swift */,
 				18CC953D27F26685008EAE87 /* Chat.swift */,
 				18CC953E27F26686008EAE87 /* RecentMessage.swift */,
+				18B6EAB827F13C1500E15BDE /* ContactsVM.swift */,
+				18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */,
 				18B6EA8727F11FD800E15BDE /* FirebaseManager.swift */,
 				18CC953527F2649D008EAE87 /* ContactsView.swift */,
 				18CC953927F26608008EAE87 /* ChatView.swift */,

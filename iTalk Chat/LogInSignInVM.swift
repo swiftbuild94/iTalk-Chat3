@@ -124,5 +124,6 @@ final class LogInSignInVM: ObservableObject {
 	 func handleSignOut() {
 		self.isUserLoggedOut = true
 		try? FirebaseManager.shared.auth.signOut()
+         print("Logged Out!")
 	}
 }

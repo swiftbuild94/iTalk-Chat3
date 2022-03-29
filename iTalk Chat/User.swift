@@ -16,12 +16,14 @@ struct User: Identifiable, Codable {
     var photo: String?
     var phoneNumber: String?
     var email: String?
+    var profileImageURL: String?
     
     init(data: [String:Any]){
         self.uid = data["uid"] as? String ?? ""
         self.name = data["name"] as? String ?? ""
         self.email = data["email"] as? String
         self.photo = data["photo"] as? String
+        self.profileImageURL = data["profileImageURL"] as? String
         self.phoneNumber = data["phone"] as? String
     }
     
