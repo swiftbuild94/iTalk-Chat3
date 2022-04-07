@@ -24,10 +24,6 @@ class ChatsVM: ObservableObject {
 	}
 	
 	//MARK: - Fetch Messages
-	func getRecentMessages() {
-		fetchMessages()
-	}
-	
 	private func fetchMessages() {
 		self.chatMessages.removeAll()
 		guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
@@ -38,11 +34,13 @@ class ChatsVM: ObservableObject {
                                                 secondDocument: nil)
 		let order = FirebaseConstants.timestamp
         var chat: Chat?
-		
 		let snapResult = snapshotLister(firebaseLocation, order: order)
         let data = snapResult?.data()
+//        self.chatMessages.append(.init(data: data))
+//
 //        do {
-//           chat = try snapResult?.data(as: Chat.self)
+//            chat = try snapResult?.data(data)
+////           chat = try snapResult?.data(as: Chat.self)
 //        } catch {
 //            print(error)
 //        }
@@ -121,9 +119,10 @@ class ChatsVM: ObservableObject {
 	}
 	
 	private func saveToMessagesAndRecentMessages(_ data: [String : Any]) {
+//        print("----SaveToMessagesAndRecentMessages DATA: \(data)")
         var firebaseLocation = FirebaseDocument(
             firstCollection: FirebaseConstants.messages,
-            firstDocument: data[FirebaseConstants.uid] as! String,
+            firstDocument: data[FirebaseConstants.fromId] as! String,
             secondCollection: data[FirebaseConstants.toId] as! String,
             secondDocument: nil)
 //		firebaseLocation.firstDocument = FirebaseConstants.messages
@@ -133,11 +132,11 @@ class ChatsVM: ObservableObject {
 		
 		firebaseLocation.firstDocument = FirebaseConstants.messages
 		firebaseLocation.firstDocument = data[FirebaseConstants.toId]  as! String
-		firebaseLocation.secondCollection = data[FirebaseConstants.uid] as! String
+		firebaseLocation.secondCollection = data[FirebaseConstants.fromId] as! String
 		saveToFirebase(firebaseLocation, data: data)
 		
 		firebaseLocation.firstDocument = FirebaseConstants.recentMessages
-		firebaseLocation.firstDocument = data[FirebaseConstants.uid] as! String
+		firebaseLocation.firstDocument = data[FirebaseConstants.fromId] as! String
 		firebaseLocation.secondCollection = FirebaseConstants.messages
         firebaseLocation.secondDocument = data[FirebaseConstants.toId] as? String
 		saveToFirebase(firebaseLocation, data: data)
@@ -145,12 +144,14 @@ class ChatsVM: ObservableObject {
 		firebaseLocation.firstDocument = FirebaseConstants.recentMessages
 		firebaseLocation.firstDocument = data[FirebaseConstants.toId] as! String
 		firebaseLocation.secondCollection = FirebaseConstants.messages
-        firebaseLocation.secondDocument = data[FirebaseConstants.uid] as? String
+        firebaseLocation.secondDocument = data[FirebaseConstants.fromId] as? String
 		saveToFirebase(firebaseLocation, data: data)
 	}
     
     // MARK: - Save to Firebase
     private func saveToFirebase(_ firebaseDocument: FirebaseDocument, data: [String: Any]) {
+        print("Save to Firebase Document: \(firebaseDocument)")
+        print("Save to Firebase Data: \(data)")
         let collection = firebaseDocument.firstCollection
         let document = firebaseDocument.firstDocument
         let secondCollection = firebaseDocument.secondCollection
