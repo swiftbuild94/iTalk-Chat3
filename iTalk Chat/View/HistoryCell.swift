@@ -49,7 +49,7 @@ struct HistoryCell: View {
 							.multilineTextAlignment(.leading)
 					}
 					Spacer()
-					Text(recentMessage.timeAgo)
+//					Text(recentMessage.timeAgo)
 						.font(.system(size: ageOfMessageSize, weight: .semibold))
 						.foregroundColor(Color(.label))
 				}.padding(.horizontal)

@@ -33,14 +33,15 @@ struct HistoryView: View {
 //						.foregroundColor(Color.blue)
 //				}
 				ScrollView {
-//                    ForEach(vmChat.chatMessages) { recentMessage in
-//                        let uid = recentMessage.fromId
-//						let user = vmConctacts.usersDictionary[uid]
-//                        NavigationLink(destination: ChatView(chatUser: user!)) {
-//////                            HistoryCell(recent5Message: recentMessage, user: user!)
-//                            Text("One")
-////						}
-//					}
+                    Text(vmConctacts.errorMessage)
+                        .foregroundColor(Color.red)
+                    ForEach(vmConctacts.recentMessages, id:\.self) { recentMessage in
+                        let uid = recentMessage.fromId
+						let user = vmConctacts.usersDictionary[uid]
+                        NavigationLink(destination: ChatView(chatUser: user!)) {
+                            HistoryCell(recentMessage: recentMessage, user: user!)
+						}
+					}
 				}
                 .navigationTitle("History")
 			}

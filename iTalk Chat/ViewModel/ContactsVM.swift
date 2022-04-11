@@ -21,7 +21,7 @@ final class ContactsVM: ObservableObject {
 	@Published var errorMessage = ""
 //    @Published var namesX = [String]()
 //	@Published var isUserLoggedOut = true
-//    @Published var recentMessages = [RecentMessage].self
+    @Published var recentMessages = [RecentMessage]()
 	var selectedUser: String?
     private var firestoreListener: ListenerRegistration?
 	
@@ -74,28 +74,31 @@ final class ContactsVM: ObservableObject {
 	}
 	
 	private func fetchRecentMessages() {
-////		self.recentMessages.removeAll()
-//		firestoreListener?.remove()
-//		guard let uid = currentUser?.uid else { return }
-//		var firebaseLocation: FirebaseDocument
-//		firebaseLocation.firstCollection = FirebaseConstants.recentMessages
-//		firebaseLocation.firstDocument = uid
-//		firebaseLocation.secondCollection = FirebaseConstants.messages
-//		let order = FirebaseConstants.timestamp
-//		
-//		let snapResult = snapshotLister(firebaseLocation, order: order)
-//		let docId = snapResult.documentID
-//		let data = snapResult.data()
-//		
-//		if let index = self.recentMessages.index(where: { rm in
-//			return rm.id == docId
-//		}){
-//			self.recentMessages.remove(at: index)
-//		}
-//		if let cm = try change.document.data(as: RecentMessage.self) {
-//			self.recentMessages.append(cm)
-//			print("Recent Message Appended \(cm)")
-//		}
+		self.recentMessages.removeAll()
+		firestoreListener?.remove()
+		guard let uid = currentUser?.uid else { return }
+        FirebaseManager.shared.firestore
+            .collection(FirebaseConstants.recentMessages)
+            .document(uid)
+            .collection(FirebaseConstants.messages)
+            .order(by: FirebaseConstants.timestamp)
+            .addSnapshotListener { querySnapshot, error in
+                if let err = error {
+                    self.errorMessage = "Failed to get all users: \(err)"
+    //                print(self.errorMessage)
+                    return
+                }
+                querySnapshot?.documentChanges.forEach({ change in
+                        let docId = change.document.documentID
+                    if let index = self.recentMessages.firstIndex(where: { rm in
+                        return rm.documentID == docId
+                    }) {
+                        self.recentMessages.remove(at: index)
+                    }
+                    self.recentMessages.insert(.init(documentId: docId, data: change.document.data()), at: 0)
+                })
+                self.errorMessage = "Messages: \(self.recentMessages)"
+            }
 	}
 				
 	// MARK: - Intents
