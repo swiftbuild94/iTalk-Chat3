@@ -19,36 +19,35 @@ struct HistoryView: View {
 //        self.vmChat = .init(chatUser: chatUser)
 //        self.userSelected = chatUser
 //    }
-//    
+    
     var body: some View {
-		NavigationLink("", isActive: $shouldNavigateToChatView) {
-//            ChatView(contact: vm.$userSelected)
-		}
+//		NavigationLink("", isActive: $shouldNavigateToChatView) {
+////            ChatView(contact: vm.$userSelected)
+//		}
 		NavigationView {
 			VStack {
-				Text("History")
+//				Text("History")
 				Spacer()
-				Button {
-					shouldShowNewUserScreen.toggle()
-				} label: {
-					Image(systemName: "plus.message.fill")
-						.foregroundColor(Color.blue)
-				}
+//				Button {
+//					shouldShowNewUserScreen.toggle()
+//				} label: {
+//					Image(systemName: "plus.message.fill")
+//						.foregroundColor(Color.blue)
+//				}
 				ScrollView {
-//                    List(vmChat.recentMessages) { recentMessage in
-////                    ForEach(0...10) {
-//                    let uid = recentMessage.fromId
-//						let user = vmChat.usersDictionary[uid]
-//                        NavigationLink(destination: ChatView(contact: vm.user)) {
-//							HistoryCell(recentMessage: recentMessage, user: user!)
+//                    List(vmChat.chatMessages) { recentMessage in
+//                        let uid = recentMessage.fromId
+//						let user = vmConctacts.usersDictionary[uid]
+//                        NavigationLink(destination: ChatView(chatUser: user!)) {
+////                            HistoryCell(recent5Message: recentMessage, user: user!)
 //						}
 //					}
 				}
 			}
-			.navigationBarHidden(true)
+//			.navigationBarHidden(true)
 			.fullScreenCover(isPresented: $shouldShowNewUserScreen) {
 				ContactsView(didSelectNewUser: { user in
-					print(user.name)
+//					print(user.name)
 					self.userSelected = user
 					self.shouldNavigateToChatView.toggle()
 				})
@@ -60,10 +59,9 @@ struct HistoryView: View {
 
 
 
-struct HistoryView_Previews: PreviewProvider {
-    static var previews: some View {
-		ContentView()
-			.preferredColorScheme(.dark)
-        ContentView()
-    }
-}
+//struct HistoryView_Previews: PreviewProvider {
+//    static var previews: some View {
+////		HistoryView()
+////			.preferredColorScheme(.dark)
+//    }
+//}

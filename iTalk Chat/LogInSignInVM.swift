@@ -31,16 +31,6 @@ final class LogInSignInVM: ObservableObject {
         getCurrentUser()
     }
     
-    func handleAction() {
-        if isLoginMode {
-            loginUser()
-            print("Login")
-        } else {
-            print("CreateUser")
-            createAccount()
-        }
-    }
-    
     
 //    MARK: - Get Current User
     func getCurrentUser() {
@@ -87,9 +77,11 @@ final class LogInSignInVM: ObservableObject {
 				self.errorMessage = "Failed to login user: \(error)"
 				return
 			}
+            self.isUserLoggedOut = false
 			print("Succefully login user:  \(result?.user.uid ?? "")")
 //			self.didCompleateLoginProcess()
             print("isUserLoggedOut: \(self.isUserLoggedOut)")
+            return
 		}
 	}
 	
@@ -107,6 +99,7 @@ final class LogInSignInVM: ObservableObject {
 						self.errorMessage = "Failed to create user: \(error)"
 						return
 					}
+                    
 					print("Succefully created user:  \(result?.user.uid ?? "")")
                     self.persistImageToStorage()
 				}

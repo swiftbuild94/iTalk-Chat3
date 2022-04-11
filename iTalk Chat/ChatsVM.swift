@@ -23,20 +23,49 @@ class ChatsVM: ObservableObject {
 		fetchMessages()
 	}
 	
+    
+    private func fetchMessages() {
+        guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        guard let toId = chatUser?.uid else { return }
+        FirebaseManager.shared.firestore
+            .collection(FirebaseConstants.messages)
+            .document(fromId)
+            .collection(toId)
+            .order(by: FirebaseConstants.timestamp)
+            .addSnapshotListener { querySnapshot, error in
+                if let error = error {
+                    self.errorMessage = "Failed to listen for messages: \(error)"
+                    print(error)
+                    return
+                }
+                
+                querySnapshot?.documentChanges.forEach({ change in
+                    if change.type == .added {
+                        let data = change.document.data()
+                        self.chatMessages.append(.init(documentId: change.document.documentID, data: data))
+                    }
+                })
+            }
+        DispatchQueue.main.async {
+            self.count += 1
+        }
+    }
+    
 	//MARK: - Fetch Messages
-	private func fetchMessages() {
-		self.chatMessages.removeAll()
-		guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
-		guard let toId = chatUser?.uid else { return }
-        let firebaseLocation = FirebaseDocument(firstCollection: FirebaseConstants.messages,
-                                                firstDocument: fromId,
-                                                secondCollection: toId,
-                                                secondDocument: nil)
-		let order = FirebaseConstants.timestamp
-        var chat: Chat?
-		let snapResult = snapshotLister(firebaseLocation, order: order)
-        let data = snapResult?.data()
-//        self.chatMessages.append(.init(data: data))
+	private func fetchMessagesOld() {
+//		self.chatMessages.removeAll()
+//		guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
+//		guard let toId = chatUser?.uid else { return }
+//        let firebaseLocation = FirebaseDocument(firstCollection: FirebaseConstants.messages,
+//                                                firstDocument: fromId,
+//                                                secondCollection: toId,
+//                                                secondDocument: nil)
+//		let order = FirebaseConstants.timestamp
+//        var chat: Chat?
+//		let snapResult = snapshotLister(firebaseLocation, order: order)
+//        let data = snapResult?.data()
+////        self.chatMessages.append(.init(data: data))
+//
 //
 //        do {
 //            chat = try snapResult?.data(data)
@@ -45,7 +74,7 @@ class ChatsVM: ObservableObject {
 //            print(error)
 //        }
 //        self.chatMessages.append(chat!)
-        print("Chat Message Appended \(String(describing: chat))")
+//        print("Chat Message Appended \(String(describing: chat))")
 		
 		DispatchQueue.main.async {
 			self.count += 1

@@ -26,6 +26,18 @@ struct LogInView: View {
 //        }
 //    }
     
+    func handleAction() {
+        if vm.isLoginMode {
+            vm.loginUser()
+        } else {
+            vm.createAccount()
+        }
+        print("IsUserLoggedOut \(vm.isUserLoggedOut)")
+        if vm.isUserLoggedOut {
+            self.didCompleateLoginProcess()
+        }
+    }
+    
     var body: some View {
           VStack {
               Picker(selection: $vm.isLoginMode, label: Text("Picker")) {
@@ -93,7 +105,7 @@ struct LogInView: View {
                   }
                  
                   Button(action: {
-                      vm.handleAction()
+                      handleAction()
                   }, label: {
                       Text(vm.isLoginMode ? "Log In" : "Create Account" )
                           .font(.headline)

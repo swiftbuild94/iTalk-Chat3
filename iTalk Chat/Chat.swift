@@ -16,11 +16,19 @@ struct Chat: Identifiable, Codable {
     let toId: String
 //    let typeOfContent: TypeOfContent
     let text: String?
-    let contentAudio: Data?
-    let contentVideo: Data?
-    let duration: String?
-    let location: String?
+//    let contentAudio: Data?
+//    let contentVideo: Data?
+//    let duration: String?
+//    let location: String?
     let timestamp: String?
-    let readtime: Date?
+//    let readtime: Date?
+    
+    init(documentId: String, data: [String:Any]) {
+        self.id = documentId
+        self.fromId = data["fromId"] as? String ?? ""
+        self.toId = data["toId"] as? String ?? ""
+        self.text = data["text"] as? String ?? ""
+        self.timestamp = data["timestamp"] as? String ?? ""
+    }
     
 }

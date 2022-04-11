@@ -288,6 +288,7 @@ struct ChatTextBar: View {
 
 let data: [String: Any] = ["name": "Test"]
 let userTest = User(data: data)
+
 struct ChatView_Previews: PreviewProvider {
 	static var previews: some View {
         ChatView(chatUser: userTest)
