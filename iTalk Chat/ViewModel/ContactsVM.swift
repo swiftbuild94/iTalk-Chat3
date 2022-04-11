@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestoreSwift
 
 final class ContactsVM: ObservableObject {
-	@Published var users =  [User]()
+	@Published var users = [User]()
 	@Published var usersDictionary = [String: User]()
 	@Published var currentUser: User?
     @Published var myUser: User?
@@ -19,7 +19,7 @@ final class ContactsVM: ObservableObject {
     @Published var myUserName = ""
     @Published var myUserPhoto = ""
 	@Published var errorMessage = ""
-    @Published var namesX = [String]()
+//    @Published var namesX = [String]()
 //	@Published var isUserLoggedOut = true
 //    @Published var recentMessages = [RecentMessage].self
 	var selectedUser: String?
@@ -33,32 +33,34 @@ final class ContactsVM: ObservableObject {
 	
 	// MARK: - Get All Users
     func getAllUsers() {
-//		DispatchQueue.main.async {
+		DispatchQueue.main.async {
 			self.fetchAllUsers()
-//		}
+		}
 	}
 	
 	private func fetchAllUsers() {
+//        print(">>>>FETCH ALL USERS<<<<")
         FirebaseManager.shared.firestore.collection("users").getDocuments { [self] documentsSnapshot, error in
 			#warning("TODO: get only users in contact app")
 			if let err = error {
 				self.errorMessage = "Failed to get all users: \(err)"
-				print(self.errorMessage)
+//				print(self.errorMessage)
 				return
 			}
             
 			documentsSnapshot?.documents.forEach({ snapshot in
 				let data = snapshot.data()
                 let user = User(data: data)
-				if user.uid != self.selectedUser {
+				if user.uid != FirebaseManager.shared.auth.currentUser?.uid {
 					self.users.append(.init(data: data))
-                    namesX.append(user.name)
+//                    namesX.append(user.name)
 //                    print(self.users)
                     self.usersDictionary[user.uid] = (.init(data: data))
 //					print(usersDictionary)
 //                    for(userId, infor) in usersDictionary {
 //                    print(namesX)
 //                    }
+                    //self.errorMessage =  "Users: \(self.users)"
 				}
 			})
 		}

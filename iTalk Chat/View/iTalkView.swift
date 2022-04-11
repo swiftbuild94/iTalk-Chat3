@@ -10,20 +10,13 @@ import SwiftUI
 
 struct iTalkView: View {
 	@ObservedObject private var vm = ContactsVM()
-    var users: [User]?
-    
-    init(){
-        vm.getAllUsers()
-        self.users = vm.users
-        print(">>>>>USERS:")
-        print(self.users!)
-    }
-    
+
 	var body: some View {
 		NavigationView {
                 ScrollView {
-                    Text("")
-                    ForEach(vm.users) { contact in
+                    Text(vm.errorMessage)
+                        .foregroundColor(Color.red)
+                    ForEach(vm.users, id:\.self) { contact in
                         NavigationLink(destination: ChatView(chatUser: contact)) {
 //                            Text(contact.name)
                             ContactCell(contact: contact)

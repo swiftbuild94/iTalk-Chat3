@@ -23,7 +23,6 @@ class ChatsVM: ObservableObject {
 		fetchMessages()
 	}
 	
-    
     private func fetchMessages() {
         guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
         guard let toId = chatUser?.uid else { return }

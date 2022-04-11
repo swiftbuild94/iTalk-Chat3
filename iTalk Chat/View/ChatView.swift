@@ -26,30 +26,31 @@ struct ChatView: View {
 	
 	var body: some View {
 		NavigationView {
-			VStack() {
-				ContactImage(contact: contact)
-                Spacer()
-				MessagesView(vm: vmChat)
-						.padding(.bottom, topPadding)
-				InputsButtons(typeOfContent: typeOfContent)
-				if typeOfContent == .text {
-					ChatTextBar(vmChat: vmChat)
-				} else if typeOfContent == .audio {
-					ChatAudioBar()
-				}
-			}
-//			.navigationTitle(Text(contact.name))
+            ZStack(alignment: .top) {
+                VStack() {
+                    ContactImage(contact: contact)
+                    Spacer()
+                    MessagesView(vm: vmChat)
+                        .padding(.bottom, topPadding)
+                    InputsButtons(typeOfContent: typeOfContent)
+                    if typeOfContent == .text {
+                        ChatTextBar(vmChat: vmChat)
+                    } else if typeOfContent == .audio {
+                        ChatAudioBar()
+                    }
+                }
+            }
             .navigationTitle(contact.name)
             .navigationBarTitleDisplayMode(.inline)
 //            .navigationBarTitleDisplayMode(.automatic)
-			.toolbar {
-//				ToolbarItemGroup(placement: .navigationBarLeading) {
-//					Button {
-//						chatMode.wrappedValue.dismiss()
-//					} label: {
-//						Text("sx")
-//					}
-				}
+//			.toolbar {
+////				ToolbarItemGroup(placement: .navigationBarLeading) {
+////					Button {
+////						chatMode.wrappedValue.dismiss()
+////					} label: {
+////						Text("sx")
+////					}
+//				}
 			}
 //			.onDisappear {
 ////                $vmChat.stopFirestoreListener()
@@ -71,6 +72,7 @@ struct ContactImage: View {
 	private let cornerRadius: CGFloat = 50
 	
 	var body: some View {
+        ZStack(alignment: .top){
 		HStack {
 			if contact.profileImageURL == nil {
 				Image(systemName: "person.fill")
@@ -93,6 +95,7 @@ struct ContactImage: View {
 			}
 		}
 	}
+    }
 }
 
 
@@ -142,7 +145,7 @@ struct MessageView: View {
 							.foregroundColor(.white)
 					}
 					.padding()
-					.background(Color.blue)
+					.background(Color.gray)
 					.cornerRadius(8)
 				}
 				.background(.white)
@@ -155,7 +158,7 @@ struct MessageView: View {
 							.foregroundColor(.white)
 					}
 					.padding()
-					.background(Color.gray)
+					.background(Color.blue)
 					.cornerRadius(8)
 					Spacer()
 				}
@@ -275,6 +278,7 @@ struct ChatTextBar: View {
                 .border(.blue)
 			Button {
                 vmChat.sendText()
+                UIApplication.shared.keyWindow?.endEditing(true)
 			} label: {
 				Image(systemName: "arrow.up.circle.fill")
 					.foregroundColor(Color.blue)
