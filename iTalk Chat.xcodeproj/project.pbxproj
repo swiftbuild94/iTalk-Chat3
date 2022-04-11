@@ -111,30 +111,11 @@
 		18B6EA7327F11F9900E15BDE /* iTalk Chat */ = {
 			isa = PBXGroup;
 			children = (
+				18F1BCF22804B53C00300591 /* Model */,
+				18F1BCF32804B5A800300591 /* ViewModel */,
+				18F1BCF42804B5C100300591 /* View */,
 				18CC954127F266A3008EAE87 /* Support */,
-				18CC953B27F2665C008EAE87 /* ChatsVM.swift */,
-				18B6EAB627F1304600E15BDE /* User.swift */,
-				18CC953D27F26685008EAE87 /* Chat.swift */,
-				18CC953E27F26686008EAE87 /* RecentMessage.swift */,
-				18B6EAB827F13C1500E15BDE /* ContactsVM.swift */,
-				18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */,
-				18D1763E27FF868200EFFC63 /* Array+Identifiable.swift */,
-				18B6EA8727F11FD800E15BDE /* FirebaseManager.swift */,
-				18CC953527F2649D008EAE87 /* ContactsView.swift */,
-				18CC953927F26608008EAE87 /* ChatView.swift */,
-				18EE916A27F3A43000516D3C /* GridLayout.swift */,
-				18CC953727F264AF008EAE87 /* ContactCell.swift */,
-				18CC954227F266EC008EAE87 /* TypeOfContent.swift */,
-				18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */,
 				18B6EA8B27F1200000E15BDE /* GoogleService-Info.plist */,
-				18EE916827F3A3FF00516D3C /* Grid.swift */,
-				18EE916627F3A09C00516D3C /* HistoryCell.swift */,
-				18B6EABA27F13C6400E15BDE /* HistoryView.swift */,
-				18B6EAAB27F129D400E15BDE /* LogInView.swift */,
-				18CC953327F2577B008EAE87 /* iTalkView.swift */,
-				18B6EAAA27F129D400E15BDE /* SettingsView.swift */,
-				18B6EAA827F127C200E15BDE /* ContentView.swift */,
-				18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */,
 				18B6EA7A27F11F9A00E15BDE /* Preview Content */,
 			);
 			path = "iTalk Chat";
@@ -151,10 +132,53 @@
 		18CC954127F266A3008EAE87 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				18D1763E27FF868200EFFC63 /* Array+Identifiable.swift */,
 				18B6EAA427F1230300E15BDE /* ImagePicker.swift */,
+				18EE916A27F3A43000516D3C /* GridLayout.swift */,
+				18CC954227F266EC008EAE87 /* TypeOfContent.swift */,
+				18EE916827F3A3FF00516D3C /* Grid.swift */,
 				18B6EA7827F11F9A00E15BDE /* Assets.xcassets */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		18F1BCF22804B53C00300591 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */,
+				18B6EA8727F11FD800E15BDE /* FirebaseManager.swift */,
+				18B6EAB627F1304600E15BDE /* User.swift */,
+				18CC953D27F26685008EAE87 /* Chat.swift */,
+				18CC953E27F26686008EAE87 /* RecentMessage.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		18F1BCF32804B5A800300591 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				18CC953B27F2665C008EAE87 /* ChatsVM.swift */,
+				18B6EAB827F13C1500E15BDE /* ContactsVM.swift */,
+				18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		18F1BCF42804B5C100300591 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18CC953527F2649D008EAE87 /* ContactsView.swift */,
+				18CC953927F26608008EAE87 /* ChatView.swift */,
+				18CC953727F264AF008EAE87 /* ContactCell.swift */,
+				18EE916627F3A09C00516D3C /* HistoryCell.swift */,
+				18B6EABA27F13C6400E15BDE /* HistoryView.swift */,
+				18B6EAAB27F129D400E15BDE /* LogInView.swift */,
+				18CC953327F2577B008EAE87 /* iTalkView.swift */,
+				18B6EAAA27F129D400E15BDE /* SettingsView.swift */,
+				18B6EAA827F127C200E15BDE /* ContentView.swift */,
+				18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
