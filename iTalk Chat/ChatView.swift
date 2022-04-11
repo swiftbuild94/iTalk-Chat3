@@ -38,14 +38,16 @@ struct ChatView: View {
 					ChatAudioBar()
 				}
 			}
-			.navigationTitle(Text(contact.name))
-            .navigationBarTitleDisplayMode(.automatic)
+//			.navigationTitle(Text(contact.name))
+            .navigationTitle(contact.name)
+            .navigationBarTitleDisplayMode(.inline)
+//            .navigationBarTitleDisplayMode(.automatic)
 			.toolbar {
 //				ToolbarItemGroup(placement: .navigationBarLeading) {
 //					Button {
 //						chatMode.wrappedValue.dismiss()
 //					} label: {
-//						Text("")
+//						Text("sx")
 //					}
 				}
 			}

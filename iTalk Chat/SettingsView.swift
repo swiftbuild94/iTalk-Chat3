@@ -83,11 +83,12 @@ struct SettingsView: View {
                         .cancel()
                 ])
             }
+            .navigationBarTitle(Text("Settings"))
         }
 //        .fullScreenCover(isPresented: vm.$shouldShowImagePicker, onDismiss: nil) {
 //            ImagePicker(selectedImage: vm.$image, didSet: vm.$shouldShowImagePicker)
 //        }
-        .navigationBarTitle(Text("Settings"), displayMode: .inline)
+     
 
 //}
     }    

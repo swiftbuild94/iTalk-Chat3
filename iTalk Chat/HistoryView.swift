@@ -43,6 +43,7 @@ struct HistoryView: View {
 //						}
 //					}
 				}
+                .navigationTitle("History")
 			}
 //			.navigationBarHidden(true)
 			.fullScreenCover(isPresented: $shouldShowNewUserScreen) {

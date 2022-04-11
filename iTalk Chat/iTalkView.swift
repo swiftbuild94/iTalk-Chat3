@@ -38,8 +38,9 @@ struct iTalkView: View {
 //					}
 //				}
 //			}
+                .navigationBarTitle(Text("iTalk"))
 		}
-//		.navigationBarTitle(Text("iTalk"), displayMode: .inline)
+	
 	}
 }
 
