@@ -28,8 +28,8 @@ struct ChatView: View {
 		NavigationView {
             ZStack(alignment: .top) {
                 VStack() {
-                    ContactImage(contact: contact)
-                    Spacer()
+//                    ContactImage(contact: contact)
+//                    Spacer()
                     MessagesView(vm: vmChat)
                         .padding(.bottom, topPadding)
                     InputsButtons(typeOfContent: typeOfContent)
@@ -43,14 +43,20 @@ struct ChatView: View {
             .navigationTitle(contact.name)
             .navigationBarTitleDisplayMode(.inline)
 //            .navigationBarTitleDisplayMode(.automatic)
-//			.toolbar {
+			.toolbar {
 ////				ToolbarItemGroup(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .navigationBarLeading ) {
+                    ContactImage(contact: contact)
+                }
+                ToolbarItem(placement: .principalAction ) {
+                    Image(systemName: "")
+                }
 ////					Button {
 ////						chatMode.wrappedValue.dismiss()
 ////					} label: {
 ////						Text("sx")
 ////					}
-//				}
+				}
 			}
 //			.onDisappear {
 ////                $vmChat.stopFirestoreListener()
@@ -276,6 +282,7 @@ struct ChatTextBar: View {
                 .opacity(vmChat.chatText.isEmpty ? 0.5 : 1)
                 .foregroundColor(Color.gray)
                 .border(.blue)
+                .accessibilityLabel("Message")
 			Button {
                 vmChat.sendText()
                 UIApplication.shared.keyWindow?.endEditing(true)
