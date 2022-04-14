@@ -14,8 +14,7 @@ struct ContactsView: View {
 	let didSelectNewUser: (User) -> ()
 	
     var body: some View {
-		Text("List of Contacts")
-		NavigationView {
+//		NavigationView {
 			ScrollView {
 				ForEach(viewModel.users) { contact in
 					Button {
@@ -26,8 +25,10 @@ struct ContactsView: View {
 					}
 				}
 			}
-		}
-		.navigationBarTitle(Text("iTalk"), displayMode: .inline)
+//		}
+        .navigationTitle("Contacts")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.automatic)
 		.toolbar {
 			ToolbarItemGroup(placement: .navigationBarLeading) {
 				Button {

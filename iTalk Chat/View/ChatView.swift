@@ -11,11 +11,12 @@ import SDWebImageSwiftUI
 
 struct ChatView: View {
 	@Environment(\.presentationMode) var chatMode
-    @ObservedObject private var vmLogin = LogInSignInVM()
+//    @ObservedObject private var vmLogin = LogInSignInVM()
     @ObservedObject private var vmChat: ChatsVM
-	@State private var shouldShowImagePicker = false
+//	@State private var shouldShowImagePicker = false
 	@State private var zoomed = false
-	@State private var typeOfContent: TypeOfContent = .text
+//	@State private var typeOfContent: TypeOfContent = .text
+    @State private var image: UIImage?
 	private var contact: User
 	private let topPadding: CGFloat = 8
 	
@@ -25,82 +26,80 @@ struct ChatView: View {
 	}
 	
 	var body: some View {
-		NavigationView {
+//		NavigationView {
             ZStack(alignment: .top) {
                 VStack() {
-//                    ContactImage(contact: contact)
-//                    Spacer()
                     MessagesView(vm: vmChat)
                         .padding(.bottom, topPadding)
-                    InputsButtons(typeOfContent: typeOfContent)
-                    if typeOfContent == .text {
+                    InputsButtons(vm: vmChat)
+                    if vmChat.typeOfContent == .text {
                         ChatTextBar(vmChat: vmChat)
-                    } else if typeOfContent == .audio {
+                    } else if vmChat.typeOfContent == .audio {
                         ChatAudioBar()
                     }
                 }
             }
-            .navigationTitle(contact.name)
-            .navigationBarTitleDisplayMode(.inline)
+//        }
+//            .navigationTitle(contact.name)
+//            .navigationBarTitleDisplayMode(.inline)
 //            .navigationBarTitleDisplayMode(.automatic)
 			.toolbar {
-////				ToolbarItemGroup(placement: .navigationBarLeading) {
-                ToolbarItem(placement: .navigationBarLeading ) {
-                    ContactImage(contact: contact)
+                ToolbarItem(placement: .navigation ) {
+                    Button {
+                        //  chatMode.wrappedValue.dismiss()
+                    } label: {
+                        Text(contact.name)
+                            .foregroundColor(Color.accentColor)
+                            .dynamicTypeSize(.xxxLarge)
+                        ContactImage(contact: contact)
+                    }
                 }
-                ToolbarItem(placement: .principalAction ) {
-                    Image(systemName: "")
-                }
-////					Button {
-////						chatMode.wrappedValue.dismiss()
-////					} label: {
-////						Text("sx")
-////					}
-				}
+//                ToolbarItemGroup(placement: .navigationBarTrailing)  {
+//                    Image(systemName: "phone.fill")
+//                        .foregroundColor(Color.blue)
+//                        .dynamicTypeSize(/*@START_MENU_TOKEN@*/.xLarge/*@END_MENU_TOKEN@*/)
+//                    Image(systemName: "video.fill")
+//                        .foregroundColor(Color.blue)
+//                        .dynamicTypeSize(/*@START_MENU_TOKEN@*/.xLarge/*@END_MENU_TOKEN@*/)
+//                }
+            }
+			.onDisappear {
+//                $vmChat.stopFirestoreListener()
 			}
-//			.onDisappear {
-////                $vmChat.stopFirestoreListener()
-//			}
-//			.fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
-//				//			ImagePicker(selectedImage: $image, didSet: $shouldShowImagePicker)
-//			}
-//		}
+            .fullScreenCover(isPresented: $vmChat.shouldShowImagePicker, onDismiss: nil) {
+                ImagePicker(selectedImage: $image, didSet: $vmChat.shouldShowImagePicker)
+			}
 	}
 }
 
 
 struct ContactImage: View {
 	var contact: User
-	private let imageSize: CGFloat  = 52
+	private let imageSize: CGFloat  = 38
 	private let imagePadding: CGFloat = 8
 	private let shadowRadius: CGFloat = 15
 	private let circleLineWidth: CGFloat = 1
-	private let cornerRadius: CGFloat = 50
+	private let cornerRadius: CGFloat = 38
 	
-	var body: some View {
-        ZStack(alignment: .top){
-		HStack {
-			if contact.profileImageURL == nil {
-				Image(systemName: "person.fill")
-					.clipShape(Circle())
-					.shadow(radius: shadowRadius)
-					.overlay(Circle().stroke(Color.black, lineWidth: circleLineWidth))
-					.font(.system(size: imageSize))
-					.padding(imagePadding)
-			} else {
-                Image(contact.profileImageURL!)
-                WebImage(url: URL(string: contact.profileImageURL!))
-					.resizable()
-					.scaledToFill()
-					.frame(width: imageSize, height: imageSize)
-					.clipped()
-					.cornerRadius(cornerRadius)
-					.overlay(RoundedRectangle(cornerRadius: cornerRadius)
-								.stroke(Color(.label), lineWidth: circleLineWidth)
-					)
-			}
-		}
-	}
+    var body: some View {
+        if contact.profileImageURL == nil {
+            Image(systemName: "person.fill")
+                .clipShape(Circle())
+                .shadow(radius: shadowRadius)
+                .overlay(Circle().stroke(Color.black, lineWidth: circleLineWidth))
+                .font(.system(size: imageSize))
+                .padding(imagePadding)
+        } else {
+            Image(contact.profileImageURL!)
+            WebImage(url: URL(string: contact.profileImageURL!))
+                .resizable()
+                .scaledToFill()
+                .frame(width: imageSize, height: imageSize)
+                .clipped()
+                .cornerRadius(cornerRadius)
+                .overlay(RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke(Color(.label), lineWidth: circleLineWidth) )
+        }
     }
 }
 
@@ -118,22 +117,26 @@ struct MessagesView: View {
 //	}
 	
 	var body: some View {
-		ScrollView {
-			ScrollViewReader { scrollViewProxy in
-				VStack {
-					ForEach(vm.chatMessages) { message in
-						MessageView(message: message)
-					}
-					HStack { Spacer() }
-						.id(Self.bottomAnchor)
-				}
-				.onReceive(vm.$count) { _ in
-					withAnimation(.easeOut(duration: 0.5)) {
-						scrollViewProxy.scrollTo(Self.bottomAnchor, anchor: .bottom)
-					}
-				}
-			}
-		}
+        ZStack(alignment: .top){
+            ScrollView {
+                ScrollViewReader { scrollViewProxy in
+                    VStack {
+                        ForEach(vm.chatMessages) { message in
+                            MessageView(message: message)
+                        }
+                        HStack { Spacer() }
+                        .id(Self.bottomAnchor)
+                    }
+                    .onReceive(vm.$count) { _ in
+                        withAnimation(.easeOut(duration: 0.5)) {
+                            scrollViewProxy.scrollTo(Self.bottomAnchor, anchor: .bottom)
+                        }
+                    }
+                }
+            }
+        }
+//        .background(.gray)
+        #warning("TODO: Image Background")
 	}
 }
 
@@ -151,10 +154,9 @@ struct MessageView: View {
 							.foregroundColor(.white)
 					}
 					.padding()
-					.background(Color.gray)
+                    .background(.gray)
 					.cornerRadius(8)
 				}
-				.background(.white)
 				.padding(.horizontal)
 				.padding(.top, topPadding)
 			} else {
@@ -168,7 +170,6 @@ struct MessageView: View {
 					.cornerRadius(8)
 					Spacer()
 				}
-				.background(.white)
 				.padding(.horizontal)
 				.padding(.top, topPadding)
 			}
@@ -178,55 +179,60 @@ struct MessageView: View {
 
 
 struct InputsButtons: View {
-	@State private var shouldShowImagePicker = false
-	@State private var shouldShowCamara = false
-	@State private var shouldShowContact = false
-	@State private var shouldShowLocation = false
-	@State private var shouldShowDocument = false
-	@State var typeOfContent: TypeOfContent
-	
+//	@State private var shouldShowImagePicker = false
+//	@State private var shouldShowCamara = false
+//	@State private var shouldShowContact = false
+//	@State private var shouldShowLocation = false
+//	@State private var shouldShowDocument = false
+//	@State var typeOfContent: TypeOfContent
+    @ObservedObject var vm: ChatsVM
+    
 	private let buttonsSize: CGFloat = 24
 	
 	var body: some View {
 		HStack {
-			if typeOfContent != .audio {
+            if vm.typeOfContent != .audio {
 				Button {
-					typeOfContent = .audio
+                    vm.typeOfContent = .audio
 				} label: {
 					Image(systemName: "mic.circle")
 				}
-			}
+            } else {
+                Button {
+                    vm.typeOfContent = .text
+                } label: {
+                    Image(systemName: "character.bubble")
+                }
+            }
+            Button {
+                vm.typeOfContent = .text
+            } label: {
+                Image(systemName: "charecter.bubble")
+            }
 			Button {
-				shouldShowLocation.toggle()
+                vm.shouldShowLocation.toggle()
 			} label: {
-				Image(systemName: "location.circle")
+                Image(systemName: "location.circle")
 			}
 			Button {
-				shouldShowDocument.toggle()
+                vm.shouldShowDocument.toggle()
 			} label: {
 				Image(systemName: "doc.circle")
 			}
 			Button {
-				shouldShowContact.toggle()
+                vm.shouldShowContact.toggle()
 			} label: {
 				Image(systemName: "person.crop.circle")
 			}
 			Button {
-				shouldShowCamara.toggle()
+                vm.shouldShowCamara.toggle()
 			} label: {
 				Image(systemName: "camera.on.rectangle")
 			}
 			Button {
-				shouldShowImagePicker.toggle()
+                vm.shouldShowImagePicker.toggle()
 			} label: {
 				Image(systemName: "photo.on.rectangle")
-			}
-			if typeOfContent != .text {
-				Button {
-					typeOfContent = .text
-				} label: {
-					Image(systemName: "charecter.bubble")
-				}
 			}
 		}
 		.font(.system(size: buttonsSize))
@@ -235,7 +241,7 @@ struct InputsButtons: View {
 
 
 struct ChatAudioBar: View {
-	@State private var audioIsRecording = false
+	@State private var audioIsRecording = true
 	
 	var body: some View {
 		HStack {
@@ -280,7 +286,7 @@ struct ChatTextBar: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.top)
                 .opacity(vmChat.chatText.isEmpty ? 0.5 : 1)
-                .foregroundColor(Color.gray)
+                .foregroundColor(Color.accentColor)
                 .border(.blue)
                 .accessibilityLabel("Message")
 			Button {
@@ -305,5 +311,6 @@ let userTest = User(data: data)
 struct ChatView_Previews: PreviewProvider {
 	static var previews: some View {
         ChatView(chatUser: userTest)
+//            .preferredColorScheme(.dark)
 	}
 }

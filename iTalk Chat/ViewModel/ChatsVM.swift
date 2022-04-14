@@ -14,10 +14,18 @@ class ChatsVM: ObservableObject {
 	@Published var errorMessage = ""
 	@Published var chatMessages = [Chat]()
 	@Published var count = 0
+    @Published var chatUser: User?
+    @Published var typeOfContent: TypeOfContent = .text
+    @Published var shouldShowImagePicker = false
+    @Published var shouldShowCamara = false
+    @Published var shouldShowContact = false
+    @Published var shouldShowLocation = false
+    @Published var shouldShowDocument = false
+    
     var firestoreListener: ListenerRegistration?
-	var chatUser: User?
-	var typeOfContent: TypeOfContent = .text
-	
+    
+    
+    
 	init(chatUser: User?) {
 		self.chatUser = chatUser
 		fetchMessages()
