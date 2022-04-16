@@ -21,47 +21,51 @@ struct HistoryView: View {
 //    }
     
     var body: some View {
-//		NavigationLink("", isActive: $shouldNavigateToChatView) {
-////            ChatView(contact: vm.$userSelected)
-//		}
-		NavigationView {
-			VStack {
-//				Button {
-//					shouldShowNewUserScreen.toggle()
-//				} label: {
-//					Image(systemName: "plus.message.fill")
-//						.foregroundColor(Color.blue)
-//				}
-				ScrollView {
-                    Text(vmConctacts.errorMessage)
-                        .foregroundColor(Color.red)
-                    ForEach(vmConctacts.recentMessages, id:\.self) { recentMessage in
-                        let uid = recentMessage.fromId
-						let user = vmConctacts.usersDictionary[uid]
-                        NavigationLink(destination: ChatView(chatUser: user!)) {
-                            HistoryCell(recentMessage: recentMessage, user: user!)
-						}
-					}
-				}
-                .navigationTitle("History")
-			}
-			.fullScreenCover(isPresented: $shouldShowNewUserScreen) {
-				ContactsView(didSelectNewUser: { user in
-//					print(user.name)
-					self.userSelected = user
-					self.shouldNavigateToChatView.toggle()
-				})
-			}
-		}
-	}
+        //		NavigationLink("", isActive: $shouldNavigateToChatView) {
+        ////            ChatView(contact: vm.$userSelected)
+        //		}
+        NavigationView {
+            VStack {
+                //				Button {
+                //					shouldShowNewUserScreen.toggle()
+                //				} label: {
+                //					Image(systemName: "plus.message.fill")
+                //						.foregroundColor(Color.blue)
+                //				}
+                ScrollView {
+                    VStack {
+                        Text(vmConctacts.errorMessage)
+                            .foregroundColor(Color.red)
+//                        ForEach(vmConctacts.recentMessages) { recentMessage in
+                        ForEach(vmConctacts.recentMessages, id:\.self) { recentMessage in
+                            let uid = recentMessage.fromId
+                            let user = vmConctacts.usersDictionary[uid]
+                            //                            NavigationLink(destination: ChatView(chatUser: user!)) {
+                            Text("Name")
+                            Text(user!.name)
+                            //                            HistoryCell(recentMessage: recentMessage, user: user!)
+                        }
+                    }
+                }
+            }
+            .navigationTitle("History")
+        }
+        .fullScreenCover(isPresented: $shouldShowNewUserScreen) {
+            ContactsView(didSelectNewUser: { user in
+                //					print(user.name)
+                self.userSelected = user
+                self.shouldNavigateToChatView.toggle()
+            })
+        }
+    }
 }
 
 
 
 
-//struct HistoryView_Previews: PreviewProvider {
-//    static var previews: some View {
-////		HistoryView()
-////			.preferredColorScheme(.dark)
-//    }
-//}
+struct HistoryView_Previews: PreviewProvider {
+    static var previews: some View {
+		HistoryView()
+			.preferredColorScheme(.dark)
+    }
+}

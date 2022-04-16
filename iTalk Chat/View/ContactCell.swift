@@ -41,7 +41,7 @@ struct ContactCell: View {
 					VStack(alignment: .leading) {
 						Text(contact.name)
 							.font(.system(size: contactSize, weight: .bold))
-                        Text(contact.uid)
+                        Text(contact.email ?? "")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
 					}

@@ -19,6 +19,7 @@ final class ContactsVM: ObservableObject {
     @Published var myUserName = ""
     @Published var myUserPhoto = ""
 	@Published var errorMessage = ""
+    @Published var count = 0
 //    @Published var namesX = [String]()
 //	@Published var isUserLoggedOut = true
     @Published var recentMessages = [RecentMessage]()
@@ -26,7 +27,6 @@ final class ContactsVM: ObservableObject {
     private var firestoreListener: ListenerRegistration?
 	
 	init() {
-//		getCurrentUser()
 		getAllUsers()
 		getRecentMessagges()
 	}
@@ -44,7 +44,7 @@ final class ContactsVM: ObservableObject {
 			#warning("TODO: get only users in contact app")
 			if let err = error {
 				self.errorMessage = "Failed to get all users: \(err)"
-//				print(self.errorMessage)
+				print(self.errorMessage)
 				return
 			}
             
@@ -53,14 +53,7 @@ final class ContactsVM: ObservableObject {
                 let user = User(data: data)
 				if user.uid != FirebaseManager.shared.auth.currentUser?.uid {
 					self.users.append(.init(data: data))
-//                    namesX.append(user.name)
-//                    print(self.users)
                     self.usersDictionary[user.uid] = (.init(data: data))
-//					print(usersDictionary)
-//                    for(userId, infor) in usersDictionary {
-//                    print(namesX)
-//                    }
-                    //self.errorMessage =  "Users: \(self.users)"
 				}
 			})
 		}
@@ -68,15 +61,16 @@ final class ContactsVM: ObservableObject {
 	
 	// MARK: - Get Recent Messages
 	private func getRecentMessagges() {
-		DispatchQueue.main.async {
+//		DispatchQueue.main.async {
 			self.fetchRecentMessages()
-		}
+//		}
 	}
 	
 	private func fetchRecentMessages() {
+        print(">>>>>Fetch Recent Messages<<<<<")
 		self.recentMessages.removeAll()
 		firestoreListener?.remove()
-		guard let uid = currentUser?.uid else { return }
+		guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         FirebaseManager.shared.firestore
             .collection(FirebaseConstants.recentMessages)
             .document(uid)
@@ -89,18 +83,27 @@ final class ContactsVM: ObservableObject {
                     return
                 }
                 querySnapshot?.documentChanges.forEach({ change in
-                        let docId = change.document.documentID
+                    let docId = change.document.documentID
                     if let index = self.recentMessages.firstIndex(where: { rm in
-                        return rm.documentID == docId
+                        self.errorMessage = "3"
+                        return rm.id == docId
                     }) {
+                        self.errorMessage = "4"
                         self.recentMessages.remove(at: index)
                     }
-                    self.recentMessages.insert(.init(documentId: docId, data: change.document.data()), at: 0)
+                    do {
+                        if let rm = try change.document.data(as: RecentMessage.self) {
+                            self.recentMessages.insert(rm, at: 0)
+                            self.errorMessage = "Messages: \(self.recentMessages)"
+                        }
+                    } catch {
+                        print(error)
+                    }
                 })
-                self.errorMessage = "Messages: \(self.recentMessages)"
             }
 	}
-				
+		
+    
 	// MARK: - Intents
 	//	func addUser() {
 	//		let user = Contacts.User(name: "String", photo: "String")

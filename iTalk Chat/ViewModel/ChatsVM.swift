@@ -24,13 +24,12 @@ class ChatsVM: ObservableObject {
     
     var firestoreListener: ListenerRegistration?
     
-    
-    
 	init(chatUser: User?) {
 		self.chatUser = chatUser
 		fetchMessages()
 	}
 	
+    // MARK: - Fetch Messages
     private func fetchMessages() {
         guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
         guard let toId = chatUser?.uid else { return }
@@ -58,57 +57,8 @@ class ChatsVM: ObservableObject {
         }
     }
     
-	//MARK: - Fetch Messages
-	private func fetchMessagesOld() {
-//		self.chatMessages.removeAll()
-//		guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
-//		guard let toId = chatUser?.uid else { return }
-//        let firebaseLocation = FirebaseDocument(firstCollection: FirebaseConstants.messages,
-//                                                firstDocument: fromId,
-//                                                secondCollection: toId,
-//                                                secondDocument: nil)
-//		let order = FirebaseConstants.timestamp
-//        var chat: Chat?
-//		let snapResult = snapshotLister(firebaseLocation, order: order)
-//        let data = snapResult?.data()
-////        self.chatMessages.append(.init(data: data))
-//
-//
-//        do {
-//            chat = try snapResult?.data(data)
-////           chat = try snapResult?.data(as: Chat.self)
-//        } catch {
-//            print(error)
-//        }
-//        self.chatMessages.append(chat!)
-//        print("Chat Message Appended \(String(describing: chat))")
-		
-		DispatchQueue.main.async {
-			self.count += 1
-		}
-	}
-	
-	
-	// MARK: - Send Message
-	func handleSend() {
-		switch typeOfContent {
-			case .text:
-				sendText()
-			case .audio:
-				break
-			default:
-				break
-		}
-	}
-
-	func sendText(){
-		if chatText != "" {
-			print(chatText)
-			sendToFirebase()
-		}
-	}
     
-    // MARK: SnapshotListener
+    // MARK: - SnapshotListener
     private func snapshotLister(_ firebaseDocument: FirebaseDocument, order: String) ->  QueryDocumentSnapshot? {
         var queryDocumentSnapshot: QueryDocumentSnapshot?
         firestoreListener = FirebaseManager.shared.firestore
@@ -130,6 +80,27 @@ class ChatsVM: ObservableObject {
         return queryDocumentSnapshot
     }
 	
+    
+    // MARK: - Send Message
+    func handleSend() {
+        switch typeOfContent {
+            case .text:
+                sendText()
+            case .audio:
+                break
+            default:
+                break
+        }
+    }
+
+    func sendText(){
+        if chatText != "" {
+            print(chatText)
+            sendToFirebase()
+        }
+    }
+    
+    //    MARK: - Send To Firebase
 	private func sendToFirebase() {
 		var data: [String : Any]
 		
