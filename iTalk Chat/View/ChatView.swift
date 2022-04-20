@@ -33,7 +33,7 @@ struct ChatView: View {
                         .padding(.bottom, topPadding)
                     InputsButtons(vm: vmChat)
                     if vmChat.typeOfContent == .text {
-                        ChatTextBar(vmChat: vmChat)
+                        ChatTextBar(vm: vmChat)
                     } else if vmChat.typeOfContent == .audio {
                         ChatAudioBar()
                     }
@@ -193,28 +193,26 @@ struct InputsButtons: View {
 		HStack {
             if vm.typeOfContent != .audio {
 				Button {
+                    vm.focus = false
                     vm.typeOfContent = .audio
 				} label: {
 					Image(systemName: "mic.circle")
 				}
             } else {
                 Button {
+                    vm.focus = true
                     vm.typeOfContent = .text
                 } label: {
                     Image(systemName: "character.bubble")
                 }
             }
-            Button {
-                vm.typeOfContent = .text
-            } label: {
-                Image(systemName: "charecter.bubble")
-            }
+            /*
 			Button {
                 vm.shouldShowLocation.toggle()
 			} label: {
                 Image(systemName: "location.circle")
 			}
-			Button {
+            Button {
                 vm.shouldShowDocument.toggle()
 			} label: {
 				Image(systemName: "doc.circle")
@@ -229,6 +227,7 @@ struct InputsButtons: View {
 			} label: {
 				Image(systemName: "camera.on.rectangle")
 			}
+            */
 			Button {
                 vm.shouldShowImagePicker.toggle()
 			} label: {
@@ -241,8 +240,50 @@ struct InputsButtons: View {
 
 
 struct ChatAudioBar: View {
-	@State private var audioIsRecording = true
-	
+	@State private var audioIsRecording = false
+    @ObservedObject var audioRecorder = AudioRecorder()
+    
+    var body: some View {
+        if audioIsRecording == true {
+            Button {
+                print("Stop Recording")
+                self.audioRecorder.stopRecording()
+                self.audioIsRecording = false
+            } label: {
+                Image(systemName: "stop.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
+                    .clipped()
+                    .foregroundColor(.blue)
+                    .padding(.bottom, 40)
+                Image(systemName: "arrow.up.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
+                    .clipped()
+                    .foregroundColor(.blue)
+                    .padding(.bottom, 40)
+            }
+        } else {
+            Button {
+                print("Start Recording")
+                self.audioIsRecording = true
+                self.audioRecorder.startRecording()
+            } label: {
+                Image(systemName: "circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
+                    .clipped()
+                    .foregroundColor(.red)
+                    .padding(.bottom, 40)
+            }
+
+        }
+    }
+    
+    /*
 	var body: some View {
 		HStack {
 			if audioIsRecording {
@@ -267,31 +308,45 @@ struct ChatAudioBar: View {
 			}
 		}
 	}
+     */
 }
 
 struct ChatTextBar: View {
     @ObservedObject var vmChat: ChatsVM
 //	@ObservedObject private var chatText = vm.chatText
 //    @State var chatText: String?
+    @FocusState fileprivate var focus: Bool
 	private let buttonsSize: CGFloat = 24
 	private let topPadding: CGFloat = 8
 //	var chatUser: User
 	
+    init(vm: ChatsVM) {
+        self.vmChat = vm
+        self.focus = vm.focus
+    }
+    
 	var body: some View {
 //		Text(vm.errorMessage)
 		HStack {
 //			DescriptionPlaceholder()
             TextField("", text: $vmChat.chatText)
 //            TextEditor(text: $vmChat.chatText)
+                .focused($focus)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.top)
                 .opacity(vmChat.chatText.isEmpty ? 0.5 : 1)
                 .foregroundColor(Color.accentColor)
                 .border(.blue)
                 .accessibilityLabel("Message")
+                .onSubmit {
+                    vmChat.sendText()
+                    vmChat.focus = false
+                }
+                .submitLabel(.send)
 			Button {
                 vmChat.sendText()
-                UIApplication.shared.keyWindow?.endEditing(true)
+                vmChat.focus = false
+                //UIApplication.shared.keyWindow?.endEditing(true)
 			} label: {
 				Image(systemName: "arrow.up.circle.fill")
 					.foregroundColor(Color.blue)

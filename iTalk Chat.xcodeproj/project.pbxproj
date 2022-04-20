@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18068E27280F8057005460FB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18068E26280F8057005460FB /* AudioRecorder.swift */; };
+		18068E2A280F80C3005460FB /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18068E29280F80C3005460FB /* Date+toString.swift */; };
 		18B6EA7927F11F9A00E15BDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7827F11F9A00E15BDE /* Assets.xcassets */; };
 		18B6EA7C27F11F9A00E15BDE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */; };
 		18B6EA8827F11FD800E15BDE /* FirebaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */; };
@@ -44,6 +46,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18068E26280F8057005460FB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		18068E29280F80C3005460FB /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
 		18B6EA7127F11F9900E15BDE /* iTalk-Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTalk-Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B6EA7827F11F9A00E15BDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 				18CC954227F266EC008EAE87 /* TypeOfContent.swift */,
 				18EE916827F3A3FF00516D3C /* Grid.swift */,
 				18B6EA7827F11F9A00E15BDE /* Assets.xcassets */,
+				18068E29280F80C3005460FB /* Date+toString.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 				18CC953B27F2665C008EAE87 /* ChatsVM.swift */,
 				18B6EAB827F13C1500E15BDE /* ContactsVM.swift */,
 				18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */,
+				18068E26280F8057005460FB /* AudioRecorder.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -271,7 +277,9 @@
 				18B6EAA927F127C200E15BDE /* ContentView.swift in Sources */,
 				18D1763F27FF868200EFFC63 /* Array+Identifiable.swift in Sources */,
 				18B6EAB127F12A3200E15BDE /* LogInSignInVM.swift in Sources */,
+				18068E2A280F80C3005460FB /* Date+toString.swift in Sources */,
 				18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */,
+				18068E27280F8057005460FB /* AudioRecorder.swift in Sources */,
 				18EE916927F3A3FF00516D3C /* Grid.swift in Sources */,
 				18B6EAB927F13C1500E15BDE /* ContactsVM.swift in Sources */,
 				18CC953427F2577B008EAE87 /* iTalkView.swift in Sources */,
@@ -422,6 +430,7 @@
 				DEVELOPMENT_TEAM = U4M526LLNP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to send an audio message";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -451,6 +460,7 @@
 				DEVELOPMENT_TEAM = U4M526LLNP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to send an audio message";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -15,12 +15,13 @@ class ChatsVM: ObservableObject {
 	@Published var chatMessages = [Chat]()
 	@Published var count = 0
     @Published var chatUser: User?
-    @Published var typeOfContent: TypeOfContent = .text
+    @Published var typeOfContent: TypeOfContent = .audio
     @Published var shouldShowImagePicker = false
     @Published var shouldShowCamara = false
     @Published var shouldShowContact = false
     @Published var shouldShowLocation = false
     @Published var shouldShowDocument = false
+    @Published var focus = false
     
     var firestoreListener: ListenerRegistration?
     
@@ -95,10 +96,12 @@ class ChatsVM: ObservableObject {
 
     func sendText(){
         if chatText != "" {
-            print(chatText)
+            print(chatText) 
             sendToFirebase()
+            focus = false
         }
     }
+    
     
     //    MARK: - Send To Firebase
 	private func sendToFirebase() {
@@ -154,6 +157,7 @@ class ChatsVM: ObservableObject {
         firebaseLocation.secondDocument = data[FirebaseConstants.fromId] as? String
 		saveToFirebase(firebaseLocation, data: data)
 	}
+    
     
     // MARK: - Save to Firebase
     private func saveToFirebase(_ firebaseDocument: FirebaseDocument, data: [String: Any]) {
