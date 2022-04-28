@@ -9,7 +9,7 @@ import SwiftUI
 
 final class LogInSignInVM: ObservableObject {
 	@Published var isLoginMode = true
-	@Published var isUserLoggedOut = false
+	@Published var isUserLoggedOut = true
 	@Published var name = ""
 	@Published var email = ""
 	@Published var password = ""
@@ -71,7 +71,8 @@ final class LogInSignInVM: ObservableObject {
 	
 	
 	// MARK: - LogIn User
-	func loginUser() {
+    func loginUser() {
+        print("loginUser")
 		FirebaseManager.shared.auth.signIn(withEmail: email, password: password) { result, error in
 			if let error = error {
 				self.errorMessage = "Failed to login user: \(error)"
@@ -80,7 +81,7 @@ final class LogInSignInVM: ObservableObject {
             self.isUserLoggedOut = false
 			print("Succefully login user:  \(result?.user.uid ?? "")")
 //			self.didCompleateLoginProcess()
-            print("isUserLoggedOut: \(self.isUserLoggedOut)")
+            print("VCisUserLoggedOut: \(self.isUserLoggedOut)")
             return
 		}
 	}

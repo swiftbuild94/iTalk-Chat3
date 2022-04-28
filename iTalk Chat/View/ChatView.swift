@@ -12,25 +12,32 @@ import SDWebImageSwiftUI
 struct ChatView: View {
 	@Environment(\.presentationMode) var chatMode
 //    @ObservedObject private var vmLogin = LogInSignInVM()
-    @ObservedObject private var vmChat: ChatsVM
+    @ObservedObject fileprivate var vmChat: ChatsVM
 //	@State private var shouldShowImagePicker = false
 	@State private var zoomed = false
 //	@State private var typeOfContent: TypeOfContent = .text
     @State private var image: UIImage?
+    @FocusState fileprivate var focus
 	private var contact: User
 	private let topPadding: CGFloat = 8
 	
 	init(chatUser: User){
 		self.contact = chatUser
 		self.vmChat = .init(chatUser: chatUser)
+        self.focus = vmChat.focus
 	}
 	
 	var body: some View {
-//		NavigationView {
             ZStack(alignment: .top) {
                 VStack() {
                     MessagesView(vm: vmChat)
                         .padding(.bottom, topPadding)
+                        .gesture(
+                            TapGesture()
+                                .onEnded({ _ in
+                                    focus = false
+                                })
+                        )
                     InputsButtons(vm: vmChat)
                     if vmChat.typeOfContent == .text {
                         ChatTextBar(vm: vmChat)
@@ -39,14 +46,10 @@ struct ChatView: View {
                     }
                 }
             }
-//        }
-//            .navigationTitle(contact.name)
-//            .navigationBarTitleDisplayMode(.inline)
-//            .navigationBarTitleDisplayMode(.automatic)
 			.toolbar {
                 ToolbarItem(placement: .navigation ) {
                     Button {
-                        //  chatMode.wrappedValue.dismiss()
+//                          chatMode.wrappedValue.dismiss()
                     } label: {
                         Text(contact.name)
                             .foregroundColor(Color.accentColor)
@@ -80,7 +83,7 @@ struct ContactImage: View {
 	private let shadowRadius: CGFloat = 15
 	private let circleLineWidth: CGFloat = 1
 	private let cornerRadius: CGFloat = 38
-	
+    
     var body: some View {
         if contact.profileImageURL == nil {
             Image(systemName: "person.fill")
@@ -240,23 +243,42 @@ struct InputsButtons: View {
 
 
 struct ChatAudioBar: View {
-	@State private var audioIsRecording = false
+    @State private var audioIsRecording = false
     @ObservedObject var audioRecorder = AudioRecorder()
-    
+    @State var isTimerRunning = false
+    @State var currentDate = Date()
+//    @State private var endTime = Date()
+//    private var timerString = "0:00"
+//    @State private var startTime = Date()
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    let dateFormatter = DateFormatter()
+    init() {
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.setLocalizedDateFormatFromTemplate("mm:ss")
+    }
     var body: some View {
         if audioIsRecording == true {
             Button {
                 print("Stop Recording")
                 self.audioRecorder.stopRecording()
                 self.audioIsRecording = false
+                self.isTimerRunning = false
             } label: {
-                Image(systemName: "stop.fill")
+                Image(systemName: "trash")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 100, height: 100)
                     .clipped()
-                    .foregroundColor(.blue)
+                    .foregroundColor(.primary)
                     .padding(.bottom, 40)
+                    .padding()
+                Spacer()
+                Text(dateFormatter.string(from: currentDate))
+                    .dynamicTypeSize(.xxxLarge)
+                    .onReceive(timer) { input in
+                      currentDate = input
+                    }
+                Spacer()
                 Image(systemName: "arrow.up.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -270,6 +292,8 @@ struct ChatAudioBar: View {
                 print("Start Recording")
                 self.audioIsRecording = true
                 self.audioRecorder.startRecording()
+                self.isTimerRunning = false
+                currentDate = Date()
             } label: {
                 Image(systemName: "circle.fill")
                     .resizable()
@@ -279,52 +303,25 @@ struct ChatAudioBar: View {
                     .foregroundColor(.red)
                     .padding(.bottom, 40)
             }
-
         }
     }
-    
-    /*
-	var body: some View {
-		HStack {
-			if audioIsRecording {
-				Image("audiowave")
-					.aspectRatio(contentMode: .fit)
-				Image(systemName: "record.circle.fill")
-					.foregroundColor(Color.blue)
-				Image(systemName: "stop.circle")
-				Button {
-					audioIsRecording = false
-				} label: {
-					Image(systemName: "arrow.up.circle.fill")
-						.foregroundColor(Color.blue)
-				}
-			} else {
-				Button {
-					audioIsRecording = true
-				} label: {
-					Image(systemName: "mic.circle")
-						.foregroundColor(Color.blue)
-				}
-			}
-		}
-	}
-     */
 }
 
 struct ChatTextBar: View {
     @ObservedObject var vmChat: ChatsVM
 //	@ObservedObject private var chatText = vm.chatText
 //    @State var chatText: String?
-    @FocusState fileprivate var focus: Bool
+   
 	private let buttonsSize: CGFloat = 24
 	private let topPadding: CGFloat = 8
 //	var chatUser: User
-	
+    @FocusState var focus: Bool
+    
     init(vm: ChatsVM) {
         self.vmChat = vm
-        self.focus = vm.focus
+        self.focus = true
     }
-    
+//
 	var body: some View {
 //		Text(vm.errorMessage)
 		HStack {
@@ -340,12 +337,12 @@ struct ChatTextBar: View {
                 .accessibilityLabel("Message")
                 .onSubmit {
                     vmChat.sendText()
-                    vmChat.focus = false
+//                    vmChat.focus = false
                 }
                 .submitLabel(.send)
 			Button {
                 vmChat.sendText()
-                vmChat.focus = false
+//                vmChat.focus = false
                 //UIApplication.shared.keyWindow?.endEditing(true)
 			} label: {
 				Image(systemName: "arrow.up.circle.fill")

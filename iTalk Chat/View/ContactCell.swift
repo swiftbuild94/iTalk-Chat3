@@ -12,13 +12,13 @@ struct ContactCell: View {
 	var contact: User
 	let shadowRadius: CGFloat = 5
 	let circleLineWidth: CGFloat = 1
-	let imageSize: CGFloat  = 48
+	let imageSize: CGFloat  = 62
 	let spacing: CGFloat = 4
 	let contactSize: CGFloat = 16
 	let ageOfMessageSize: CGFloat = 14
 	let imagePadding: CGFloat = 8
 	let contactSpacing: CGFloat = 16
-	let cornerRadius: CGFloat = 50
+	let cornerRadius: CGFloat = 62
 	
 	var body: some View {
 		return
@@ -37,10 +37,11 @@ struct ContactCell: View {
                                 .stroke(Color(.label), lineWidth: circleLineWidth)
 							)
 					}
-					Spacer()
+//					Spacer()
 					VStack(alignment: .leading) {
 						Text(contact.name)
-							.font(.system(size: contactSize, weight: .bold))
+//							.font(.system(size: contactSize, weight: .bold))
+                            .dynamicTypeSize(.large)
                         Spacer()
                         Text(contact.email ?? "")
                             .font(.subheadline)

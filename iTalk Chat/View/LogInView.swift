@@ -18,7 +18,19 @@ struct LogInView: View {
 //  @State private var isLoginMode = true
     @State private var shouldShowImagePicker = false
     @State private var image: UIImage?
+    @Environment(\.presentationMode) var presentationMode
     var didCompleateLoginProcess: () -> ()
+    @FocusState private var focus: Focus?
+    
+    enum Focus {
+        case emailLogin
+        case emailSignUp
+        case passwordLogin
+        case passwordSignUp
+        case name
+        case retype
+        case phone
+    }
     
 //    init(){
 //        if !vm.isUserLoggedOut {
@@ -34,6 +46,7 @@ struct LogInView: View {
         }
         print("IsUserLoggedOut \(vm.isUserLoggedOut)")
         if vm.isUserLoggedOut {
+            presentationMode.wrappedValue.dismiss()
             self.didCompleateLoginProcess()
         }
     }
@@ -77,21 +90,45 @@ struct LogInView: View {
                                   .autocapitalization(.words)
                                   .keyboardType(.asciiCapable)
                                   .dynamicTypeSize(.large)
+                                  .focused($focus, equals: .name)
+                                  .onSubmit {
+                                      focus = .emailSignUp
+                                  }
+                                  .submitLabel(.next)
                               TextField("Email", text: $vm.email)
                                   .keyboardType(.emailAddress)
                                   .autocapitalization(.none)
                                   .dynamicTypeSize(.large)
+                                  .focused($focus, equals: .emailLogin)
+                                  .onSubmit {
+                                      focus = .phone
+                                  }
+                                  .submitLabel(.next)
                               TextField("Phone", text: $vm.phoneNumber)
                                   .keyboardType(.phonePad)
-                                  .dynamicTypeSize(.large)
+                                  .dynamicTypeSize(.large).focused($focus, equals: .phone)
+                                  .onSubmit {
+                                      focus = .passwordSignUp
+                                  }
+                                  .submitLabel(.next)
                               SecureField("Password", text: $vm.password)
                                   .keyboardType(/*@START_MENU_TOKEN@*/.asciiCapableNumberPad/*@END_MENU_TOKEN@*/)
                                   .autocapitalization(.none)
                                   .dynamicTypeSize(.large)
+                                  .focused($focus, equals: .passwordSignUp)
+                                  .onSubmit {
+                                      focus = .retype
+                                  }
+                                  .submitLabel(.next)
                               SecureField("Retype Password", text: $vm.passwordRetype)
                                   .keyboardType(/*@START_MENU_TOKEN@*/.asciiCapableNumberPad/*@END_MENU_TOKEN@*/)
                                   .autocapitalization(.none)
                                   .dynamicTypeSize(.large)
+                                  .focused($focus, equals: .retype)
+                                  .onSubmit {
+                                      focus = .passwordLogin
+                                  }
+                                  .submitLabel(.join)
                           }.textFieldStyle(RoundedBorderTextFieldStyle())
                               .padding(12)
                               .background(Color.white)
@@ -104,10 +141,19 @@ struct LogInView: View {
                                   .keyboardType(.emailAddress)
                                   .autocapitalization(.none)
                                   .dynamicTypeSize(.large)
+                                  .focused($focus, equals: .emailSignUp)
+                                  .onSubmit {
+                                      focus = .passwordLogin
+                                  }
+                                  .submitLabel(.next)
                               SecureField("Password", text: $vm.password)
-                                  .keyboardType(.asciiCapableNumberPad)
                               .autocapitalization(.none)
                                   .dynamicTypeSize(.large)
+                                  .focused($focus, equals: .passwordLogin)
+                                  .onSubmit {
+                                      handleAction()
+                                  }
+                                  .submitLabel(.go)
                           }
                           .textFieldStyle(RoundedBorderTextFieldStyle())
                               .padding(12)

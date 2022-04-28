@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var vmLogin = LogInSignInVM()
-    @ObservedObject private var vmContacts = ContactsVM()
+//    @ObservedObject private var vmContacts = ContactsVM()
     //    @ObservedObject private var vmChats = ChatsVM(chatUser: nil)
 //    @State var isUserLoggedOut = false
     @State private var selection = 0
@@ -43,7 +43,7 @@ struct ContentView: View {
         }
         .fullScreenCover(isPresented: $vmLogin.isUserLoggedOut) {
             LogInView(didCompleateLoginProcess: {
-                self.vmLogin.isUserLoggedOut = false
+                self.vmLogin.isUserLoggedOut = true
                 self.vmLogin.getCurrentUser()
             })
         }
@@ -54,7 +54,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView()
+//            ContentView()
             ContentView()
                 .preferredColorScheme(.dark)
         }

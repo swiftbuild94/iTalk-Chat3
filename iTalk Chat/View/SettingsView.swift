@@ -34,8 +34,8 @@ struct SettingsView: View {
                             .resizable()
                             .scaledToFill()
                             .clipped()
-                            .cornerRadius(72)
-                            .frame(width: 72, height: 72)
+                            .cornerRadius(82)
+                            .frame(width: 82, height: 82)
                     }
                     .clipShape(Circle())
                     .shadow(radius: 10)
