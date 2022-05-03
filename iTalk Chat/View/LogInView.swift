@@ -46,7 +46,7 @@ struct LogInView: View {
         }
         print("IsUserLoggedOut \(vm.isUserLoggedOut)")
         if vm.isUserLoggedOut {
-            presentationMode.wrappedValue.dismiss()
+//            presentationMode.wrappedValue.dismiss()
             self.didCompleateLoginProcess()
         }
     }
