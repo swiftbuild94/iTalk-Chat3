@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
+import SwiftUI
 
 class ChatsVM: ObservableObject {
 	@Published var chatText = ""
@@ -22,6 +23,8 @@ class ChatsVM: ObservableObject {
     @Published var shouldShowLocation = false
     @Published var shouldShowDocument = false
     @Published var focus = false
+    @Published var image: UIImage?
+    private var url: URL?
     
     var firestoreListener: ListenerRegistration?
     
@@ -103,6 +106,32 @@ class ChatsVM: ObservableObject {
     }
     
     
+    // MARK: - PersistImageToStorage
+    func persistImageToStorage() {
+        print("Saving Image")
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+//        let fileName = UUID().uuidString
+        let ref = FirebaseManager.shared.storage.reference(withPath: uid)
+        guard let imageData = self.image?.jpegData(compressionQuality: 0.5) else { return }
+        ref.putData(imageData, metadata: nil) { metadata, error in
+            if let err = error {
+                self.errorMessage = "Fail to save image: \(err)"
+                return
+            }
+            ref.downloadURL { url, error in
+                if let err = error {
+                    self.errorMessage = "Fail to retrive downloadURL image: \(err)"
+                    return
+                }
+                print("Success storing image with URL \(String(describing: url?.absoluteString))")
+                guard let url = url else { return }
+                self.url = url
+                self.typeOfContent = .photoalbum
+                self.sendToFirebase()
+            }
+        }
+    }
+    
     //    MARK: - Send To Firebase
 	private func sendToFirebase() {
 		var data: [String : Any]
@@ -114,9 +143,14 @@ class ChatsVM: ObservableObject {
 			case .text:
 				data = [FirebaseConstants.fromId: uid,
 						FirebaseConstants.toId: toId,
-						FirebaseConstants.text:  self.chatText,
+                        FirebaseConstants.text:  self.chatText,
 						FirebaseConstants.timestamp: Timestamp()] as [String : Any]
-			default:
+        case .photoalbum:
+            data = [FirebaseConstants.fromId: uid,
+                    FirebaseConstants.toId: toId,
+                    FirebaseConstants.photo: self.url?.absoluteString ?? "",
+                    FirebaseConstants.timestamp: Timestamp()] as [String : Any]
+            default:
 				data = [FirebaseConstants.fromId: uid,
 						FirebaseConstants.toId: toId,
 						FirebaseConstants.text:  self.chatText,

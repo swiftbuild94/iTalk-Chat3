@@ -13,10 +13,10 @@ struct ChatView: View {
 	@Environment(\.presentationMode) var chatMode
 //    @ObservedObject private var vmLogin = LogInSignInVM()
     @ObservedObject fileprivate var vmChat: ChatsVM
-//	@State private var shouldShowImagePicker = false
 	@State private var zoomed = false
 //	@State private var typeOfContent: TypeOfContent = .text
-    @State private var image: UIImage?
+//    @State private var image: UIImage?
+    @State private var shouldShowImagePicker = false
     @FocusState fileprivate var focus
 	private var contact: User
 	private let topPadding: CGFloat = 8
@@ -69,8 +69,12 @@ struct ChatView: View {
 			.onDisappear {
 //                $vmChat.stopFirestoreListener()
 			}
-            .fullScreenCover(isPresented: $vmChat.shouldShowImagePicker, onDismiss: nil) {
-                ImagePicker(selectedImage: $image, didSet: $vmChat.shouldShowImagePicker)
+            .fullScreenCover(isPresented: $vmChat.shouldShowImagePicker, onDismiss: {
+                if vmChat.image != nil {
+                    vmChat.persistImageToStorage()
+                }
+            }) {
+                ImagePicker(selectedImage: $vmChat.image, didSet: $shouldShowImagePicker)
 			}
 	}
 }
@@ -146,13 +150,21 @@ struct MessagesView: View {
 struct MessageView: View {
 	let message: Chat
 	private let topPadding: CGFloat = 8
-	
+    
 	var body: some View {
 		VStack {
 			if message.fromId == FirebaseManager.shared.auth.currentUser?.uid {
 				HStack {
 					Spacer()
 					HStack {
+                        if message.photo != nil {
+                                Image(message.photo ?? "")
+                                WebImage(url: URL(string: message.photo ?? "" ))
+                                    .resizable()
+                                    .scaledToFill()
+                                    .clipped()
+                                    .frame(width: 200, height: 200)
+                        }
 						Text(message.text ?? "")
 							.foregroundColor(.white)
 					}
@@ -165,6 +177,14 @@ struct MessageView: View {
 			} else {
 				HStack {
 					HStack {
+                        if message.photo != nil {
+                                Image(message.photo ?? "")
+                                WebImage(url: URL(string: message.photo ?? "" ))
+                                    .resizable()
+                                    .scaledToFill()
+                                    .clipped()
+                                    .frame(width: 200, height: 200)
+                        }
 						Text(message.text ?? "")
 							.foregroundColor(.white)
 					}
@@ -245,55 +265,48 @@ struct InputsButtons: View {
 struct ChatAudioBar: View {
     @State private var audioIsRecording = false
     @ObservedObject var audioRecorder = AudioRecorder()
-    @State var isTimerRunning = false
-    @State var currentDate = Date()
-//    @State private var endTime = Date()
-//    private var timerString = "0:00"
-//    @State private var startTime = Date()
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-    let dateFormatter = DateFormatter()
-    init() {
-        dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.setLocalizedDateFormatFromTemplate("mm:ss")
-    }
+   
     var body: some View {
         if audioIsRecording == true {
             Button {
                 print("Stop Recording")
-                self.audioRecorder.stopRecording()
                 self.audioIsRecording = false
-                self.isTimerRunning = false
+                self.audioRecorder.stopRecording()
+                self.audioRecorder.stopTimer()
             } label: {
                 Image(systemName: "trash")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 100)
+                    .frame(width: 50, height: 50)
                     .clipped()
                     .foregroundColor(.primary)
                     .padding(.bottom, 40)
                     .padding()
                 Spacer()
-                Text(dateFormatter.string(from: currentDate))
+                Text(String(format: "%.1f", audioRecorder.secondsElapsed))
                     .dynamicTypeSize(.xxxLarge)
-                    .onReceive(timer) { input in
-                      currentDate = input
-                    }
                 Spacer()
-                Image(systemName: "arrow.up.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 100)
-                    .clipped()
-                    .foregroundColor(.blue)
-                    .padding(.bottom, 40)
+                Button {
+                    self.audioIsRecording = false
+                    self.audioRecorder.stopRecording()
+                    self.audioRecorder.stopTimer()
+                } label: {
+                    Image(systemName: "arrow.up.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 100, height: 100)
+                        .clipped()
+                        .foregroundColor(.blue)
+                        .padding(.bottom, 40)
+                        .padding()
+                }
             }
         } else {
             Button {
                 print("Start Recording")
-                self.audioIsRecording = true
+//                self.audioIsRecording = true
+//                self.audioRecorder.startTimer()
                 self.audioRecorder.startRecording()
-                self.isTimerRunning = false
-                currentDate = Date()
             } label: {
                 Image(systemName: "circle.fill")
                     .resizable()
