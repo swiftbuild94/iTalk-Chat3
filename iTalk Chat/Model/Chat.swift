@@ -21,14 +21,16 @@ struct Chat: Identifiable, Codable {
 //    let duration: String?
 //    let location: String?
     let timestamp: String?
+    let photo: String?
 //    let readtime: Date?
     
     init(documentId: String, data: [String:Any]) {
         self.id = documentId
-        self.fromId = data["fromId"] as? String ?? ""
-        self.toId = data["toId"] as? String ?? ""
-        self.text = data["text"] as? String ?? ""
-        self.timestamp = data["timestamp"] as? String ?? ""
+        self.fromId = data[FirebaseConstants.fromId] as? String ?? ""
+        self.toId = data[FirebaseConstants.toId] as? String ?? ""
+        self.text = data[FirebaseConstants.text] as? String ?? ""
+        self.timestamp = data[FirebaseConstants.timestamp] as? String ?? ""
+        self.photo = data[FirebaseConstants.photo] as? String
     }
     
 }
