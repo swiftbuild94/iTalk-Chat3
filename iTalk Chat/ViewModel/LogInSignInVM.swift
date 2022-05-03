@@ -9,7 +9,7 @@ import SwiftUI
 
 final class LogInSignInVM: ObservableObject {
 	@Published var isLoginMode = true
-	@Published var isUserLoggedOut = true
+	@Published var isUserLoggedOut = false
 	@Published var name = ""
 	@Published var email = ""
 	@Published var password = ""
@@ -142,7 +142,7 @@ final class LogInSignInVM: ObservableObject {
                             FirebaseConstants.name: self.name,
                             FirebaseConstants.email: self.email,
                             FirebaseConstants.phone: self.phoneNumber,
-                            FirebaseConstants.photo:  image.absoluteString]
+                            FirebaseConstants.profileImageUrl:  image.absoluteString]
         print(userData)
 		FirebaseManager.shared.firestore.collection("users")
 			.document(uid).setData(userData) { error in
@@ -152,7 +152,10 @@ final class LogInSignInVM: ObservableObject {
 					return
 				}
 				print("Success saving User")
-                self.isUserLoggedOut = false
+                DispatchQueue.main.async {
+                    self.isUserLoggedOut = false
+                }
+                
 //				self.didCompleateLoginProcess()
 			}
 	}
@@ -160,7 +163,9 @@ final class LogInSignInVM: ObservableObject {
 	
 	// MARK: - SignOut
 	 func handleSignOut() {
-		self.isUserLoggedOut = true
+         DispatchQueue.main.async {
+             self.isUserLoggedOut = true
+         }
 		try? FirebaseManager.shared.auth.signOut()
          print("Logged Out!")
 	}
