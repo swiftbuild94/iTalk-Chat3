@@ -15,23 +15,24 @@ class AudioRecorder: ObservableObject {
     let objectWillChange = PassthroughSubject<AudioRecorder, Never>()
     var audioRecorder: AVAudioRecorder!
     var recordingSession: AVAudioSession!
+    var soundURL: String?
     var recording = false {
         didSet {
             objectWillChange.send(self)
         }
     }
     
-    func isAllowedToRecord() {
+    private func isAllowedToRecord() {
         do {
             try recordingSession.setCategory(.playAndRecord, mode: .default)
             try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission { [unowned self] allowed in
+            recordingSession.requestRecordPermission() { [unowned self] allowed in
                 DispatchQueue.main.async {
                     if allowed {
-                       // self.loadRecordingUI()
+//                        self.startRecording()
                         print("Allowed")
                     } else {
-                        print("Error")
+                        print("Error Session Recording")
                     }
                 }
             }
@@ -46,28 +47,23 @@ class AudioRecorder: ObservableObject {
     }
     
     func startRecording() {
-        let recordingSession = AVAudioSession.sharedInstance()
+        let audioFileName = UUID().uuidString + "m4a"
+        let audioFileURL = getDocumentsDirectory().appendingPathComponent(audioFileName)
+        soundURL = audioFileName
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
         do {
-            try recordingSession.setCategory(.playAndRecord, mode: .default)
-            try recordingSession.setActive(true)
+            audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: settings)
+//            audioRecorder.delegate = self
+            audioRecorder.isMeteringEnabled = true
+            audioRecorder.prepareToRecord()
+            audioRecorder.record()
         } catch {
-            print("Error Recording: \(error)")
-        }
-        let audioFileName = getDocumentsDirectory().appendingPathComponent(".recording.m4a")
-        //        let audioFileName = documentPath.description.appendingPathComponent("\(Date().toString(dateFormat: "dd-MM-YY_'at'_HH:mm:ss")).m4a")
-        //        let AudioFileUrl = URL(audioFileName)
-        let settings = [ AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                       AVSampleRateKey: 1200,
-                 AVNumberOfChannelsKey: 1,
-              AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
-        
-        do {
-            self.audioRecorder = try AVAudioRecorder(url: audioFileName, settings: settings)
-            //self.audioRecorder.delegate = self
-            self.audioRecorder.record()
-            self.recording = true
-        } catch {
-            print("Could not start recordings: \(error)")
+            print(error)
         }
     }
     

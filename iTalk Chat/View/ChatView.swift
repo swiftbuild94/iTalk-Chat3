@@ -265,16 +265,17 @@ struct InputsButtons: View {
 struct ChatAudioBar: View {
     @State private var audioIsRecording = false
     @ObservedObject var audioRecorder = AudioRecorder()
-   
+    @ObservedObject var timerManager = TimerManager()
+    
     var body: some View {
         if audioIsRecording == true {
             Button {
                 print("Stop Recording")
                 self.audioIsRecording = false
                 self.audioRecorder.stopRecording()
-                self.audioRecorder.stopTimer()
+                self.timerManager.stopTimer()
             } label: {
-                Image(systemName: "trash")
+                Image(systemName: "trash.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 50, height: 50)
@@ -283,13 +284,13 @@ struct ChatAudioBar: View {
                     .padding(.bottom, 40)
                     .padding()
                 Spacer()
-                Text(String(format: "%.1f", audioRecorder.secondsElapsed))
+                Text(String(format: "%.1f", timerManager.secondsElapsed))
                     .dynamicTypeSize(.xxxLarge)
                 Spacer()
                 Button {
                     self.audioIsRecording = false
                     self.audioRecorder.stopRecording()
-                    self.audioRecorder.stopTimer()
+                    self.timerManager.stopTimer()
                 } label: {
                     Image(systemName: "arrow.up.circle.fill")
                         .resizable()
@@ -304,11 +305,11 @@ struct ChatAudioBar: View {
         } else {
             Button {
                 print("Start Recording")
-//                self.audioIsRecording = true
-//                self.audioRecorder.startTimer()
+                self.audioIsRecording = true
+                self.timerManager.startTimer()
                 self.audioRecorder.startRecording()
             } label: {
-                Image(systemName: "circle.fill")
+                Image(systemName: "mic.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 100, height: 100)
