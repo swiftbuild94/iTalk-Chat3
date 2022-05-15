@@ -13,24 +13,20 @@ struct Chat: Identifiable, Codable {
     @DocumentID var id: String?
     
     let fromId: String
-    let toId: String
+//    let toId: String
 //    let typeOfContent: TypeOfContent
     let text: String?
-//    let contentAudio: Data?
-//    let contentVideo: Data?
-//    let duration: String?
+//    let video: Data?
+//    let videDuration: String?
 //    let location: String?
-    let timestamp: String?
     let photo: String?
+    let audio: String?
+//    let audioDuration: String?
 //    let readtime: Date?
-    
-    init(documentId: String, data: [String:Any]) {
-        self.id = documentId
-        self.fromId = data[FirebaseConstants.fromId] as? String ?? ""
-        self.toId = data[FirebaseConstants.toId] as? String ?? ""
-        self.text = data[FirebaseConstants.text] as? String ?? ""
-        self.timestamp = data[FirebaseConstants.timestamp] as? String ?? ""
-        self.photo = data[FirebaseConstants.photo] as? String
+    let timestamp: Date
+    var timeAgo: String {
+        let formater = RelativeDateTimeFormatter()
+        formater.unitsStyle = .abbreviated
+        return formater.localizedString(for: timestamp, relativeTo: Date())
     }
-    
 }

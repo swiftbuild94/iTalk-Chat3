@@ -49,7 +49,7 @@ final class ContactsVM: ObservableObject {
 			}
             
 			documentsSnapshot?.documents.forEach({ snapshot in
-				let data = snapshot.data()
+                let data = snapshot.data()
                 let user = User(data: data)
 				if user.uid != FirebaseManager.shared.auth.currentUser?.uid {
 					self.users.append(.init(data: data))
@@ -79,7 +79,7 @@ final class ContactsVM: ObservableObject {
             .addSnapshotListener { querySnapshot, error in
                 if let err = error {
                     self.errorMessage = "Failed to get all users: \(err)"
-    //                print(self.errorMessage)
+                    print(self.errorMessage)
                     return
                 }
                 querySnapshot?.documentChanges.forEach({ change in

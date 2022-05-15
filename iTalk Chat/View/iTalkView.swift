@@ -22,7 +22,7 @@ struct iTalkView: View {
                             ContactCell(contact: contact)
                         }
                     }
-                }
+                }   
 //			if $vm.contacts != [] {
 //				Grid(contacts!) { contact in
 //					 Text("Count: \(contacts.count)")

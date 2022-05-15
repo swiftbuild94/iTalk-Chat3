@@ -42,7 +42,7 @@ struct ChatView: View {
                     if vmChat.typeOfContent == .text {
                         ChatTextBar(vm: vmChat)
                     } else if vmChat.typeOfContent == .audio {
-                        ChatAudioBar()
+                        ChatAudioBar(vmChat: vmChat)
                     }
                 }
             }
@@ -71,7 +71,7 @@ struct ChatView: View {
 			}
             .fullScreenCover(isPresented: $vmChat.shouldShowImagePicker, onDismiss: {
                 if vmChat.image != nil {
-                    vmChat.persistImageToStorage()
+                    vmChat.handleSend(.photoalbum)
                 }
             }) {
                 ImagePicker(selectedImage: $vmChat.image, didSet: $shouldShowImagePicker)
@@ -148,9 +148,11 @@ struct MessagesView: View {
 }
 
 struct MessageView: View {
+    @ObservedObject var vmAudio = AudioPlayer()
+    @ObservedObject var timerManager = TimerManager()
 	let message: Chat
 	private let topPadding: CGFloat = 8
-    
+
 	var body: some View {
 		VStack {
 			if message.fromId == FirebaseManager.shared.auth.currentUser?.uid {
@@ -158,12 +160,31 @@ struct MessageView: View {
 					Spacer()
 					HStack {
                         if message.photo != nil {
-                                Image(message.photo ?? "")
-                                WebImage(url: URL(string: message.photo ?? "" ))
-                                    .resizable()
-                                    .scaledToFill()
-                                    .clipped()
-                                    .frame(width: 200, height: 200)
+                            //Image(message.photo!)
+                            WebImage(url: URL(string: message.photo!))
+                                .resizable()
+                                .scaledToFill()
+                                .clipped()
+                                .frame(width: 200, height: 200)
+                        }
+                        if message.audio != nil {
+                            if vmAudio.isPlaying {
+                                Button {
+                                    vmAudio.stopPlay()
+                                    timerManager.stopTimer()
+                                } label: {
+                                    Image(systemName: "stop.fill")
+                                    Text(String(format: "%.1f", timerManager.secondsElapsed))
+                                }
+                            } else {
+                                Button {
+                                    timerManager.startTimer()
+                                    vmAudio.playAudio(message.audio!)
+                                } label: {
+                                    Image(systemName: "play.fill")
+                                    Text(message.audio!)
+                                }
+                            }
                         }
 						Text(message.text ?? "")
 							.foregroundColor(.white)
@@ -177,17 +198,21 @@ struct MessageView: View {
 			} else {
 				HStack {
 					HStack {
-                        if message.photo != nil {
-                                Image(message.photo ?? "")
-                                WebImage(url: URL(string: message.photo ?? "" ))
+                        Button {
+                            print("Show Image")
+                        } label: {
+                            if message.photo != nil {
+                                Image(message.photo!)
+                                WebImage(url: URL(string: message.photo!))
                                     .resizable()
                                     .scaledToFill()
                                     .clipped()
                                     .frame(width: 200, height: 200)
+                            }
+                            Text(message.text ?? "")
+                                .foregroundColor(.white)
                         }
-						Text(message.text ?? "")
-							.foregroundColor(.white)
-					}
+                    }
 					.padding()
 					.background(Color.blue)
 					.cornerRadius(8)
@@ -214,6 +239,7 @@ struct InputsButtons: View {
 	
 	var body: some View {
 		HStack {
+            Spacer()
             if vm.typeOfContent != .audio {
 				Button {
                     vm.focus = false
@@ -229,12 +255,12 @@ struct InputsButtons: View {
                     Image(systemName: "character.bubble")
                 }
             }
-            /*
 			Button {
                 vm.shouldShowLocation.toggle()
 			} label: {
                 Image(systemName: "location.circle")
 			}
+            /*
             Button {
                 vm.shouldShowDocument.toggle()
 			} label: {
@@ -256,6 +282,7 @@ struct InputsButtons: View {
 			} label: {
 				Image(systemName: "photo.on.rectangle")
 			}
+            Spacer()
 		}
 		.font(.system(size: buttonsSize))
 	}
@@ -266,6 +293,7 @@ struct ChatAudioBar: View {
     @State private var audioIsRecording = false
     @ObservedObject var audioRecorder = AudioRecorder()
     @ObservedObject var timerManager = TimerManager()
+    @ObservedObject var vmChat: ChatsVM
     
     var body: some View {
         if audioIsRecording == true {
@@ -282,7 +310,7 @@ struct ChatAudioBar: View {
                     .clipped()
                     .foregroundColor(.primary)
                     .padding(.bottom, 40)
-                    .padding()
+                    .padding(.leading, 40)
                 Spacer()
                 Text(String(format: "%.1f", timerManager.secondsElapsed))
                     .dynamicTypeSize(.xxxLarge)
@@ -291,11 +319,14 @@ struct ChatAudioBar: View {
                     self.audioIsRecording = false
                     self.audioRecorder.stopRecording()
                     self.timerManager.stopTimer()
+                    if self.audioRecorder.getAudios() != nil {
+                        vmChat.handleSend(.audio)
+                    }
                 } label: {
                     Image(systemName: "arrow.up.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 150, height: 150)
                         .clipped()
                         .foregroundColor(.blue)
                         .padding(.bottom, 40)
@@ -323,25 +354,20 @@ struct ChatAudioBar: View {
 
 struct ChatTextBar: View {
     @ObservedObject var vmChat: ChatsVM
-//	@ObservedObject private var chatText = vm.chatText
-//    @State var chatText: String?
-   
 	private let buttonsSize: CGFloat = 24
 	private let topPadding: CGFloat = 8
-//	var chatUser: User
     @FocusState var focus: Bool
     
     init(vm: ChatsVM) {
         self.vmChat = vm
-        self.focus = true
     }
-//
+
 	var body: some View {
 //		Text(vm.errorMessage)
 		HStack {
 //			DescriptionPlaceholder()
-            TextField("", text: $vmChat.chatText)
-//            TextEditor(text: $vmChat.chatText)
+            // TextField("", text: $vmChat.chatText)
+            TextEditor(text: $vmChat.chatText)
                 .focused($focus)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.top)
@@ -349,15 +375,17 @@ struct ChatTextBar: View {
                 .foregroundColor(Color.accentColor)
                 .border(.blue)
                 .accessibilityLabel("Message")
+                .onAppear {
+                    focus = true
+                }
                 .onSubmit {
-                    vmChat.sendText()
+                    vmChat.handleSend(.text)
 //                    vmChat.focus = false
                 }
                 .submitLabel(.send)
 			Button {
-                vmChat.sendText()
+                vmChat.handleSend(.text)
 //                vmChat.focus = false
-                //UIApplication.shared.keyWindow?.endEditing(true)
 			} label: {
 				Image(systemName: "arrow.up.circle.fill")
 					.foregroundColor(Color.blue)

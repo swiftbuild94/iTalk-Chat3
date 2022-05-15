@@ -6,69 +6,94 @@
 //
 
 import Foundation
-import Firebase
-import FirebaseFirestoreSwift
+import SwiftUI
 import Combine
 import AVFoundation
+// import AVKit
 
 class AudioRecorder: ObservableObject {
-    let objectWillChange = PassthroughSubject<AudioRecorder, Never>()
-    var audioRecorder: AVAudioRecorder!
-    var recordingSession: AVAudioSession!
-    var soundURL: String?
-    var recording = false {
-        didSet {
-            objectWillChange.send(self)
-        }
+    @Published var audios = [URL]()
+    private var audioRecorder: AVAudioRecorder!
+    private var audioSession: AVAudioSession!
+    
+    deinit {
+        self.stopRecording()
     }
     
-    private func isAllowedToRecord() {
+    
+    // MARK: - Recording
+    private func isAllowedToRecord() -> Bool {
+        var isAllowed = false
         do {
-            try recordingSession.setCategory(.playAndRecord, mode: .default)
+            let recordingSession = AVAudioSession.sharedInstance()
+            try recordingSession.setCategory(.playAndRecord, mode: .spokenAudio)
             try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission() { [unowned self] allowed in
-                DispatchQueue.main.async {
-                    if allowed {
-//                        self.startRecording()
-                        print("Allowed")
-                    } else {
-                        print("Error Session Recording")
+            recordingSession.requestRecordPermission() { allowed in
+                if allowed {
+                    DispatchQueue.main.async {
+                        isAllowed = true
+                        print("Allowed to Record")
                     }
+                } else {
+                    print("Error Session Recording")
                 }
             }
         } catch {
-            print(error)
+            print("Error not allowed to record: \(error)")
         }
-    }
-    
-    private func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
+        return isAllowed
     }
     
     func startRecording() {
-        let audioFileName = UUID().uuidString + "m4a"
-        let audioFileURL = getDocumentsDirectory().appendingPathComponent(audioFileName)
-        soundURL = audioFileName
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
-        do {
-            audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: settings)
-//            audioRecorder.delegate = self
-            audioRecorder.isMeteringEnabled = true
-            audioRecorder.prepareToRecord()
-            audioRecorder.record()
-        } catch {
-            print(error)
+        if isAllowedToRecord() {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let audioFileName = Date().toString(dateFormat: "YY-MM-dd_HH-mm-ss") + ".m4a"
+            let audioFileURL = paths.appendingPathComponent(audioFileName)
+            let settings = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 12000,
+                AVNumberOfChannelsKey: 1,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            ]
+            do {
+                audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: settings)
+                audioRecorder.isMeteringEnabled = true
+                audioRecorder.prepareToRecord()
+                audioRecorder.record()
+            } catch {
+                print("Error recording: \(error)")
+            }
         }
     }
     
     func stopRecording() {
-        self.audioRecorder.stop()
-        self.recording = false
+        self.audioRecorder?.stop()
+    }
+    
+    
+    // MARK: - Get Audios
+    func getAudios() -> [URL]? {
+        self.audios.removeAll()
+        let fileManager = FileManager.default
+        let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        do {
+            let directoryContents = try fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
+            for audio in directoryContents {
+                self.audios.append(audio)
+            }
+            return self.audios
+        } catch {
+            return nil
+        }
+    }
+    
+
+    // MARK: - Delete Recordings
+    func deleteRecording(url : URL){
+        do {
+            try FileManager.default.removeItem(at : url)
+        } catch {
+            print("Can't delete")
+        }
     }
 }

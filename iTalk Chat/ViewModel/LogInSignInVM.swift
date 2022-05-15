@@ -143,12 +143,12 @@ final class LogInSignInVM: ObservableObject {
                             FirebaseConstants.email: self.email,
                             FirebaseConstants.phone: self.phoneNumber,
                             FirebaseConstants.profileImageUrl:  image.absoluteString]
-        print(userData)
+//        print(userData)
 		FirebaseManager.shared.firestore.collection("users")
 			.document(uid).setData(userData) { error in
 				if let err = error {
-					print(err)
 					self.errorMessage = "Error: \(err)"
+                    print(self.errorMessage)
 					return
 				}
 				print("Success saving User")
