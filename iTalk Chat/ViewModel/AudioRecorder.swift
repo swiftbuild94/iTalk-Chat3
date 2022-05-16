@@ -26,14 +26,12 @@ class AudioRecorder: ObservableObject {
         var isAllowed = false
         do {
             let recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(.playAndRecord, mode: .spokenAudio)
+            try recordingSession.setCategory(.record, mode: .spokenAudio)
             try recordingSession.setActive(true)
             recordingSession.requestRecordPermission() { allowed in
                 if allowed {
-                    DispatchQueue.main.async {
-                        isAllowed = true
-                        print("Allowed to Record")
-                    }
+                    isAllowed = true
+                    print("Audio -> Allowed to Record")
                 } else {
                     print("Error Session Recording")
                 }
@@ -46,6 +44,7 @@ class AudioRecorder: ObservableObject {
     
     func startRecording() {
         if isAllowedToRecord() {
+
             let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let audioFileName = Date().toString(dateFormat: "YY-MM-dd_HH-mm-ss") + ".m4a"
             let audioFileURL = paths.appendingPathComponent(audioFileName)
@@ -55,11 +54,13 @@ class AudioRecorder: ObservableObject {
                 AVNumberOfChannelsKey: 1,
                 AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
             ]
+            print("Audio -> Start Record")
             do {
                 audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: settings)
                 audioRecorder.isMeteringEnabled = true
                 audioRecorder.prepareToRecord()
                 audioRecorder.record()
+                print("Audio -> Recording")
             } catch {
                 print("Error recording: \(error)")
             }

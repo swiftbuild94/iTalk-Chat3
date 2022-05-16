@@ -24,6 +24,7 @@ class ChatsVM: ObservableObject {
     @Published var shouldShowDocument = false
     @Published var focus = false
     @Published var image: UIImage?
+    @Published var data: Data?
     private var url: URL?
     
     var firestoreListener: ListenerRegistration?
@@ -41,18 +42,25 @@ class ChatsVM: ObservableObject {
             .collection(FirebaseConstants.messages)
             .document(fromId)
             .collection(toId)
-            .order(by: FirebaseConstants.timestamp)
+            .order(by: FirebaseConstants.timestamp, descending: true)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     self.errorMessage = "Failed to listen for messages: \(error)"
-                    print(error)
+                    print("Error listen message: \(error)")
                     return
                 }
                 
                 querySnapshot?.documentChanges.forEach({ change in
                     if change.type == .added {
-                        let data = change.document.data()
-                        self.chatMessages.append(.init(documentId: change.document.documentID, data: data))
+                        do {
+                            if let chats = try change.document.data(as: Chat.self) {
+                                self.chatMessages.insert(chats, at: 0)
+    
+                            }
+                            self.chatMessages.sort(by: { $0.timestamp < $1.timestamp })
+                        } catch {
+                            print("Catch Error: \(error)")
+                        }
                     }
                 })
             }
@@ -61,56 +69,106 @@ class ChatsVM: ObservableObject {
         }
     }
     
+    func loadAudioUsingUrl(url: String){
+        let storage = Storage.storage()
+        let audioRef = storage.reference(forURL: url)
+        audioRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("error downloading \(error)")
+            } else {
+                self.data = data
+            }
+        }
+    }
+    
     
     // MARK: - SnapshotListener
-    private func snapshotLister(_ firebaseDocument: FirebaseDocument, order: String) ->  QueryDocumentSnapshot? {
-        var queryDocumentSnapshot: QueryDocumentSnapshot?
-        firestoreListener = FirebaseManager.shared.firestore
-            .collection(firebaseDocument.firstCollection)
-            .document(firebaseDocument.firstDocument)
-            .collection(firebaseDocument.secondCollection)
-            .order(by: order)
-            .addSnapshotListener { querySnapshot, error in
-                if let error = error {
-                    print(error)
-                }
-                querySnapshot?.documentChanges.forEach({ change in
-                    if change.type == .added {
-                        queryDocumentSnapshot =  change.document
-                        print("Changed")
-                    }
-                })
-            }
-        return queryDocumentSnapshot
-    }
+//    private func snapshotLister(_ firebaseDocument: FirebaseDocument, order: String) ->  QueryDocumentSnapshot? {
+//        var queryDocumentSnapshot: QueryDocumentSnapshot?
+//        firestoreListener = FirebaseManager.shared.firestore
+//            .collection(firebaseDocument.firstCollection)
+//            .document(firebaseDocument.firstDocument)
+//            .collection(firebaseDocument.secondCollection)
+//            .order(by: FirebaseConstants.timestamp)
+//            .addSnapshotListener { querySnapshot, error in
+//                if let error = error {
+//                    print("Error snapshot listener: \(error)")
+//                }
+//                querySnapshot?.documentChanges.forEach({ change in
+//                    if change.type == .added {
+//                        queryDocumentSnapshot =  change.document
+//                        print("Changed")
+//                    }
+//                })
+//            }
+//        return queryDocumentSnapshot
+//    }
 	
     
     // MARK: - Send Message
-    func handleSend() {
+    func handleSend(_ typeOfContent: TypeOfContent, data: [Any]? = nil) {
         switch typeOfContent {
             case .text:
                 sendText()
             case .audio:
-                break
+                persistAudioToStorage()
+            case .photoalbum:
+                persistImageToStorage()
             default:
                 break
         }
     }
 
-    func sendText(){
+    private func sendText(){
         if chatText != "" {
-            print(chatText) 
+            print("Send Text: \(chatText)")
             sendToFirebase()
             focus = false
         }
     }
     
+    // MARK: - PersistAudioToStorage
+    private func persistAudioToStorage() {
+        print("Saving Audio")
+        var audios = [URL]()
+        let fileManager = FileManager.default
+        let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let directoryContents = try? fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
+        for audio in directoryContents! {
+            audios.append(audio)
+        }
+        guard let url = audios.last else { return }
+        
+        let metadata = StorageMetadata()
+                metadata.contentType = "audio/m4a"
+        
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        let ref = FirebaseManager.shared.storage.reference(withPath: uid)
+        //guard let audioData = try? Data(contentsOf: url) else { return }
+        ref.putFile(from: url, metadata: nil) { metadata, error in
+            if let err = error {
+                self.errorMessage = "Fail to save image: \(err)"
+                return
+            }
+            ref.downloadURL { url, error in
+                if let err = error {
+                    self.errorMessage = "Fail to retrive downloadURL image: \(err)"
+                    return
+                }
+                print("Success storing audio with URL \(String(describing: url?.absoluteString))")
+                guard let url = url else { return }
+                self.url = url
+                self.typeOfContent = .audio
+                self.sendToFirebase()
+            }
+        }
+    }
+    
     
     // MARK: - PersistImageToStorage
-    func persistImageToStorage() {
+    private func persistImageToStorage() {
         print("Saving Image")
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-//        let fileName = UUID().uuidString
         let ref = FirebaseManager.shared.storage.reference(withPath: uid)
         guard let imageData = self.image?.jpegData(compressionQuality: 0.5) else { return }
         ref.putData(imageData, metadata: nil) { metadata, error in
@@ -134,69 +192,62 @@ class ChatsVM: ObservableObject {
     
     //    MARK: - Send To Firebase
 	private func sendToFirebase() {
-		var data: [String : Any]
-		
+        var msg: Chat
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-		guard let toId = chatUser?.uid else { return }
+        guard let toId = chatUser?.uid else { return }
 		
 		switch typeOfContent {
-			case .text:
-				data = [FirebaseConstants.fromId: uid,
-						FirebaseConstants.toId: toId,
-                        FirebaseConstants.text:  self.chatText,
-						FirebaseConstants.timestamp: Timestamp()] as [String : Any]
+        case .text:
+            msg = Chat(id: nil, fromId: uid, toId: toId, text: self.chatText, photo: nil, audio: nil, timestamp: Date())
+        case .audio:
+            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: nil, audio: self.url?.absoluteString ?? "", timestamp: Date())
         case .photoalbum:
-            data = [FirebaseConstants.fromId: uid,
-                    FirebaseConstants.toId: toId,
-                    FirebaseConstants.photo: self.url?.absoluteString ?? "",
-                    FirebaseConstants.timestamp: Timestamp()] as [String : Any]
-            default:
-				data = [FirebaseConstants.fromId: uid,
-						FirebaseConstants.toId: toId,
-						FirebaseConstants.text:  self.chatText,
-						FirebaseConstants.timestamp: Timestamp()] as [String : Any]
-		}
+            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: self.url?.absoluteString ?? "", audio: nil, timestamp: Date())
+        default:
+            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: nil, audio: self.url?.absoluteString ?? "", timestamp: Date())
+        }
 
-		saveToMessagesAndRecentMessages(data)
+		saveToMessagesAndRecentMessages(msg)
 		self.chatText = ""
 		self.count += 1
 	}
 	
-	private func saveToMessagesAndRecentMessages(_ data: [String : Any]) {
+	private func saveToMessagesAndRecentMessages(_ chat: Chat) {
 //        print("----SaveToMessagesAndRecentMessages DATA: \(data)")
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        guard let toId = chatUser?.uid else { return }
+        
         var firebaseLocation = FirebaseDocument(
             firstCollection: FirebaseConstants.messages,
-            firstDocument: data[FirebaseConstants.fromId] as! String,
-            secondCollection: data[FirebaseConstants.toId] as! String,
+            firstDocument: uid,
+            secondCollection: toId,
             secondDocument: nil)
-//		firebaseLocation.firstDocument = FirebaseConstants.messages
-//        firebaseLocation.firstDocument = data[FirebaseConstants.uid] as! String
-//        firebaseLocation.secondCollection = data[FirebaseConstants.toId] as! String
-		saveToFirebase(firebaseLocation, data: data)
+ 
+		saveToFirebase(firebaseLocation, chat: chat)
 		
 		firebaseLocation.firstDocument = FirebaseConstants.messages
-		firebaseLocation.firstDocument = data[FirebaseConstants.toId]  as! String
-		firebaseLocation.secondCollection = data[FirebaseConstants.fromId] as! String
-		saveToFirebase(firebaseLocation, data: data)
+		firebaseLocation.firstDocument = toId
+		firebaseLocation.secondCollection = uid
+		saveToFirebase(firebaseLocation, chat: chat)
 		
 		firebaseLocation.firstDocument = FirebaseConstants.recentMessages
-		firebaseLocation.firstDocument = data[FirebaseConstants.fromId] as! String
+		firebaseLocation.firstDocument = uid
 		firebaseLocation.secondCollection = FirebaseConstants.messages
-        firebaseLocation.secondDocument = data[FirebaseConstants.toId] as? String
-		saveToFirebase(firebaseLocation, data: data)
+        firebaseLocation.secondDocument = toId
+		saveToFirebase(firebaseLocation, chat: chat)
 		
 		firebaseLocation.firstDocument = FirebaseConstants.recentMessages
-		firebaseLocation.firstDocument = data[FirebaseConstants.toId] as! String
+		firebaseLocation.firstDocument = toId
 		firebaseLocation.secondCollection = FirebaseConstants.messages
-        firebaseLocation.secondDocument = data[FirebaseConstants.fromId] as? String
-		saveToFirebase(firebaseLocation, data: data)
+        firebaseLocation.secondDocument = uid
+		saveToFirebase(firebaseLocation, chat: chat)
 	}
     
     
     // MARK: - Save to Firebase
-    private func saveToFirebase(_ firebaseDocument: FirebaseDocument, data: [String: Any]) {
+    private func saveToFirebase(_ firebaseDocument: FirebaseDocument, chat: Chat) {
         print("Save to Firebase Document: \(firebaseDocument)")
-        print("Save to Firebase Data: \(data)")
+        print("Save to Firebase Data: \(chat)")
         let collection = firebaseDocument.firstCollection
         let document = firebaseDocument.firstDocument
         let secondCollection = firebaseDocument.secondCollection
@@ -209,7 +260,7 @@ class ChatsVM: ObservableObject {
                 .collection(secondCollection)
                 .document(secondDocument)
             
-            document.setData(data) { error in
+            try? document.setData(from: chat) { error in
                 if let error = error {
                     self.errorMessage = "Failed to save: \(error)"
                     print(self.errorMessage)
@@ -223,7 +274,7 @@ class ChatsVM: ObservableObject {
                 .document(document)
                 .collection(secondCollection)
                 .document()
-            document.setData(data) { error in
+            try? document.setData(from: chat) { error in
                 if let error = error {
                     self.errorMessage = "Failed to save: \(error)"
                     print(self.errorMessage)

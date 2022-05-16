@@ -7,6 +7,8 @@
 
 import Firebase
 import FirebaseFirestoreSwift
+import FirebaseStorage
+import FirebaseStorageSwift
 
 struct FirebaseDocument {
 	var firstCollection: String

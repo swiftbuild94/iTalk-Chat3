@@ -7,22 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1804097B2831881E00E4FEE7 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1804097A2831881E00E4FEE7 /* AudioPlayer.swift */; };
 		18068E27280F8057005460FB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18068E26280F8057005460FB /* AudioRecorder.swift */; };
 		18068E2A280F80C3005460FB /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18068E29280F80C3005460FB /* Date+toString.swift */; };
+		183360EF2831835800F963DE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183360EE2831835800F963DE /* MapKit.framework */; };
+		183766762831C51B0065E2EC /* InputsButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183766752831C51B0065E2EC /* InputsButtons.swift */; };
+		183766782831C5AD0065E2EC /* ChatAudioBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183766772831C5AD0065E2EC /* ChatAudioBar.swift */; };
+		1837667A2831C5F50065E2EC /* ChatTextBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183766792831C5F50065E2EC /* ChatTextBar.swift */; };
+		18506AC12831D71E00F777D2 /* String+isMail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18506AC02831D71E00F777D2 /* String+isMail.swift */; };
+		18506AC32831DA4F00F777D2 /* String+isPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18506AC22831DA4F00F777D2 /* String+isPhone.swift */; };
+		1850823C2829BC2600B106AE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1850823B2829BC2600B106AE /* FirebaseAuth */; };
+		1850823E2829BC2600B106AE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1850823D2829BC2600B106AE /* FirebaseFirestore */; };
+		185082402829BC2600B106AE /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 1850823F2829BC2600B106AE /* FirebaseFirestoreSwift-Beta */; };
+		185082422829BC2600B106AE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 185082412829BC2600B106AE /* FirebaseStorage */; };
+		185082442829BC2600B106AE /* FirebaseStorageSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 185082432829BC2600B106AE /* FirebaseStorageSwift-Beta */; };
+		185082472829BCDC00B106AE /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 185082462829BCDC00B106AE /* SDWebImageSwiftUI */; };
 		18682206282160B400223C62 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18682205282160B400223C62 /* TimerManager.swift */; };
+		18B180922832065F002A3195 /* FDWaveformView in Frameworks */ = {isa = PBXBuildFile; productRef = 18B180912832065F002A3195 /* FDWaveformView */; };
 		18B6EA7927F11F9A00E15BDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7827F11F9A00E15BDE /* Assets.xcassets */; };
 		18B6EA7C27F11F9A00E15BDE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */; };
 		18B6EA8827F11FD800E15BDE /* FirebaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */; };
 		18B6EA8927F11FD800E15BDE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EA8727F11FD800E15BDE /* FirebaseManager.swift */; };
 		18B6EA8C27F1200000E15BDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA8B27F1200000E15BDE /* GoogleService-Info.plist */; };
-		18B6EA9327F1209B00E15BDE /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9227F1209B00E15BDE /* SDWebImageSwiftUI */; };
-		18B6EA9627F1214F00E15BDE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9527F1214F00E15BDE /* FirebaseAuth */; };
-		18B6EA9827F1214F00E15BDE /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9727F1214F00E15BDE /* FirebaseDatabase */; };
-		18B6EA9A27F1214F00E15BDE /* FirebaseDatabaseSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9927F1214F00E15BDE /* FirebaseDatabaseSwift-Beta */; };
-		18B6EA9C27F1214F00E15BDE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9B27F1214F00E15BDE /* FirebaseFirestore */; };
-		18B6EA9E27F1214F00E15BDE /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9D27F1214F00E15BDE /* FirebaseFirestoreSwift-Beta */; };
-		18B6EAA027F1214F00E15BDE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EA9F27F1214F00E15BDE /* FirebaseStorage */; };
-		18B6EAA227F1214F00E15BDE /* FirebaseStorageSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 18B6EAA127F1214F00E15BDE /* FirebaseStorageSwift-Beta */; };
 		18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAA427F1230300E15BDE /* ImagePicker.swift */; };
 		18B6EAA727F1260100E15BDE /* iTalk_ChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */; };
 		18B6EAA927F127C200E15BDE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAA827F127C200E15BDE /* ContentView.swift */; };
@@ -47,8 +53,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1804097A2831881E00E4FEE7 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		18068E26280F8057005460FB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		18068E29280F80C3005460FB /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
+		183360EB283182E700F963DE /* iTalk-Chat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "iTalk-Chat-Info.plist"; sourceTree = SOURCE_ROOT; };
+		183360EC2831830E00F963DE /* iTalk Chat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iTalk Chat.entitlements"; sourceTree = "<group>"; };
+		183360EE2831835800F963DE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		183766752831C51B0065E2EC /* InputsButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputsButtons.swift; sourceTree = "<group>"; };
+		183766772831C5AD0065E2EC /* ChatAudioBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAudioBar.swift; sourceTree = "<group>"; };
+		183766792831C5F50065E2EC /* ChatTextBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextBar.swift; sourceTree = "<group>"; };
+		18506AC02831D71E00F777D2 /* String+isMail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+isMail.swift"; sourceTree = "<group>"; };
+		18506AC22831DA4F00F777D2 /* String+isPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+isPhone.swift"; sourceTree = "<group>"; };
 		18682205282160B400223C62 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		18B6EA7127F11F9900E15BDE /* iTalk-Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTalk-Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B6EA7827F11F9A00E15BDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -84,25 +99,63 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18B6EA9827F1214F00E15BDE /* FirebaseDatabase in Frameworks */,
-				18B6EA9327F1209B00E15BDE /* SDWebImageSwiftUI in Frameworks */,
-				18B6EA9A27F1214F00E15BDE /* FirebaseDatabaseSwift-Beta in Frameworks */,
-				18B6EA9E27F1214F00E15BDE /* FirebaseFirestoreSwift-Beta in Frameworks */,
-				18B6EAA027F1214F00E15BDE /* FirebaseStorage in Frameworks */,
-				18B6EAA227F1214F00E15BDE /* FirebaseStorageSwift-Beta in Frameworks */,
-				18B6EA9C27F1214F00E15BDE /* FirebaseFirestore in Frameworks */,
-				18B6EA9627F1214F00E15BDE /* FirebaseAuth in Frameworks */,
+				185082472829BCDC00B106AE /* SDWebImageSwiftUI in Frameworks */,
+				185082402829BC2600B106AE /* FirebaseFirestoreSwift-Beta in Frameworks */,
+				18B180922832065F002A3195 /* FDWaveformView in Frameworks */,
+				1850823C2829BC2600B106AE /* FirebaseAuth in Frameworks */,
+				185082422829BC2600B106AE /* FirebaseStorage in Frameworks */,
+				183360EF2831835800F963DE /* MapKit.framework in Frameworks */,
+				1850823E2829BC2600B106AE /* FirebaseFirestore in Frameworks */,
+				185082442829BC2600B106AE /* FirebaseStorageSwift-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		183360ED2831835800F963DE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				183360EE2831835800F963DE /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		183766742831C4F20065E2EC /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				18CC953927F26608008EAE87 /* ChatView.swift */,
+				183766752831C51B0065E2EC /* InputsButtons.swift */,
+				183766772831C5AD0065E2EC /* ChatAudioBar.swift */,
+				183766792831C5F50065E2EC /* ChatTextBar.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		18506ABE2831D15400F777D2 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				18CC953527F2649D008EAE87 /* ContactsView.swift */,
+				18CC953727F264AF008EAE87 /* ContactCell.swift */,
+			);
+			path = Contact;
+			sourceTree = "<group>";
+		};
+		18506ABF2831D18D00F777D2 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				18EE916627F3A09C00516D3C /* HistoryCell.swift */,
+				18B6EABA27F13C6400E15BDE /* HistoryView.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		18B6EA6827F11F9900E15BDE = {
 			isa = PBXGroup;
 			children = (
 				18B6EA7327F11F9900E15BDE /* iTalk Chat */,
 				18B6EA7227F11F9900E15BDE /* Products */,
+				183360ED2831835800F963DE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,6 +170,8 @@
 		18B6EA7327F11F9900E15BDE /* iTalk Chat */ = {
 			isa = PBXGroup;
 			children = (
+				183360EC2831830E00F963DE /* iTalk Chat.entitlements */,
+				183360EB283182E700F963DE /* iTalk-Chat-Info.plist */,
 				18F1BCF22804B53C00300591 /* Model */,
 				18F1BCF32804B5A800300591 /* ViewModel */,
 				18F1BCF42804B5C100300591 /* View */,
@@ -138,6 +193,7 @@
 		18CC954127F266A3008EAE87 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				18506AC02831D71E00F777D2 /* String+isMail.swift */,
 				18D1763E27FF868200EFFC63 /* Array+Identifiable.swift */,
 				18B6EAA427F1230300E15BDE /* ImagePicker.swift */,
 				18EE916A27F3A43000516D3C /* GridLayout.swift */,
@@ -145,6 +201,7 @@
 				18EE916827F3A3FF00516D3C /* Grid.swift */,
 				18B6EA7827F11F9A00E15BDE /* Assets.xcassets */,
 				18068E29280F80C3005460FB /* Date+toString.swift */,
+				18506AC22831DA4F00F777D2 /* String+isPhone.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -169,6 +226,7 @@
 				18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */,
 				18068E26280F8057005460FB /* AudioRecorder.swift */,
 				18682205282160B400223C62 /* TimerManager.swift */,
+				1804097A2831881E00E4FEE7 /* AudioPlayer.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -176,11 +234,9 @@
 		18F1BCF42804B5C100300591 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				18CC953527F2649D008EAE87 /* ContactsView.swift */,
-				18CC953927F26608008EAE87 /* ChatView.swift */,
-				18CC953727F264AF008EAE87 /* ContactCell.swift */,
-				18EE916627F3A09C00516D3C /* HistoryCell.swift */,
-				18B6EABA27F13C6400E15BDE /* HistoryView.swift */,
+				183766742831C4F20065E2EC /* Chat */,
+				18506ABE2831D15400F777D2 /* Contact */,
+				18506ABF2831D18D00F777D2 /* History */,
 				18B6EAAB27F129D400E15BDE /* LogInView.swift */,
 				18CC953327F2577B008EAE87 /* iTalkView.swift */,
 				18B6EAAA27F129D400E15BDE /* SettingsView.swift */,
@@ -207,14 +263,13 @@
 			);
 			name = "iTalk Chat";
 			packageProductDependencies = (
-				18B6EA9227F1209B00E15BDE /* SDWebImageSwiftUI */,
-				18B6EA9527F1214F00E15BDE /* FirebaseAuth */,
-				18B6EA9727F1214F00E15BDE /* FirebaseDatabase */,
-				18B6EA9927F1214F00E15BDE /* FirebaseDatabaseSwift-Beta */,
-				18B6EA9B27F1214F00E15BDE /* FirebaseFirestore */,
-				18B6EA9D27F1214F00E15BDE /* FirebaseFirestoreSwift-Beta */,
-				18B6EA9F27F1214F00E15BDE /* FirebaseStorage */,
-				18B6EAA127F1214F00E15BDE /* FirebaseStorageSwift-Beta */,
+				1850823B2829BC2600B106AE /* FirebaseAuth */,
+				1850823D2829BC2600B106AE /* FirebaseFirestore */,
+				1850823F2829BC2600B106AE /* FirebaseFirestoreSwift-Beta */,
+				185082412829BC2600B106AE /* FirebaseStorage */,
+				185082432829BC2600B106AE /* FirebaseStorageSwift-Beta */,
+				185082462829BCDC00B106AE /* SDWebImageSwiftUI */,
+				18B180912832065F002A3195 /* FDWaveformView */,
 			);
 			productName = "iTalk Chat";
 			productReference = 18B6EA7127F11F9900E15BDE /* iTalk-Chat.app */;
@@ -245,8 +300,9 @@
 			);
 			mainGroup = 18B6EA6827F11F9900E15BDE;
 			packageReferences = (
-				18B6EA9127F1209B00E15BDE /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-				18B6EA9427F1214F00E15BDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1850823A2829BC2600B106AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				185082452829BCDB00B106AE /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				18B180902832065E002A3195 /* XCRemoteSwiftPackageReference "FDWaveformView" */,
 			);
 			productRefGroup = 18B6EA7227F11F9900E15BDE /* Products */;
 			projectDirPath = "";
@@ -277,12 +333,16 @@
 			files = (
 				18B6EA8927F11FD800E15BDE /* FirebaseManager.swift in Sources */,
 				18B6EABB27F13C6400E15BDE /* HistoryView.swift in Sources */,
+				18506AC12831D71E00F777D2 /* String+isMail.swift in Sources */,
+				1804097B2831881E00E4FEE7 /* AudioPlayer.swift in Sources */,
 				18B6EAA927F127C200E15BDE /* ContentView.swift in Sources */,
 				18D1763F27FF868200EFFC63 /* Array+Identifiable.swift in Sources */,
 				18B6EAB127F12A3200E15BDE /* LogInSignInVM.swift in Sources */,
+				18506AC32831DA4F00F777D2 /* String+isPhone.swift in Sources */,
 				18682206282160B400223C62 /* TimerManager.swift in Sources */,
 				18068E2A280F80C3005460FB /* Date+toString.swift in Sources */,
 				18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */,
+				183766782831C5AD0065E2EC /* ChatAudioBar.swift in Sources */,
 				18068E27280F8057005460FB /* AudioRecorder.swift in Sources */,
 				18EE916927F3A3FF00516D3C /* Grid.swift in Sources */,
 				18B6EAB927F13C1500E15BDE /* ContactsVM.swift in Sources */,
@@ -294,6 +354,8 @@
 				18B6EAAF27F129D500E15BDE /* LogInView.swift in Sources */,
 				18CC953627F2649D008EAE87 /* ContactsView.swift in Sources */,
 				18CC954027F26686008EAE87 /* Chat.swift in Sources */,
+				183766762831C51B0065E2EC /* InputsButtons.swift in Sources */,
+				1837667A2831C5F50065E2EC /* ChatTextBar.swift in Sources */,
 				18EE916727F3A09C00516D3C /* HistoryCell.swift in Sources */,
 				18B6EAB727F1304600E15BDE /* User.swift in Sources */,
 				18CC954327F266EC008EAE87 /* TypeOfContent.swift in Sources */,
@@ -428,12 +490,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "iTalk Chat/iTalk Chat.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iTalk Chat/Preview Content\"";
 				DEVELOPMENT_TEAM = U4M526LLNP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iTalk-Chat-Info.plist";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to send an audio message";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -458,12 +522,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "iTalk Chat/iTalk Chat.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iTalk Chat/Preview Content\"";
 				DEVELOPMENT_TEAM = U4M526LLNP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iTalk-Chat-Info.plist";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to send an audio message";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -507,64 +573,69 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		18B6EA9127F1209B00E15BDE /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-		18B6EA9427F1214F00E15BDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		1850823A2829BC2600B106AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
+				kind = versionRange;
+				maximumVersion = 8.0.0;
+				minimumVersion = 7.0.0;
+			};
+		};
+		185082452829BCDB00B106AE /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 2.0.0;
+				minimumVersion = 1.0.0;
+			};
+		};
+		18B180902832065E002A3195 /* XCRemoteSwiftPackageReference "FDWaveformView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fulldecent/FDWaveformView";
+			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 8.0.0;
+				minimumVersion = 5.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		18B6EA9227F1209B00E15BDE /* SDWebImageSwiftUI */ = {
+		1850823B2829BC2600B106AE /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 18B6EA9127F1209B00E15BDE /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
-		};
-		18B6EA9527F1214F00E15BDE /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 18B6EA9427F1214F00E15BDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 1850823A2829BC2600B106AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		18B6EA9727F1214F00E15BDE /* FirebaseDatabase */ = {
+		1850823D2829BC2600B106AE /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 18B6EA9427F1214F00E15BDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDatabase;
-		};
-		18B6EA9927F1214F00E15BDE /* FirebaseDatabaseSwift-Beta */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 18B6EA9427F1214F00E15BDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseDatabaseSwift-Beta";
-		};
-		18B6EA9B27F1214F00E15BDE /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 18B6EA9427F1214F00E15BDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 1850823A2829BC2600B106AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-		18B6EA9D27F1214F00E15BDE /* FirebaseFirestoreSwift-Beta */ = {
+		1850823F2829BC2600B106AE /* FirebaseFirestoreSwift-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 18B6EA9427F1214F00E15BDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 1850823A2829BC2600B106AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseFirestoreSwift-Beta";
 		};
-		18B6EA9F27F1214F00E15BDE /* FirebaseStorage */ = {
+		185082412829BC2600B106AE /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 18B6EA9427F1214F00E15BDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 1850823A2829BC2600B106AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
 		};
-		18B6EAA127F1214F00E15BDE /* FirebaseStorageSwift-Beta */ = {
+		185082432829BC2600B106AE /* FirebaseStorageSwift-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 18B6EA9427F1214F00E15BDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 1850823A2829BC2600B106AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageSwift-Beta";
+		};
+		185082462829BCDC00B106AE /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 185082452829BCDB00B106AE /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+		18B180912832065F002A3195 /* FDWaveformView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18B180902832065E002A3195 /* XCRemoteSwiftPackageReference "FDWaveformView" */;
+			productName = FDWaveformView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

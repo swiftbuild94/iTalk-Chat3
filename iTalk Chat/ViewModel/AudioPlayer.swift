@@ -39,11 +39,13 @@ class AudioPlayer: ObservableObject {
     
     func playAudio(_ audio: String) {
         print("Play Audio: \(audio)")
+        guard isAllowedToPlay() else { return }
         if isAllowedToPlay() {
             guard let soundFileURL = URL(string: audio) else {
                 print("Not found")
                 return
             }
+            print(soundFileURL)
             do {
                 let audioData = try Data(contentsOf: soundFileURL)
                 print("Audio -> Getting Data: \(audioData)")
@@ -52,10 +54,10 @@ class AudioPlayer: ObservableObject {
                 return
             }
             do {
-                try AVAudioSession.sharedInstance().setCategory(.soloAmbient)
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .spokenAudio, options: [.defaultToSpeaker, .allowBluetooth])
                 print("Audio -> Set Category")
             } catch {
-                print("Error on Solo")
+                print("Error on Category")
                 return
             }
             do {
@@ -77,7 +79,7 @@ class AudioPlayer: ObservableObject {
                 return
             }
             print("Audio Played without errors")
-        }
+//        }
     }
     
 

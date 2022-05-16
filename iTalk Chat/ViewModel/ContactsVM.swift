@@ -52,8 +52,10 @@ final class ContactsVM: ObservableObject {
                 let data = snapshot.data()
                 let user = User(data: data)
 				if user.uid != FirebaseManager.shared.auth.currentUser?.uid {
-					self.users.append(.init(data: data))
-                    self.usersDictionary[user.uid] = (.init(data: data))
+                    DispatchQueue.main.async {
+                        self.users.append(.init(data: data))
+                        self.usersDictionary[user.uid] = (.init(data: data))
+                    }
 				}
 			})
 		}
@@ -93,8 +95,10 @@ final class ContactsVM: ObservableObject {
                     }
                     do {
                         if let rm = try change.document.data(as: RecentMessage.self) {
-                            self.recentMessages.insert(rm, at: 0)
-                            self.errorMessage = "Messages: \(self.recentMessages)"
+                            DispatchQueue.main.async {
+                                self.recentMessages.insert(rm, at: 0)
+                                self.errorMessage = "Messages: \(self.recentMessages)"
+                            }
                         }
                     } catch {
                         print(error)

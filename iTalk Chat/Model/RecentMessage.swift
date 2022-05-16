@@ -14,9 +14,9 @@ struct RecentMessage: Identifiable, Codable, Hashable {
     let fromId, toId: String
     let text: String
     let timestamp: Date
-//    var timeAgo: String {
-//        let formater = RelativeDateTimeFormatter()
-//        formater.unitsStyle = .abbreviated
-//        return formater.localizedString(for: timestamp, relativeTo: Date())
-//    }
+    var timeAgo: String {
+        let formater = RelativeDateTimeFormatter()
+        formater.unitsStyle = .abbreviated
+        return formater.localizedString(for: timestamp, relativeTo: Date())
+    }
 }

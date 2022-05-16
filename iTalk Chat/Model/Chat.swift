@@ -13,7 +13,7 @@ struct Chat: Identifiable, Codable {
     @DocumentID var id: String?
     
     let fromId: String
-//    let toId: String
+    let toId: String?
 //    let typeOfContent: TypeOfContent
     let text: String?
 //    let video: Data?
@@ -24,9 +24,9 @@ struct Chat: Identifiable, Codable {
 //    let audioDuration: String?
 //    let readtime: Date?
     let timestamp: Date
-    var timeAgo: String {
-        let formater = RelativeDateTimeFormatter()
-        formater.unitsStyle = .abbreviated
-        return formater.localizedString(for: timestamp, relativeTo: Date())
-    }
+//    var timeAgo: String {
+//        let formater = RelativeDateTimeFormatter()
+//        formater.unitsStyle = .abbreviated
+//        return formater.localizedString(for: timestamp, relativeTo: Date())
+//    }
 }
