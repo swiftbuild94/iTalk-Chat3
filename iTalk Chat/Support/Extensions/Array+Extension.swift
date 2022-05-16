@@ -1,5 +1,5 @@
 //
-//  Array+Identifiable.swift
+//  Array+Extension.swift
 //  iTalk
 //
 //  Created by Patricio Benavente on 27/09/20.

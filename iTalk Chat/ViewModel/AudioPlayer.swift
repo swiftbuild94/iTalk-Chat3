@@ -40,46 +40,46 @@ class AudioPlayer: ObservableObject {
     func playAudio(_ audio: String) {
         print("Play Audio: \(audio)")
         guard isAllowedToPlay() else { return }
-        if isAllowedToPlay() {
-            guard let soundFileURL = URL(string: audio) else {
-                print("Not found")
-                return
-            }
-            print(soundFileURL)
-            do {
-                let audioData = try Data(contentsOf: soundFileURL)
-                print("Audio -> Getting Data: \(audioData)")
-            } catch {
-                print("Error getting data")
-                return
-            }
-            do {
-                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .spokenAudio, options: [.defaultToSpeaker, .allowBluetooth])
-                print("Audio -> Set Category")
-            } catch {
-                print("Error on Category")
-                return
-            }
-            do {
-                try AVAudioSession.sharedInstance().setActive(true)
-                print("Audio -> Activate session")
-            } catch {
-                print("Error on activate session: \(error)")
-                return
-            }
-            do {
-                let player = try AVAudioPlayer(data: Data(contentsOf: soundFileURL), fileTypeHint: "m4a")
-                player.volume = 1.0
-                player.prepareToPlay()
-                player.play()
-                self.isPlaying = true
-                print("Audio -> audio is playing")
-            } catch {
-                print("Error Playing: \(error)")
-                return
-            }
-            print("Audio Played without errors")
-//        }
+        //        if isAllowedToPlay() {
+        guard let soundFileURL = URL(string: audio) else {
+            print("Not found")
+            return
+        }
+        print(soundFileURL)
+        do {
+            let audioData = try Data(contentsOf: soundFileURL)
+            print("Audio -> Getting Data: \(audioData)")
+        } catch {
+            print("Error getting data")
+            return
+        }
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .spokenAudio, options: [.defaultToSpeaker, .allowBluetooth])
+            print("Audio -> Set Category")
+        } catch {
+            print("Error on Category")
+            return
+        }
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+            print("Audio -> Activate session")
+        } catch {
+            print("Error on activate session: \(error)")
+            return
+        }
+        do {
+            let player = try AVAudioPlayer(data: Data(contentsOf: soundFileURL), fileTypeHint: "m4a")
+            player.volume = 1.0
+            player.prepareToPlay()
+            player.play()
+            self.isPlaying = true
+            print("Audio -> audio is playing")
+        } catch {
+            print("Error Playing: \(error)")
+            return
+        }
+        print("Audio Played without errors")
+        //        }
     }
     
 
