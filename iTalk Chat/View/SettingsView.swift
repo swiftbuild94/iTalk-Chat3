@@ -18,7 +18,8 @@ struct SettingsView: View {
     @State private var isAutoPlayAudio = true
     @State private var isAutoRecordAudio = true
 //    @State var currentUser: User?
-
+    let colorBubles = true
+    
     let optionsSize: CGFloat = 16
     
     var body: some View {
@@ -44,6 +45,7 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(vmLogin.myUser?.name ?? "")
                             .font(.system(size: 24, weight: .bold))
+                        Text(vmLogin.myUser?.phoneNumber ?? "")
                         HStack {
                             Circle()
                                 .foregroundColor(.green)
@@ -57,15 +59,26 @@ struct SettingsView: View {
                     }
                     Spacer()
                 }
-                Divider()
-                Text("Chat Background")
-                Toggle("Auto play audio message", isOn: $isAutoPlayAudio)
-                Toggle("Auto record audio message", isOn: $isAutoRecordAudio)
-                Divider()
-                Text("Blocked Users")
-//                Text("Error: \(vmContacts.errorMessage)")
-//                Text(vmLogin.myUser?.profileImageURL ?? "")
-                Divider()
+                Picker(selection: $vmLogin.isBubblesBlue, label: Text("Bubbles Color")) {
+                    Text("Blue")
+                        .tag(true)
+                    Text("Green")
+                        .tag(false)
+                }.pickerStyle(InlinePickerStyle())
+                Section {
+                    Text("Chat Background")
+                    Toggle("Auto play audio message", isOn: $isAutoPlayAudio)
+                    Toggle("Auto record audio message", isOn: $isAutoRecordAudio)
+                }
+                Section {
+                    Text("Story")
+                    Text("Notifications")
+                    Text("Security")
+                }
+                Section {
+                    Text("Archived Users")
+                    Text("Blocked Users")
+                }
                 Button {
                     vmLogin.shouldShowLogOutOptions.toggle()
                 } label: {

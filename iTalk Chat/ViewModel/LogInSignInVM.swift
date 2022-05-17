@@ -22,6 +22,7 @@ final class LogInSignInVM: ObservableObject {
     @Published var myUserName = ""
     @Published var myUserPhoto = ""
 	@Published var shouldShowLogOutOptions = false
+    @Published var isBubblesBlue = true
 //    @Published var didCompleateLoginProcess = (() -> ()).self
 //    var didCompleateLoginProcess: () -> ()
 
