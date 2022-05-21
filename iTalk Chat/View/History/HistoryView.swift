@@ -9,8 +9,7 @@
 import SwiftUI
 
 struct HistoryView: View {
-    @ObservedObject private var vmConctacts = ContactsVM()
-//    @ObservedObject private var vmChat = ChatsVM(chatUser: nil)
+    @ObservedObject private var vm = ContactsVM()
 	@State private var shouldShowNewUserScreen = false
 	@State private var shouldNavigateToChatView = false
 	@State private var userSelected: User?
@@ -21,41 +20,25 @@ struct HistoryView: View {
 //    }
     
     var body: some View {
-        //		NavigationLink("", isActive: $shouldNavigateToChatView) {
-        ////            ChatView(contact: vm.$userSelected)
-        //		}
         NavigationView {
-            VStack {
-                //				Button {
-                //					shouldShowNewUserScreen.toggle()
-                //				} label: {
-                //					Image(systemName: "plus.message.fill")
-                //						.foregroundColor(Color.blue)
-                //				}
                 ScrollView {
-                    VStack {
-                        Text(vmConctacts.errorMessage)
-                            .foregroundColor(Color.red)
-//                        ForEach(vmConctacts.recentMessages) { recentMessage in
-                        ForEach(vmConctacts.recentMessages, id:\.self) { recentMessage in
-                            let uid = recentMessage.fromId
-                            let user = vmConctacts.usersDictionary[uid]
-                            //                            NavigationLink(destination: ChatView(chatUser: user!)) {
-                            Text("Name")
-                            Text(user!.name)
-                            //                            HistoryCell(recentMessage: recentMessage, user: user!)
+                    Text(vm.errorMessage)
+                        .foregroundColor(Color.red)
+                    ForEach(vm.recentMessages, id:\.self) { recentMessage in
+                        let uid = recentMessage.fromId
+                        let user = vm.usersDictionary[uid]
+                        if let contact = user {
+                            NavigationLink(destination: ChatView(chatUser: contact)) {
+                                ContactCell(contact: contact)
+                            }
+                        } else {
+                            Text("Error")
+                                .foregroundColor(Color.red)
+                            Text(String(describing: recentMessage))
                         }
                     }
                 }
-            }
-            .navigationTitle("History")
-        }
-        .fullScreenCover(isPresented: $shouldShowNewUserScreen) {
-            ContactsView(didSelectNewUser: { user in
-                //					print(user.name)
-                self.userSelected = user
-                self.shouldNavigateToChatView.toggle()
-            })
+                .navigationBarTitle(Text("History"))
         }
     }
 }

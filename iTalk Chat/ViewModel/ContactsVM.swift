@@ -33,13 +33,10 @@ final class ContactsVM: ObservableObject {
 	
 	// MARK: - Get All Users
     func getAllUsers() {
-		DispatchQueue.main.async {
-			self.fetchAllUsers()
-		}
+        self.fetchAllUsers()
 	}
 	
 	private func fetchAllUsers() {
-//        print(">>>>FETCH ALL USERS<<<<")
         FirebaseManager.shared.firestore.collection("users").getDocuments { [self] documentsSnapshot, error in
 			#warning("TODO: get only users in contact app")
 			if let err = error {
@@ -52,6 +49,7 @@ final class ContactsVM: ObservableObject {
                 let data = snapshot.data()
                 let user = User(data: data)
 				if user.uid != FirebaseManager.shared.auth.currentUser?.uid {
+                    print(">>>>FETCH ALL USERS<<<<")
                     DispatchQueue.main.async {
                         self.users.append(.init(data: data))
                         self.usersDictionary[user.uid] = (.init(data: data))
@@ -69,7 +67,6 @@ final class ContactsVM: ObservableObject {
 	}
 	
 	private func fetchRecentMessages() {
-        print(">>>>>Fetch Recent Messages<<<<<")
 		self.recentMessages.removeAll()
 		firestoreListener?.remove()
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
@@ -77,7 +74,7 @@ final class ContactsVM: ObservableObject {
             .collection(FirebaseConstants.recentMessages)
             .document(uid)
             .collection(FirebaseConstants.messages)
-            .order(by: FirebaseConstants.timestamp)
+            .order(by: FirebaseConstants.timestamp, descending: true)
             .addSnapshotListener { querySnapshot, error in
                 if let err = error {
                     self.errorMessage = "Failed to get all users: \(err)"
@@ -95,6 +92,7 @@ final class ContactsVM: ObservableObject {
                     }
                     do {
                         if let rm = try change.document.data(as: RecentMessage.self) {
+                            print(">>>>>Fetch Recent Messages<<<<<")
                             DispatchQueue.main.async {
                                 self.recentMessages.insert(rm, at: 0)
                                 self.errorMessage = "Messages: \(self.recentMessages)"

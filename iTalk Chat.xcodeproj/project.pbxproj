@@ -150,6 +150,7 @@
 		18506ABF2831D18D00F777D2 /* History */ = {
 			isa = PBXGroup;
 			children = (
+				18EE916627F3A09C00516D3C /* HistoryCell.swift */,
 				18B6EABA27F13C6400E15BDE /* HistoryView.swift */,
 			);
 			path = History;
@@ -235,7 +236,6 @@
 				18B6EAB627F1304600E15BDE /* User.swift */,
 				18CC953D27F26685008EAE87 /* Chat.swift */,
 				18CC953E27F26686008EAE87 /* RecentMessage.swift */,
-				18B6EAB827F13C1500E15BDE /* ContactsVM.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -243,9 +243,9 @@
 		18F1BCF32804B5A800300591 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				18B6EAB827F13C1500E15BDE /* ContactsVM.swift */,
 				18CC953B27F2665C008EAE87 /* ChatsVM.swift */,
 				18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */,
-				18EE916627F3A09C00516D3C /* HistoryCell.swift */,
 				184264D328332898004351E7 /* AudioPlayer.swift */,
 				18068E26280F8057005460FB /* AudioRecorder.swift */,
 				18682205282160B400223C62 /* TimerManager.swift */,
