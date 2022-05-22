@@ -27,6 +27,8 @@ class ChatsVM: ObservableObject {
     @Published var focus = false
     @Published var image: UIImage?
     @Published var data: Data?
+    @State var bubbleColor: Color = Color.green
+    
     private var url: URL?
     var audioTimer: Double?
     
@@ -35,13 +37,30 @@ class ChatsVM: ObservableObject {
 	init(chatUser: User?) {
 		self.chatUser = chatUser
 		fetchMessages()
+        setBubbleColor()
 	}
+    
+    deinit {
+        firestoreListener?.remove()
+    }
 	
+    private func setBubbleColor() {
+        let storageBubble =  UserDefaults.standard.string(forKey: "bubbleColor")
+        //print("storageBubble: \(String(describing: storageBubble) )")
+        if storageBubble == "green" {
+            self.bubbleColor = Color.green
+        } else {
+            self.bubbleColor = Color.blue
+        }
+    }
+    
     // MARK: - Fetch Messages
     private func fetchMessages() {
         guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
         guard let toId = chatUser?.uid else { return }
-        FirebaseManager.shared.firestore
+        self.chatMessages.removeAll()
+        self.firestoreListener?.remove()
+        firestoreListener = FirebaseManager.shared.firestore
             .collection(FirebaseConstants.messages)
             .document(fromId)
             .collection(toId)
@@ -57,8 +76,7 @@ class ChatsVM: ObservableObject {
                     if change.type == .added {
                         do {
                             if let chats = try change.document.data(as: Chat.self) {
-                                self.chatMessages.insert(chats, at: 0)
-    
+                                self.chatMessages.append(chats)
                             }
                             self.chatMessages.sort(by: { $0.timestamp < $1.timestamp })
                         } catch {
@@ -142,7 +160,7 @@ class ChatsVM: ObservableObject {
         let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         
         let directoryContents = try? fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
-        #warning("If exist don't save")
+        #warning("TODO: If exist don't save")
         for audio in directoryContents! {
             audios.append(audio)
         }
@@ -256,24 +274,25 @@ class ChatsVM: ObservableObject {
 		firebaseLocation.secondCollection = uid
 		saveToFirebase(firebaseLocation, chat: chat)
 		
-		firebaseLocation.firstDocument = FirebaseConstants.recentMessages
-		firebaseLocation.firstDocument = uid
-		firebaseLocation.secondCollection = FirebaseConstants.messages
-        firebaseLocation.secondDocument = toId
-		saveToFirebase(firebaseLocation, chat: chat)
+        var firebaseLocationRecent = FirebaseDocument(
+            firstCollection: FirebaseConstants.recentMessages,
+            firstDocument: uid,
+            secondCollection: FirebaseConstants.messages,
+            secondDocument: toId)
+		saveToFirebase(firebaseLocationRecent, chat: chat)
 		
-		firebaseLocation.firstDocument = FirebaseConstants.recentMessages
-		firebaseLocation.firstDocument = toId
-		firebaseLocation.secondCollection = FirebaseConstants.messages
-        firebaseLocation.secondDocument = uid
-		saveToFirebase(firebaseLocation, chat: chat)
+		firebaseLocationRecent.firstDocument = FirebaseConstants.recentMessages
+        firebaseLocationRecent.firstDocument = toId
+        firebaseLocationRecent.secondCollection = FirebaseConstants.messages
+        firebaseLocationRecent.secondDocument = uid
+		saveToFirebase(firebaseLocationRecent, chat: chat)
 	}
     
     
     // MARK: - Save to Firebase
     private func saveToFirebase(_ firebaseDocument: FirebaseDocument, chat: Chat) {
         print("Save to Firebase Document: \(firebaseDocument)")
-        print("Save to Firebase Data: \(chat)")
+        //print("Save to Firebase Data: \(chat)")
         let collection = firebaseDocument.firstCollection
         let document = firebaseDocument.firstDocument
         let secondCollection = firebaseDocument.secondCollection

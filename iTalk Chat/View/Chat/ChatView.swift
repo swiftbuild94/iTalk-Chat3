@@ -150,6 +150,7 @@ struct MessagesView: View {
 
 struct MessageView: View {
     @ObservedObject var vm: ChatsVM
+    
 	let message: Chat
 	private let topPadding: CGFloat = 8
 
@@ -159,7 +160,7 @@ struct MessageView: View {
 				HStack {
 					Spacer()
                     HStack {
-                       Bububle(vm: vm, message: message)
+                        Bubble(vm: vm, message: message)
                     }
 					.padding()
                     .background(.gray)
@@ -170,10 +171,10 @@ struct MessageView: View {
 			} else {
 				HStack {
 					HStack {
-                        Bububle(vm: vm, message: message)
+                        Bubble(vm: vm, message: message)
                     }
-					.padding()
-					.background(Color.blue)
+                    .padding()
+                    .background(vm.bubbleColor)
 					.cornerRadius(8)
 					Spacer()
 				}
@@ -184,7 +185,7 @@ struct MessageView: View {
 	}
 }
 
-struct Bububle: View {
+struct Bubble: View {
     @ObservedObject var vm: ChatsVM
     let message: Chat
     

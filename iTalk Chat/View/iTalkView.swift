@@ -10,18 +10,32 @@ import SwiftUI
 
 struct iTalkView: View {
 	@ObservedObject private var vm = ContactsVM()
+    
+    init(){
+        vm.getAllUsers()
+        vm.getRecentMessagges()
+    }
 
 	var body: some View {
 		NavigationView {
                 ScrollView {
                     Text(vm.errorMessage)
                         .foregroundColor(Color.red)
+//                    ForEach(vm.recentMessages, id:\.self) { recentMessage in
+//                        let uid = recentMessage.toId
+//                        let user = vm.usersDictionary[uid]
+//
+//                        NavigationLink(destination: ChatView(chatUser: user!)) {
+//                            HistoryCell(contact: user!, recentMessage: recentMessage)
+//                        }
+//                    }
                     ForEach(vm.users, id:\.self) { contact in
                         NavigationLink(destination: ChatView(chatUser: contact)) {
 //                            Text(contact.name)
                             ContactCell(contact: contact)
                         }
                     }
+                    
                 }   
 //			if $vm.contacts != [] {
 //				Grid(contacts!) { contact in

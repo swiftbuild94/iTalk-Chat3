@@ -13,11 +13,11 @@ struct HistoryView: View {
 	@State private var shouldShowNewUserScreen = false
 	@State private var shouldNavigateToChatView = false
 	@State private var userSelected: User?
-	
-//    init(chatUser: User) {
-//        self.vmChat = .init(chatUser: chatUser)
-//        self.userSelected = chatUser
-//    }
+    
+    init() {
+        vm.getAllUsers()
+        vm.getRecentMessagges()
+    }
     
     var body: some View {
         NavigationView {
@@ -25,16 +25,10 @@ struct HistoryView: View {
                     Text(vm.errorMessage)
                         .foregroundColor(Color.red)
                     ForEach(vm.recentMessages, id:\.self) { recentMessage in
-                        let uid = recentMessage.fromId
+                        let uid = recentMessage.toId
                         let user = vm.usersDictionary[uid]
-                        if let contact = user {
-                            NavigationLink(destination: ChatView(chatUser: contact)) {
-                                HistoryCell(recentMessage: recentMessage, user: contact)
-                            }
-                        } else {
-                            Text("Error")
-                                .foregroundColor(Color.red)
-                            Text(String(describing: recentMessage))
+                        NavigationLink(destination: ChatView(chatUser: user!)) {
+                            HistoryCell(contact: user!, recentMessage: recentMessage)
                         }
                     }
                 }

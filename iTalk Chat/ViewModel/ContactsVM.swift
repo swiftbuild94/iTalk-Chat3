@@ -12,7 +12,9 @@ import FirebaseFirestoreSwift
 
 final class ContactsVM: ObservableObject {
 	@Published var users = [User]()
+    @Published var unshownUsers = [User]()
 	@Published var usersDictionary = [String: User]()
+    var unshownUsersDictionary = [String: User]()
 	@Published var currentUser: User?
     @Published var myUser: User?
     @Published var myUserUid = ""
@@ -25,11 +27,10 @@ final class ContactsVM: ObservableObject {
     @Published var recentMessages = [RecentMessage]()
 	var selectedUser: String?
     private var firestoreListener: ListenerRegistration?
-	
-	init() {
-		getAllUsers()
-		getRecentMessagges()
-	}
+    
+    deinit {
+        firestoreListener?.remove()
+    }
 	
 	// MARK: - Get All Users
     func getAllUsers() {
@@ -37,7 +38,10 @@ final class ContactsVM: ObservableObject {
 	}
 	
 	private func fetchAllUsers() {
-        FirebaseManager.shared.firestore.collection(FirebaseConstants.users).getDocuments { [self] documentsSnapshot, error in
+        FirebaseManager.shared.firestore
+            .collection(FirebaseConstants.users)
+            .order(by: FirebaseConstants.name, descending: false)
+            .getDocuments { [self] documentsSnapshot, error in
 			#warning("TODO: get only users in contact app")
 			if let err = error {
 				self.errorMessage = "Failed to get all users: \(err)"
@@ -52,6 +56,7 @@ final class ContactsVM: ObservableObject {
                     DispatchQueue.main.async {
                         self.users.append(.init(data: data))
                         self.usersDictionary[user.uid] = (.init(data: data))
+                        self.unshownUsersDictionary[user.uid] = (.init(data: data))
                     }
 				}
 			})
@@ -59,7 +64,7 @@ final class ContactsVM: ObservableObject {
 	}
 	
 	// MARK: - Get Recent Messages
-	private func getRecentMessagges() {
+	func getRecentMessagges() {
 //		DispatchQueue.main.async {
 			self.fetchRecentMessages()
 //		}
@@ -67,12 +72,13 @@ final class ContactsVM: ObservableObject {
 	
 	private func fetchRecentMessages() {
 		self.recentMessages.removeAll()
-		firestoreListener?.remove()
+        self.firestoreListener?.remove()
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-        FirebaseManager.shared.firestore
+        print(">>>>>>fetchRecentMessages")
+        firestoreListener = FirebaseManager.shared.firestore
             .collection(FirebaseConstants.recentMessages)
             .document(uid)
-            .collection(FirebaseConstants.messages)
+            . collection(FirebaseConstants.messages)
             .order(by: FirebaseConstants.timestamp, descending: true)
             .addSnapshotListener { querySnapshot, error in
                 if let err = error {
@@ -83,36 +89,25 @@ final class ContactsVM: ObservableObject {
                 querySnapshot?.documentChanges.forEach({ change in
                     let docId = change.document.documentID
                     if let index = self.recentMessages.firstIndex(where: { rm in
-                        self.errorMessage = "3"
                         return rm.id == docId
                     }) {
-                        self.errorMessage = "4"
                         self.recentMessages.remove(at: index)
                     }
                     do {
                         if let rm = try change.document.data(as: RecentMessage.self) {
                             print(">>>>>Fetch Recent Messages<<<<<")
-                            DispatchQueue.main.async {
-                                self.recentMessages.insert(rm, at: 0)
-                                self.errorMessage = "Messages: \(self.recentMessages)"
+                            DispatchQueue.main.async { [self] in
+                                self.recentMessages.append(rm)
+                                print("RecentMessages: \(self.recentMessages)")
+                                self.unshownUsersDictionary.removeValue(forKey: rm.toId)
                             }
                         }
+                        self.unshownUsers = Array(self.unshownUsersDictionary.values.map { $0 })
+                        print(String(describing: self.unshownUsers))
                     } catch {
                         print(error)
                     }
                 })
             }
 	}
-		
-    
-	// MARK: - Intents
-	//	func addUser() {
-	//		let user = Contacts.User(name: "String", photo: "String")
-	//		self.model.addUser(user)
-	//	}
-	//
-	//	func removeUser(id: UUID) {
-	//		let notError = self.model.removeUser(id: id)
-	//		print("Removed: \(notError) id:\(id)")
-	//	}
 }
