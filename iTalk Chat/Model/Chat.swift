@@ -21,7 +21,7 @@ struct Chat: Identifiable, Codable {
 //    let location: String?
     let photo: String?
     let audio: String?
-//    let audioDuration: String?
+    let audioTimer: Double?
 //    let readtime: Date?
     let timestamp: Date
 //    var timeAgo: String {

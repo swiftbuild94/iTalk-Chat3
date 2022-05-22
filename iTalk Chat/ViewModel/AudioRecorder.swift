@@ -43,27 +43,26 @@ class AudioRecorder: ObservableObject {
     }
     
     func startRecording() {
-        if isAllowedToRecord() {
-
-            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let audioFileName = Date().toString(dateFormat: "YY-MM-dd_HH-mm-ss") + ".m4a"
-            let audioFileURL = paths.appendingPathComponent(audioFileName)
-            let settings = [
-                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                AVSampleRateKey: 12000,
-                AVNumberOfChannelsKey: 1,
-                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-            ]
-            print("Audio -> Start Record")
-            do {
-                audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: settings)
-                audioRecorder.isMeteringEnabled = true
-                audioRecorder.prepareToRecord()
-                audioRecorder.record()
-                print("Audio -> Recording")
-            } catch {
-                print("Error recording: \(error)")
-            }
+        guard isAllowedToRecord() else { return }
+        
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let audioFileName = Date().toString(dateFormat: "YY-MM-dd_HH-mm-ss") + ".m4a"
+        let audioFileURL = paths.appendingPathComponent(audioFileName)
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+        print("Audio -> Start Record")
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: settings)
+            audioRecorder.isMeteringEnabled = true
+            audioRecorder.prepareToRecord()
+            audioRecorder.record()
+            print("Audio -> Recording")
+        } catch {
+            print("Error recording: \(error)")
         }
     }
     
@@ -92,7 +91,7 @@ class AudioRecorder: ObservableObject {
     // MARK: - Delete Recordings
     func deleteRecording(url : URL){
         do {
-            try FileManager.default.removeItem(at : url)
+            try FileManager.default.removeItem(at: url)
         } catch {
             print("Can't delete")
         }

@@ -12,13 +12,14 @@ class TimerManager: ObservableObject {
     private var timer = Timer()
     
     func startTimer() {
-       timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { timer in
+        secondsElapsed = 0
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { timer in
             self.secondsElapsed += 0.1
         })
     }
     
-    func stopTimer() {
+    func stopTimer() -> Double {
         timer.invalidate()
-        secondsElapsed = 0
+        return secondsElapsed
     }
 }

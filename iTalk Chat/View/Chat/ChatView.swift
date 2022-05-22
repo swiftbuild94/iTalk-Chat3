@@ -130,7 +130,7 @@ struct MessagesView: View {
                 ScrollViewReader { scrollViewProxy in
                     VStack {
                         ForEach(vm.chatMessages) { message in
-                            MessageView(message: message)
+                            MessageView(vm: vm, message: message)
                         }
                         HStack { Spacer() }
                         .id(Self.bottomAnchor)
@@ -149,6 +149,7 @@ struct MessagesView: View {
 }
 
 struct MessageView: View {
+    @ObservedObject var vm: ChatsVM
 	let message: Chat
 	private let topPadding: CGFloat = 8
 
@@ -158,7 +159,7 @@ struct MessageView: View {
 				HStack {
 					Spacer()
                     HStack {
-                       Bububle(message: message)
+                       Bububle(vm: vm, message: message)
                     }
 					.padding()
                     .background(.gray)
@@ -169,7 +170,7 @@ struct MessageView: View {
 			} else {
 				HStack {
 					HStack {
-                        Bububle(message: message)
+                        Bububle(vm: vm, message: message)
                     }
 					.padding()
 					.background(Color.blue)
@@ -184,14 +185,15 @@ struct MessageView: View {
 }
 
 struct Bububle: View {
+    @ObservedObject var vm: ChatsVM
     let message: Chat
     
     var body: some View {
         if message.photo != nil {
-            showPhoto(message: message)
+            showPhoto(vm: vm, message: message)
         }
         if message.audio != nil {
-            showAudio(message: message)
+            showAudio(vm: vm, message: message)
         }
         showText(message: message)
     }
@@ -224,23 +226,32 @@ struct showText: View {
 }
 
 struct showPhoto: View {
+    @ObservedObject var vm: ChatsVM
     let message: Chat
     
     var body: some View {
         Button {
             print("Show Image")
         } label: {
-            Image(message.photo!)
-        WebImage(url: URL(string: message.photo!))
-            .resizable()
-            .scaledToFill()
-            .clipped()
-            .frame(width: 200, height: 200)
+            if let photo = vm.downloadPhoto(message.photo!) {
+                Image(uiImage: photo)
+                    .resizable()
+                    .scaledToFill()
+                    .clipped()
+                    .frame(width: 200, height: 200)
+            } else {
+                WebImage(url: URL(string: message.photo!))
+                    .resizable()
+                    .scaledToFill()
+                    .clipped()
+                    .frame(width: 200, height: 200)
+            }
         }
     }
 }
 
 struct showAudio: View {
+    @ObservedObject var vm: ChatsVM
     @ObservedObject var vmAudio = AudioPlayer()
     @ObservedObject var timerManager = TimerManager()
     let message: Chat
@@ -249,7 +260,7 @@ struct showAudio: View {
         if vmAudio.isPlaying {
             Button {
                 vmAudio.stopPlay()
-                timerManager.stopTimer()
+                let _ = timerManager.stopTimer()
             } label: {
                 Image(systemName: "stop.fill")
                 Text(String(format: "%.1f", timerManager.secondsElapsed))
@@ -257,11 +268,15 @@ struct showAudio: View {
         } else {
             Button {
                 timerManager.startTimer()
-                vmAudio.playAudio(message.audio!)
+                if let audio = vm.downloadAudio(message.audio!) {
+                    vmAudio.playAudio(audio)
+                }
             } label: {
                 Image(systemName: "play.fill")
-                Text(String(vmAudio.audioPlayer?.duration ?? TimeInterval()))
-                Text(message.audio!)
+                if let audioTimer = message.audioTimer {
+                    let trimedAudio = String(audioTimer).prefix(2)
+                    Text(trimedAudio)
+                }
             }
         }
     }

@@ -9,10 +9,11 @@ import Foundation
 import SwiftUI
 import Combine
 import AVFoundation
+import AVKit
 
-class AudioPlayer: ObservableObject {
-    private var audioSession: AVAudioSession!
-    @Published var audioPlayer: AVAudioPlayer!
+class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
+    private var audioSession = AVAudioSession.sharedInstance()
+    @Published var audioPlayer = AVAudioPlayer()
     let objectWillChange = PassthroughSubject<AudioPlayer, Never>()
     @Published var isPlaying = false {
         didSet {
@@ -24,54 +25,41 @@ class AudioPlayer: ObservableObject {
         self.stopPlay()
     }
     
+    
     // MARK: - Play Audio
-    private func isAllowedToPlay() -> Bool {
-        var isAllowed = false
+    func playAudio(_ audio: URL) {
+        print("=====Play Audio: \(audio)")
         do {
-            try audioSession?.overrideOutputAudioPort(.speaker)
-            isAllowed = true
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
             print("Audio -> Allowed to Play")
         } catch {
             print("Playing over the device's speakers failed: \(error)")
-        }
-        return isAllowed
-    }
-    
-    func playAudio(_ audio: String) {
-        print("Play Audio: \(audio)")
-        guard isAllowedToPlay() else { return }
-        //        if isAllowedToPlay() {
-        guard let soundFileURL = URL(string: audio) else {
-            print("Not found")
-            return
-        }
-        print(soundFileURL)
-        do {
-            let audioData = try Data(contentsOf: soundFileURL)
-            print("Audio -> Getting Data: \(audioData)")
-        } catch {
-            print("Error getting data")
             return
         }
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .spokenAudio, options: [.defaultToSpeaker, .allowBluetooth])
+            try audioSession.setCategory(.playback)
+            try audioSession.setMode(.spokenAudio)
             print("Audio -> Set Category")
         } catch {
             print("Error on Category")
             return
         }
         do {
-            try AVAudioSession.sharedInstance().setActive(true)
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             print("Audio -> Activate session")
         } catch {
             print("Error on activate session: \(error)")
             return
         }
         do {
-            let player = try AVAudioPlayer(data: Data(contentsOf: soundFileURL), fileTypeHint: "m4a")
-            player.volume = 1.0
-            player.prepareToPlay()
-            player.play()
+            try? (audio as NSURL).setResourceValue(.none, forKey: .fileProtectionKey)
+            let data = try Data(contentsOf: audio)
+            audioPlayer = try AVAudioPlayer(data: data, fileTypeHint: AVFileType.m4a.rawValue)
+            audioPlayer.prepareToPlay()
+            audioPlayer.delegate = self
+            audioPlayer.volume = 1.0
+            audioPlayer.prepareToPlay()
+            audioPlayer.play()
             self.isPlaying = true
             print("Audio -> audio is playing")
         } catch {
@@ -79,18 +67,17 @@ class AudioPlayer: ObservableObject {
             return
         }
         print("Audio Played without errors")
-        //        }
     }
     
 
-    private func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {
             isPlaying = false
         }
     }
     
     func stopPlay() {
-        audioPlayer?.stop()
+        audioPlayer.stop()
         isPlaying = false
     }
 }

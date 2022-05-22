@@ -11,6 +11,9 @@ struct FirebaseConstants {
     static let uid = "uid"
 	static let messages = "messages"
 	static let recentMessages = "recent_messages"
+    static let users = "users"
+    static let photos = "photos"
+    static let audios = "audios"
 	
 	static let name = "name"
 	static let email = "email"

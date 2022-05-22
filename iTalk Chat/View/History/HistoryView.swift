@@ -29,7 +29,7 @@ struct HistoryView: View {
                         let user = vm.usersDictionary[uid]
                         if let contact = user {
                             NavigationLink(destination: ChatView(chatUser: contact)) {
-                                ContactCell(contact: contact)
+                                HistoryCell(recentMessage: recentMessage, user: contact)
                             }
                         } else {
                             Text("Error")
@@ -48,7 +48,7 @@ struct HistoryView: View {
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-		HistoryView()
+		ContentView()
 			.preferredColorScheme(.dark)
     }
 }

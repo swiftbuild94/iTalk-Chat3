@@ -8,6 +8,8 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
+import FirebaseStorage
+import FirebaseStorageSwift
 import SwiftUI
 
 class ChatsVM: ObservableObject {
@@ -26,6 +28,7 @@ class ChatsVM: ObservableObject {
     @Published var image: UIImage?
     @Published var data: Data?
     private var url: URL?
+    var audioTimer: Double?
     
     var firestoreListener: ListenerRegistration?
     
@@ -69,61 +72,65 @@ class ChatsVM: ObservableObject {
         }
     }
     
-    func loadAudioUsingUrl(url: String){
-        let storage = Storage.storage()
-        let audioRef = storage.reference(forURL: url)
-        audioRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+    
+    // MARK: - Download Photo
+    func downloadPhoto(_ photo: String) -> UIImage? {
+        var image: UIImage?
+        let storageRef = Storage.storage().reference()
+        let photoRef = storageRef.child(photo)
+        print("===Photo: \(photoRef.fullPath)")
+        photoRef.getData(maxSize: 2 * 1024 * 1024) { data, error in
             if let error = error {
-                print("error downloading \(error)")
+                print("Error downloading \(error)")
             } else {
-                self.data = data
+                image = UIImage(data: data!)
+                print("Image NOT Error")
             }
         }
+        print("-----Image Returned----")
+        return image
     }
     
     
-    // MARK: - SnapshotListener
-//    private func snapshotLister(_ firebaseDocument: FirebaseDocument, order: String) ->  QueryDocumentSnapshot? {
-//        var queryDocumentSnapshot: QueryDocumentSnapshot?
-//        firestoreListener = FirebaseManager.shared.firestore
-//            .collection(firebaseDocument.firstCollection)
-//            .document(firebaseDocument.firstDocument)
-//            .collection(firebaseDocument.secondCollection)
-//            .order(by: FirebaseConstants.timestamp)
-//            .addSnapshotListener { querySnapshot, error in
-//                if let error = error {
-//                    print("Error snapshot listener: \(error)")
-//                }
-//                querySnapshot?.documentChanges.forEach({ change in
-//                    if change.type == .added {
-//                        queryDocumentSnapshot =  change.document
-//                        print("Changed")
-//                    }
-//                })
-//            }
-//        return queryDocumentSnapshot
-//    }
-	
+    // MARK: - Download Audio
+    func downloadAudio(_ audio: String) -> URL? {
+        let storageRef = Storage.storage()
+        let audioRef = storageRef.reference(forURL: audio)
+        let fileName = URL(string: audio)?.pathComponents.last?.description
+        print("FileName: \(String(describing: fileName))")
+        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let audioFileURL = url.appendingPathComponent(fileName ?? "")
+        audioRef.write(toFile: audioFileURL) { audioUrl, error in
+            if let err = error {
+                print("Error downloading audio: \(err)")
+            } else {
+                print("Write Compleate: \(String(describing: audioUrl))")
+            }
+        }
+        print("====Audio: \(String(describing: audioFileURL))")
+        return audioFileURL
+    }
+    
     
     // MARK: - Send Message
     func handleSend(_ typeOfContent: TypeOfContent, data: [Any]? = nil) {
         switch typeOfContent {
-            case .text:
-                sendText()
-            case .audio:
-                persistAudioToStorage()
-            case .photoalbum:
-                persistImageToStorage()
-            default:
-                break
+        case .text:
+            sendText()
+        case .audio:
+            persistAudioToStorage()
+        case .photoalbum:
+            persistImageToStorage()
+        default:
+            break
         }
     }
 
     private func sendText(){
         if chatText != "" {
             print("Send Text: \(chatText)")
+            typeOfContent = .text
             sendToFirebase()
-            focus = false
         }
     }
     
@@ -133,31 +140,42 @@ class ChatsVM: ObservableObject {
         var audios = [URL]()
         let fileManager = FileManager.default
         let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        
         let directoryContents = try? fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
+        #warning("If exist don't save")
         for audio in directoryContents! {
             audios.append(audio)
         }
         guard let url = audios.last else { return }
-        
-        let metadata = StorageMetadata()
-                metadata.contentType = "audio/m4a"
-        
-        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-        let ref = FirebaseManager.shared.storage.reference(withPath: uid)
-        //guard let audioData = try? Data(contentsOf: url) else { return }
-        ref.putFile(from: url, metadata: nil) { metadata, error in
+        let metaData = StorageMetadata()
+            metaData.contentType = "audio/m4a"
+//      guard let audioData = try? Data(contentsOf: url) else { return }
+        let ref = Storage.storage().reference()
+        let audioRef = ref.child(FirebaseConstants.audios)
+        let fileName = url.pathComponents.last?.description ?? ""
+        //let fileName = String(UUID().description) + ".m4a"
+        print("FileName: \(fileName)")
+        let spaceRef = audioRef.child(fileName)
+        spaceRef.putFile(from: url, metadata: metaData) { metadata, error in
             if let err = error {
                 self.errorMessage = "Fail to save image: \(err)"
                 return
             }
-            ref.downloadURL { url, error in
+            spaceRef.downloadURL { url, error in
                 if let err = error {
                     self.errorMessage = "Fail to retrive downloadURL image: \(err)"
                     return
                 }
-                print("Success storing audio with URL \(String(describing: url?.absoluteString))")
+                let downloadUrl = metadata?.path
+                print("URL: \(downloadUrl!)")
+                print("Success storing audio with URL: \(String(describing: url?.absoluteString))")
                 guard let url = url else { return }
                 self.url = url
+                do {
+                    try FileManager.default.removeItem(at: url)
+                } catch {
+                    print("Can't delete")
+                }
                 self.typeOfContent = .audio
                 self.sendToFirebase()
             }
@@ -168,15 +186,20 @@ class ChatsVM: ObservableObject {
     // MARK: - PersistImageToStorage
     private func persistImageToStorage() {
         print("Saving Image")
-        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-        let ref = FirebaseManager.shared.storage.reference(withPath: uid)
+        //guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         guard let imageData = self.image?.jpegData(compressionQuality: 0.5) else { return }
-        ref.putData(imageData, metadata: nil) { metadata, error in
-            if let err = error {
-                self.errorMessage = "Fail to save image: \(err)"
-                return
-            }
-            ref.downloadURL { url, error in
+        let ref = Storage.storage().reference()
+        let photoRef = ref.child(FirebaseConstants.photos)
+        let fileName = String(UUID().description) + ".jpg"
+        let spaceRef = photoRef.child(fileName)
+        print("Full Path: \(ref.fullPath)")
+        print("Name: \(ref.name)")
+        spaceRef.putData(imageData) { result in
+//            if let err = error {
+//                self.errorMessage = "Fail to save image: \(err)"
+//                return
+//            }
+            spaceRef.downloadURL { url, error in
                 if let err = error {
                     self.errorMessage = "Fail to retrive downloadURL image: \(err)"
                     return
@@ -190,6 +213,7 @@ class ChatsVM: ObservableObject {
         }
     }
     
+    
     //    MARK: - Send To Firebase
 	private func sendToFirebase() {
         var msg: Chat
@@ -198,18 +222,20 @@ class ChatsVM: ObservableObject {
 		
 		switch typeOfContent {
         case .text:
-            msg = Chat(id: nil, fromId: uid, toId: toId, text: self.chatText, photo: nil, audio: nil, timestamp: Date())
+            msg = Chat(id: nil, fromId: uid, toId: toId, text: self.chatText, photo: nil, audio: nil, audioTimer: nil, timestamp: Date())
         case .audio:
-            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: nil, audio: self.url?.absoluteString ?? "", timestamp: Date())
+            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: nil, audio: self.url?.absoluteString ?? "", audioTimer: self.audioTimer, timestamp: Date())
         case .photoalbum:
-            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: self.url?.absoluteString ?? "", audio: nil, timestamp: Date())
+            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: self.url?.absoluteString ?? "", audio: nil, audioTimer: nil, timestamp: Date())
         default:
-            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: nil, audio: self.url?.absoluteString ?? "", timestamp: Date())
+            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: nil, audio: self.url?.absoluteString ?? "", audioTimer: nil, timestamp: Date())
         }
 
 		saveToMessagesAndRecentMessages(msg)
-		self.chatText = ""
-		self.count += 1
+        DispatchQueue.main.async {
+            self.chatText = ""
+            self.count += 1
+        }
 	}
 	
 	private func saveToMessagesAndRecentMessages(_ chat: Chat) {

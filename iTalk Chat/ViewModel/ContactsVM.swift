@@ -37,14 +37,13 @@ final class ContactsVM: ObservableObject {
 	}
 	
 	private func fetchAllUsers() {
-        FirebaseManager.shared.firestore.collection("users").getDocuments { [self] documentsSnapshot, error in
+        FirebaseManager.shared.firestore.collection(FirebaseConstants.users).getDocuments { [self] documentsSnapshot, error in
 			#warning("TODO: get only users in contact app")
 			if let err = error {
 				self.errorMessage = "Failed to get all users: \(err)"
 				print(self.errorMessage)
 				return
 			}
-            
 			documentsSnapshot?.documents.forEach({ snapshot in
                 let data = snapshot.data()
                 let user = User(data: data)

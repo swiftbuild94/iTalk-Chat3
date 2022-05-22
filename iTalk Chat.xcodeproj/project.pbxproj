@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		18068E27280F8057005460FB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18068E26280F8057005460FB /* AudioRecorder.swift */; };
-		18068E2A280F80C3005460FB /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18068E29280F80C3005460FB /* Date+toString.swift */; };
+		18218ABA283A32D900401D29 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18218AB9283A32D900401D29 /* Double+Extension.swift */; };
+		18218ABC283A344400401D29 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18218ABB283A344400401D29 /* Date+Extension.swift */; };
 		183360EF2831835800F963DE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183360EE2831835800F963DE /* MapKit.framework */; };
 		183766762831C51B0065E2EC /* InputsButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183766752831C51B0065E2EC /* InputsButtons.swift */; };
 		183766782831C5AD0065E2EC /* ChatAudioBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183766772831C5AD0065E2EC /* ChatAudioBar.swift */; };
 		1837667A2831C5F50065E2EC /* ChatTextBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183766792831C5F50065E2EC /* ChatTextBar.swift */; };
 		184264D428332898004351E7 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184264D328332898004351E7 /* AudioPlayer.swift */; };
 		18506AC12831D71E00F777D2 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18506AC02831D71E00F777D2 /* String+Extension.swift */; };
-		18506AC32831DA4F00F777D2 /* String+isPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18506AC22831DA4F00F777D2 /* String+isPhone.swift */; };
 		1850823C2829BC2600B106AE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1850823B2829BC2600B106AE /* FirebaseAuth */; };
 		1850823E2829BC2600B106AE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1850823D2829BC2600B106AE /* FirebaseFirestore */; };
 		185082402829BC2600B106AE /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 1850823F2829BC2600B106AE /* FirebaseFirestoreSwift-Beta */; };
@@ -56,7 +56,8 @@
 
 /* Begin PBXFileReference section */
 		18068E26280F8057005460FB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
-		18068E29280F80C3005460FB /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
+		18218AB9283A32D900401D29 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		18218ABB283A344400401D29 /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		183360EB283182E700F963DE /* iTalk-Chat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "iTalk-Chat-Info.plist"; sourceTree = SOURCE_ROOT; };
 		183360EC2831830E00F963DE /* iTalk Chat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iTalk Chat.entitlements"; sourceTree = "<group>"; };
 		183360EE2831835800F963DE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -65,7 +66,6 @@
 		183766792831C5F50065E2EC /* ChatTextBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextBar.swift; sourceTree = "<group>"; };
 		184264D328332898004351E7 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		18506AC02831D71E00F777D2 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		18506AC22831DA4F00F777D2 /* String+isPhone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+isPhone.swift"; sourceTree = "<group>"; };
 		18682205282160B400223C62 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		18B6EA7127F11F9900E15BDE /* iTalk-Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTalk-Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B6EA7827F11F9A00E15BDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -159,10 +159,10 @@
 		1868DAD62832F9B9004B2BD9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				18218ABB283A344400401D29 /* Date+Extension.swift */,
 				18506AC02831D71E00F777D2 /* String+Extension.swift */,
 				18D1763E27FF868200EFFC63 /* Array+Extension.swift */,
-				18506AC22831DA4F00F777D2 /* String+isPhone.swift */,
-				18068E29280F80C3005460FB /* Date+toString.swift */,
+				18218AB9283A32D900401D29 /* Double+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -359,9 +359,7 @@
 				18B6EAA927F127C200E15BDE /* ContentView.swift in Sources */,
 				18D1763F27FF868200EFFC63 /* Array+Extension.swift in Sources */,
 				18B6EAB127F12A3200E15BDE /* LogInSignInVM.swift in Sources */,
-				18506AC32831DA4F00F777D2 /* String+isPhone.swift in Sources */,
 				18682206282160B400223C62 /* TimerManager.swift in Sources */,
-				18068E2A280F80C3005460FB /* Date+toString.swift in Sources */,
 				18B6EAA527F1230300E15BDE /* ImagePicker.swift in Sources */,
 				183766782831C5AD0065E2EC /* ChatAudioBar.swift in Sources */,
 				18068E27280F8057005460FB /* AudioRecorder.swift in Sources */,
@@ -372,10 +370,12 @@
 				18CC953F27F26686008EAE87 /* RecentMessage.swift in Sources */,
 				18B6EAAD27F129D500E15BDE /* SettingsView.swift in Sources */,
 				18B6EA8827F11FD800E15BDE /* FirebaseConstants.swift in Sources */,
+				18218ABC283A344400401D29 /* Date+Extension.swift in Sources */,
 				18B6EAAF27F129D500E15BDE /* LogInView.swift in Sources */,
 				18CC953627F2649D008EAE87 /* ContactsView.swift in Sources */,
 				18E6BB312833151B00350FA9 /* ImageZoom.swift in Sources */,
 				18CC954027F26686008EAE87 /* Chat.swift in Sources */,
+				18218ABA283A32D900401D29 /* Double+Extension.swift in Sources */,
 				183766762831C51B0065E2EC /* InputsButtons.swift in Sources */,
 				1837667A2831C5F50065E2EC /* ChatTextBar.swift in Sources */,
 				18EE916727F3A09C00516D3C /* HistoryCell.swift in Sources */,
@@ -522,10 +522,16 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iTalk-Chat-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to your camara to send photos or videos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location for map usage";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to send an audio message";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your library to save photos in the library";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your library to send photos or videos from your library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -554,10 +560,16 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iTalk-Chat-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to your camara to send photos or videos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need access to your location for map usage";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone to send an audio message";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need access to your library to save photos in the library";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your library to send photos or videos from your library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

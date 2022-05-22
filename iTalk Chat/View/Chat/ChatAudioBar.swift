@@ -19,7 +19,7 @@ struct ChatAudioBar: View {
                 print("Stop Recording")
                 self.audioIsRecording = false
                 self.audioRecorder.stopRecording()
-                self.timerManager.stopTimer()
+                let _ = self.timerManager.stopTimer()
             } label: {
                 Image(systemName: "trash.circle.fill")
                     .resizable()
@@ -30,13 +30,13 @@ struct ChatAudioBar: View {
                     .padding(.bottom, 40)
                     .padding(.leading, 40)
                 Spacer()
-                Text(String(format: "%.1f", timerManager.secondsElapsed))
+                Text(String(timerManager.secondsElapsed).prefix(4))
                     .dynamicTypeSize(.xxxLarge)
                 Spacer()
                 Button {
                     self.audioIsRecording = false
                     self.audioRecorder.stopRecording()
-                    self.timerManager.stopTimer()
+                    vmChat.audioTimer = self.timerManager.stopTimer()
                     if self.audioRecorder.getAudios() != nil {
                         vmChat.handleSend(.audio)
                     }

@@ -115,15 +115,18 @@ final class LogInSignInVM: ObservableObject {
 	
 	func persistImageToStorage() {
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-//		let fileName = UUID().uuidString
-		let ref = FirebaseManager.shared.storage.reference(withPath: uid)
+		let fileName = uid + ".jpg"
+        let storageRef = FirebaseManager.shared.storage.reference()
+        let photoRef = storageRef.child(FirebaseConstants.users)
+        let userRef = photoRef.child(fileName)
+		//let ref = FirebaseManager.shared.storage.reference(withPath: fileName)
 		guard let imageData = self.image?.jpegData(compressionQuality: 0.5) else { return }
-		ref.putData(imageData, metadata: nil) { metadata, error in
+		userRef.putData(imageData, metadata: nil) { metadata, error in
 			if let err = error {
 				self.errorMessage = "Fail to save image: \(err)"
 				return
 			}
-			ref.downloadURL { url, error in
+            userRef.downloadURL { url, error in
 				if let err = error {
 					self.errorMessage = "Fail to retrive downloadURL image: \(err)"
 					return
