@@ -59,12 +59,21 @@ struct SettingsView: View {
                     }
                     Spacer()
                 }
-                Picker(selection: $vmLogin.isBubblesBlue, label: Text("Bubbles Color")) {
+                Picker(selection: $vmLogin.bubbleColor, label: Text("Bubbles Color")) {
                     Text("Blue")
-                        .tag(true)
+                        .tag(BubbleColors.blue)
                     Text("Green")
-                        .tag(false)
+                        .tag(BubbleColors.green)
                 }.pickerStyle(InlinePickerStyle())
+                    .onChange(of: vmLogin.bubbleColor) { tag in
+                        switch tag {
+                        case .blue:
+                            UserDefaults.standard.set("blue", forKey: "bubbleColor")
+                        case .green:
+                            UserDefaults.standard.set("green", forKey: "bubbleColor")
+                        }
+                        
+                    }
                 Section {
                     Text("Chat Background")
                     Toggle("Auto play audio message", isOn: $isAutoPlayAudio)

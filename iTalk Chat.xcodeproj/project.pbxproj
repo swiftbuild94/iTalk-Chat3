@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		18068E27280F8057005460FB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18068E26280F8057005460FB /* AudioRecorder.swift */; };
+		181FA235283AB3DD00A0ADED /* BubbleColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181FA234283AB3DD00A0ADED /* BubbleColors.swift */; };
 		18218ABA283A32D900401D29 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18218AB9283A32D900401D29 /* Double+Extension.swift */; };
 		18218ABC283A344400401D29 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18218ABB283A344400401D29 /* Date+Extension.swift */; };
 		183360EF2831835800F963DE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183360EE2831835800F963DE /* MapKit.framework */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		18068E26280F8057005460FB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		181FA234283AB3DD00A0ADED /* BubbleColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleColors.swift; sourceTree = "<group>"; };
 		18218AB9283A32D900401D29 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		18218ABB283A344400401D29 /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		183360EB283182E700F963DE /* iTalk-Chat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "iTalk-Chat-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -117,6 +119,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18166D3E283AA58B006F57AB /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				18CC954227F266EC008EAE87 /* TypeOfContent.swift */,
+				181FA234283AB3DD00A0ADED /* BubbleColors.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		183360ED2831835800F963DE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,9 +231,9 @@
 		18CC954127F266A3008EAE87 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				18166D3E283AA58B006F57AB /* Enum */,
 				1868DAD62832F9B9004B2BD9 /* Extensions */,
 				1868DAD72832FA9D004B2BD9 /* Helpers */,
-				18CC954227F266EC008EAE87 /* TypeOfContent.swift */,
 				18B6EA7827F11F9A00E15BDE /* Assets.xcassets */,
 			);
 			path = Support;
@@ -376,6 +387,7 @@
 				18E6BB312833151B00350FA9 /* ImageZoom.swift in Sources */,
 				18CC954027F26686008EAE87 /* Chat.swift in Sources */,
 				18218ABA283A32D900401D29 /* Double+Extension.swift in Sources */,
+				181FA235283AB3DD00A0ADED /* BubbleColors.swift in Sources */,
 				183766762831C51B0065E2EC /* InputsButtons.swift in Sources */,
 				1837667A2831C5F50065E2EC /* ChatTextBar.swift in Sources */,
 				18EE916727F3A09C00516D3C /* HistoryCell.swift in Sources */,

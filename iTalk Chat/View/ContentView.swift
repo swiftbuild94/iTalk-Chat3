@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var vmLogin = LogInSignInVM()
-//    @ObservedObject private var vmContacts = ContactsVM()
+    @ObservedObject private var vmContacts = ContactsVM()
     //    @ObservedObject private var vmChats = ChatsVM(chatUser: nil)
 //    @State var isUserLoggedOut = false
     @State private var selection = 0
@@ -45,6 +45,8 @@ struct ContentView: View {
             LogInView(didCompleateLoginProcess: {
                 self.vmLogin.isUserLoggedOut = true
                 self.vmLogin.getCurrentUser()
+                self.vmContacts.getRecentMessagges()
+                self.vmContacts.getAllUsers()
             })
         }
     }
