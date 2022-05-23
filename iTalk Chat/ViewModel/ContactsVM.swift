@@ -79,7 +79,7 @@ final class ContactsVM: ObservableObject {
             .collection(FirebaseConstants.recentMessages)
             .document(uid)
             . collection(FirebaseConstants.messages)
-            .order(by: FirebaseConstants.timestamp, descending: true)
+            .order(by: FirebaseConstants.timestamp, descending: false)
             .addSnapshotListener { querySnapshot, error in
                 if let err = error {
                     self.errorMessage = "Failed to get all users: \(err)"

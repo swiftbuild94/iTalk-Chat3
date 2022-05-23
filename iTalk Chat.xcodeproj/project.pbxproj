@@ -47,6 +47,8 @@
 		18CC954027F26686008EAE87 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953D27F26685008EAE87 /* Chat.swift */; };
 		18CC954327F266EC008EAE87 /* TypeOfContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC954227F266EC008EAE87 /* TypeOfContent.swift */; };
 		18D1763F27FF868200EFFC63 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D1763E27FF868200EFFC63 /* Array+Extension.swift */; };
+		18E28761283C2E6500F84373 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E28760283C2E6500F84373 /* AudioToolbox.framework */; };
+		18E28763283C2FE200F84373 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 18E28762283C2FE200F84373 /* FirebaseMessaging */; };
 		18E6BB2F283314EB00350FA9 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6BB2E283314EB00350FA9 /* ImageView.swift */; };
 		18E6BB312833151B00350FA9 /* ImageZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6BB302833151B00350FA9 /* ImageZoom.swift */; };
 		18E6BB33283327B300350FA9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18E6BB32283327B300350FA9 /* GoogleService-Info.plist */; };
@@ -92,6 +94,7 @@
 		18CC953E27F26686008EAE87 /* RecentMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessage.swift; sourceTree = "<group>"; };
 		18CC954227F266EC008EAE87 /* TypeOfContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeOfContent.swift; sourceTree = "<group>"; };
 		18D1763E27FF868200EFFC63 /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
+		18E28760283C2E6500F84373 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		18E6BB2E283314EB00350FA9 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		18E6BB302833151B00350FA9 /* ImageZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoom.swift; sourceTree = "<group>"; };
 		18E6BB32283327B300350FA9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -107,9 +110,11 @@
 			files = (
 				185082472829BCDC00B106AE /* SDWebImageSwiftUI in Frameworks */,
 				185082402829BC2600B106AE /* FirebaseFirestoreSwift-Beta in Frameworks */,
+				18E28763283C2FE200F84373 /* FirebaseMessaging in Frameworks */,
 				18B180922832065F002A3195 /* FDWaveformView in Frameworks */,
 				1850823C2829BC2600B106AE /* FirebaseAuth in Frameworks */,
 				185082422829BC2600B106AE /* FirebaseStorage in Frameworks */,
+				18E28761283C2E6500F84373 /* AudioToolbox.framework in Frameworks */,
 				183360EF2831835800F963DE /* MapKit.framework in Frameworks */,
 				1850823E2829BC2600B106AE /* FirebaseFirestore in Frameworks */,
 				185082442829BC2600B106AE /* FirebaseStorageSwift-Beta in Frameworks */,
@@ -131,6 +136,7 @@
 		183360ED2831835800F963DE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18E28760283C2E6500F84373 /* AudioToolbox.framework */,
 				183360EE2831835800F963DE /* MapKit.framework */,
 			);
 			name = Frameworks;
@@ -303,6 +309,7 @@
 				185082432829BC2600B106AE /* FirebaseStorageSwift-Beta */,
 				185082462829BCDC00B106AE /* SDWebImageSwiftUI */,
 				18B180912832065F002A3195 /* FDWaveformView */,
+				18E28762283C2FE200F84373 /* FirebaseMessaging */,
 			);
 			productName = "iTalk Chat";
 			productReference = 18B6EA7127F11F9900E15BDE /* iTalk-Chat.app */;
@@ -330,6 +337,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"es-419",
+				es,
 			);
 			mainGroup = 18B6EA6827F11F9900E15BDE;
 			packageReferences = (
@@ -684,6 +693,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 18B180902832065E002A3195 /* XCRemoteSwiftPackageReference "FDWaveformView" */;
 			productName = FDWaveformView;
+		};
+		18E28762283C2FE200F84373 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1850823A2829BC2600B106AE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
