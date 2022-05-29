@@ -9,12 +9,14 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestoreSwift
+import FirebaseStorage
+import FirebaseStorageSwift
 
 final class ContactsVM: ObservableObject {
 	@Published var users = [User]()
     @Published var unshownUsers = [User]()
 	@Published var usersDictionary = [String: User]()
-    var unshownUsersDictionary = [String: User]()
+    @Published var unshownUsersDictionary = [String: User]()
 	@Published var currentUser: User?
     @Published var myUser: User?
     @Published var myUserUid = ""
@@ -22,6 +24,7 @@ final class ContactsVM: ObservableObject {
     @Published var myUserPhoto = ""
 	@Published var errorMessage = ""
     @Published var count = 0
+    @Published var isShowChat = false
 //    @Published var namesX = [String]()
 //	@Published var isUserLoggedOut = true
     @Published var recentMessages = [RecentMessage]()
@@ -103,6 +106,8 @@ final class ContactsVM: ObservableObject {
                             }
                         }
                         self.unshownUsers = Array(self.unshownUsersDictionary.values.map { $0 })
+                        
+                        self.recentMessages.sort(by: { $0.timestamp < $1.timestamp })
                         print(String(describing: self.unshownUsers))
                     } catch {
                         print(error)

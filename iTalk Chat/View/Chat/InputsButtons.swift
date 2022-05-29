@@ -16,7 +16,7 @@ struct InputsButtons: View {
 //    @State var typeOfContent: TypeOfContent
     @ObservedObject var vm: ChatsVM
     
-    private let buttonsSize: CGFloat = 24
+    private let buttonsSize: CGFloat = 32
     
     var body: some View {
         HStack {

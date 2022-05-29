@@ -1,5 +1,5 @@
 //
-//  ImageView.swift
+//  PhotoView.swift
 //  iTalk Chat
 //
 //  Created by Patricio Benavente on 16/05/2022.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct ImageView: View {
+struct PhotoView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Image(systemName: "ant.fill")
     }
 }
 
 struct Image_Previews: PreviewProvider {
     static var previews: some View {
-        ImageView()
+        PhotoView()
     }
 }

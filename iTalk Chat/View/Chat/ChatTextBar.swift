@@ -21,8 +21,8 @@ struct ChatTextBar: View {
 //        Text(vm.errorMessage)
         HStack {
 //            DescriptionPlaceholder()
-            // TextField("", text: $vmChat.chatText)
-            TextEditor(text: $vmChat.chatText)
+            TextField("", text: $vmChat.chatText)
+            //TextEditor(text: $vmChat.chatText)
                 .focused($focus)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.top)

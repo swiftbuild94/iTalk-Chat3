@@ -29,22 +29,32 @@ struct iTalkView: View {
 //                            HistoryCell(contact: user!, recentMessage: recentMessage)
 //                        }
 //                    }
-                    ForEach(vm.users, id:\.self) { contact in
-                        NavigationLink(destination: ChatView(chatUser: contact)) {
-//                            Text(contact.name)
-                            ContactCell(contact: contact)
+//                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        ForEach(vm.users, id:\.self) { contact in
+                            NavigationLink(destination: ChatView(chatUser: contact)) {
+                                ContactCell(contact: contact)
+                            }
                         }
-                    }
-                    
-                }   
-//			if $vm.contacts != [] {
-//				Grid(contacts!) { contact in
-//					 Text("Count: \(contacts.count)")
-//					NavigationLink(destination: ChatView(contact: contact)) {
-//						ContactsView(contact: contact)
-//					}
-//				}
-//			}
+//                    } else {
+//                        ForEach(vm.users, id:\.self) { contact in
+//                            Button {
+//                                vm.currentUser = contact
+//                                vm.isShowChat = true
+//                                print("Button Pressed for: \(String(describing: vm.currentUser?.name))")
+//                            } label: {
+//                                ContactCell(contact: contact)
+//                            }
+//                        }
+//                    }
+                    //			if $vm.contacts != [] {
+                    //				Grid(contacts!) { contact in
+                    //					 Text("Count: \(contacts.count)")
+                    //					NavigationLink(destination: ChatView(contact: contact)) {
+                    //						ContactsView(contact: contact)
+                    //					}
+                    //				}
+                    //			}
+                }
                 .navigationBarTitle(Text("iTalk"))
 		}
 	

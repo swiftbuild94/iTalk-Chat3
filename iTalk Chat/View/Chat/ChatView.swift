@@ -73,6 +73,8 @@ struct ChatView: View {
             .fullScreenCover(isPresented: $vmChat.shouldShowImagePicker, onDismiss: {
                 if vmChat.image != nil {
                     vmChat.handleSend(.photoalbum)
+                    vmChat.count += 1
+                    vmChat.getMessages()
                 }
             }) {
                 ImagePicker(selectedImage: $vmChat.image, didSet: $shouldShowImagePicker)
@@ -163,7 +165,7 @@ struct MessageView: View {
                         Bubble(vm: vm, message: message)
                     }
 					.padding()
-                    .background(.gray)
+                    .background(vm.bubbleColor)
 					.cornerRadius(8)
 				}
 				.padding(.horizontal)
@@ -174,7 +176,7 @@ struct MessageView: View {
                         Bubble(vm: vm, message: message)
                     }
                     .padding()
-                    .background(vm.bubbleColor)
+                    .background(.gray)
 					.cornerRadius(8)
 					Spacer()
 				}
@@ -207,16 +209,19 @@ struct showText: View {
         if let text = message.text {
             if ((text.prefix(7) == "http://") || (message.text?.prefix(8) == "https://")) {
                 Link(text, destination: URL(string: text)!)
-                    .foregroundColor(.red)
+                    .foregroundColor(.blue)
             } else if text.prefix(4) == "www." {
                 Link(text, destination: URL(string: "http://" + text)!)
-                    .foregroundColor(.red)
+                    .foregroundColor(.blue)
             } else if text.isEmail() {
-                Link(text, destination: URL(string: "mailto://" + text)!)
-                    .foregroundColor(.red)
+                Link(text, destination: URL(string: "mailto:" + text)!)
+                    .foregroundColor(.blue)
+            } else if text.contains("://") {
+                    Link(text, destination: URL(string: text)!)
+                        .foregroundColor(.blue)
             } else if text.isPhone() {
                 Link(text, destination: URL(string: "phone://" + text)!)
-                    .foregroundColor(.red)
+                    .foregroundColor(.blue)
             } else {
                 Text(text)
                     .foregroundColor(.white)

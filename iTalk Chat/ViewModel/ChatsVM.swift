@@ -25,6 +25,9 @@ class ChatsVM: ObservableObject {
     @Published var shouldShowLocation = false
     @Published var shouldShowDocument = false
     @Published var focus = false
+    @Published var isShowAlert = false
+    @Published var alertTitle = ""
+    @Published var alertMessage = ""
     @Published var image: UIImage?
     @Published var data: Data?
     @State var bubbleColor: Color = Color.green
@@ -54,7 +57,14 @@ class ChatsVM: ObservableObject {
         }
     }
     
+    
     // MARK: - Fetch Messages
+    func getMessages() {
+        DispatchQueue.main.async {
+            self.fetchMessages()
+        }
+    }
+    
     private func fetchMessages() {
         guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
         guard let toId = chatUser?.uid else { return }
@@ -64,14 +74,13 @@ class ChatsVM: ObservableObject {
             .collection(FirebaseConstants.messages)
             .document(fromId)
             .collection(toId)
-            .order(by: FirebaseConstants.timestamp, descending: true)
+            .order(by: FirebaseConstants.timestamp, descending: false)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     self.errorMessage = "Failed to listen for messages: \(error)"
                     print("Error listen message: \(error)")
                     return
                 }
-                
                 querySnapshot?.documentChanges.forEach({ change in
                     if change.type == .added {
                         do {
@@ -210,13 +219,15 @@ class ChatsVM: ObservableObject {
         let photoRef = ref.child(FirebaseConstants.photos)
         let fileName = String(UUID().description) + ".jpg"
         let spaceRef = photoRef.child(fileName)
+        let metaData = StorageMetadata()
+            metaData.contentType = "image/jpg"
         print("Full Path: \(ref.fullPath)")
         print("Name: \(ref.name)")
-        spaceRef.putData(imageData) { result in
-//            if let err = error {
-//                self.errorMessage = "Fail to save image: \(err)"
-//                return
-//            }
+        spaceRef.putData(imageData, metadata: metaData) { (metadata, error) in
+            if let err = error {
+                self.errorMessage = "Fail to save image: \(err)"
+                return
+            }
             spaceRef.downloadURL { url, error in
                 if let err = error {
                     self.errorMessage = "Fail to retrive downloadURL image: \(err)"

@@ -33,6 +33,15 @@ class AudioRecorder: ObservableObject {
                     isAllowed = true
                     print("Audio -> Allowed to Record")
                 } else {
+                    let vmAlerts = Alerts()
+                    vmAlerts.showCancel = true
+                    vmAlerts.title = "Audio Recording"
+                    vmAlerts.message = "Audio recording not allowed please change settings in Settings"
+                    vmAlerts.defaultText = "Go to Settings"
+                    vmAlerts.okHandler = {
+                        print("Go to Settings")
+                    }
+                    vmAlerts.isAlert = true
                     print("Error Session Recording")
                 }
             }
