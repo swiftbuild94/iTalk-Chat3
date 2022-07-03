@@ -8,7 +8,6 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import FDWaveformView
 
 struct ChatView: View {
 	@Environment(\.presentationMode) var chatMode
@@ -146,7 +145,6 @@ struct MessagesView: View {
             }
         }
 //        .background(.gray)
-        #warning("TODO: Image Background")
 	}
 }
 
@@ -216,7 +214,7 @@ struct showText: View {
             } else if text.isEmail() {
                 Link(text, destination: URL(string: "mailto:" + text)!)
                     .foregroundColor(.blue)
-            } else if text.contains("://") {
+//            } else if text.contains("://") {
                     Link(text, destination: URL(string: text)!)
                         .foregroundColor(.blue)
             } else if text.isPhone() {

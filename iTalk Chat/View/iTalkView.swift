@@ -18,23 +18,23 @@ struct iTalkView: View {
 
 	var body: some View {
 		NavigationView {
-                ScrollView {
-                    Text(vm.errorMessage)
-                        .foregroundColor(Color.red)
-//                    ForEach(vm.recentMessages, id:\.self) { recentMessage in
-//                        let uid = recentMessage.toId
-//                        let user = vm.usersDictionary[uid]
-//
-//                        NavigationLink(destination: ChatView(chatUser: user!)) {
-//                            HistoryCell(contact: user!, recentMessage: recentMessage)
-//                        }
-//                    }
-//                    if UIDevice.current.userInterfaceIdiom == .pad {
-                        ForEach(vm.users, id:\.self) { contact in
-                            NavigationLink(destination: ChatView(chatUser: contact)) {
-                                ContactCell(contact: contact)
-                            }
+            Text(vm.errorMessage)
+                .foregroundColor(Color.red)
+            ScrollView {
+                    ForEach(vm.recentMessages, id:\.self) { recentMessage in
+                        let uid = recentMessage.toId
+                        let user = vm.usersDictionary[uid]
+
+                        NavigationLink(destination: ChatView(chatUser: user!)) {
+                            HistoryCell(contact: user!, recentMessage: recentMessage)
                         }
+                    }
+//                    if UIDevice.current.userInterfaceIdiom == .pad {
+//                        ForEach(vm.users, id:\.self) { contact in
+//                            NavigationLink(destination: ChatView(chatUser: contact)) {
+//                                ContactCell(contact: contact)
+//                            }
+//                        }
 //                    } else {
 //                        ForEach(vm.users, id:\.self) { contact in
 //                            Button {

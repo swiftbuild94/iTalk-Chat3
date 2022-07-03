@@ -58,6 +58,7 @@ final class ContactsVM: ObservableObject {
                     print(">>>>FETCH ALL USERS<<<<")
                     DispatchQueue.main.async {
                         self.users.append(.init(data: data))
+                        print(self.users)
                         self.usersDictionary[user.uid] = (.init(data: data))
                         self.unshownUsersDictionary[user.uid] = (.init(data: data))
                     }
@@ -77,7 +78,7 @@ final class ContactsVM: ObservableObject {
 		self.recentMessages.removeAll()
         self.firestoreListener?.remove()
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
-        print(">>>>>>fetchRecentMessages")
+        //print(">>>>>>fetchRecentMessages")
         firestoreListener = FirebaseManager.shared.firestore
             .collection(FirebaseConstants.recentMessages)
             .document(uid)
@@ -97,12 +98,15 @@ final class ContactsVM: ObservableObject {
                         self.recentMessages.remove(at: index)
                     }
                     do {
-                        if let rm = try change.document.data(as: RecentMessage.self) {
+                        if let rm = try change.document.data(as: RecentMessage?.self) {
                             print(">>>>>Fetch Recent Messages<<<<<")
                             DispatchQueue.main.async { [self] in
                                 self.recentMessages.append(rm)
-                                print("RecentMessages: \(self.recentMessages)")
+                                //print("RecentMessages: \(self.recentMessages)")
                                 self.unshownUsersDictionary.removeValue(forKey: rm.toId)
+                                
+                                let user = self.usersDictionary[rm.toId]
+                              //  NotificationManager().sendNotification(title: "iTalk", subtitle: user?.name, body: rm.text, launchIn: 1)
                             }
                         }
                         self.unshownUsers = Array(self.unshownUsersDictionary.values.map { $0 })

@@ -131,7 +131,6 @@ struct LogInView: View {
                                   .submitLabel(.join)
                           }.textFieldStyle(RoundedBorderTextFieldStyle())
                               .padding(12)
-                              .background(Color.white)
                               .disableAutocorrection(true)
                               .font(.system(size: 24))
                           Spacer()
@@ -157,8 +156,7 @@ struct LogInView: View {
                           }
                           .textFieldStyle(RoundedBorderTextFieldStyle())
                               .padding(12)
-                              .background(Color.white)
-                              .disableAutocorrection(true)
+                             .disableAutocorrection(true)
                       }
                   }
                  
@@ -167,13 +165,13 @@ struct LogInView: View {
                   }, label: {
                       Text(vm.isLoginMode ? "Log In" : "Create Account" )
                           .font(.headline)
-                          .foregroundColor(.white)
                           .padding(.vertical, 10)
                   })
-//                      .buttonStyle(.bordered)
-//                      .background(Color.blue)
+                  .buttonBorderShape(.capsule)
+                  .buttonStyle(.bordered)
+                      .background(Color.blue)
                       .buttonStyle(.borderedProminent)
-                      .buttonBorderShape(.roundedRectangle(radius: 10))
+                     
                       .controlSize(.regular)
                       .padding()
                   Text(vm.errorMessage)

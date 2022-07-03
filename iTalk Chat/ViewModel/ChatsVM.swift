@@ -84,7 +84,7 @@ class ChatsVM: ObservableObject {
                 querySnapshot?.documentChanges.forEach({ change in
                     if change.type == .added {
                         do {
-                            if let chats = try change.document.data(as: Chat.self) {
+                            if let chats = try change.document.data(as: Chat?.self) {
                                 self.chatMessages.append(chats)
                             }
                             self.chatMessages.sort(by: { $0.timestamp < $1.timestamp })
