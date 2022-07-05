@@ -46,8 +46,9 @@ struct ContentView: View {
             LogInView(didCompleateLoginProcess: {
                 self.vmLogin.isUserLoggedOut = true
                 self.vmLogin.getCurrentUser()
-                self.vmContacts.getRecentMessagges()
                 self.vmContacts.getAllUsers()
+                self.vmContacts.getRecentMessagges()
+              
             })
         }
         .fullScreenCover(isPresented: $vmContacts.isShowChat) {
