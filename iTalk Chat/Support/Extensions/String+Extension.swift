@@ -31,12 +31,15 @@ extension UITextField {
     }
 }
 
-let __phoneRegex = "[0-9]([0-9+-]{0,30}[0-9])?"
-let __phonePredicate = NSPredicate(format: "SELF MATCHES %@", __phoneRegex)
-
+let phonePattern = #"^\(?\d{3}\)?[ -]?\d{3}[ -]?\d{4}$"#
 extension String {
     func isPhone() -> Bool {
-        return __phonePredicate.evaluate(with: self)
+     let result = self.range(
+            of: phonePattern,
+            options: .regularExpression
+        )
+        let validPhoneNumber = (result != nil)
+        return validPhoneNumber
     }
 }
 
@@ -45,37 +48,3 @@ extension UITextField {
         return self.text?.isPhone() ?? false
     }
 }
-
-
-//var supIsValidEmailAddress: Bool {
-//        return self.contains(".")
-//            && self.contains("@")
-//            && self.count >= 6 // "a@b.cd".count
-//            && self.first != .some("@")
-//            && self.last != .some("@")
-//            && self.last != .some(".")
-//            && self.dropLast(1).last != .some(".")
-//    }
-//
-//    var supValidateAsEmailAddress: Validation {
-//        return isEmpty ? .valid : supIsValidEmailAddress ? .valid : .invalid(error: Locales.commonTextInputEmailErrorInvalid)
-//    }
-
-//var supIsValidPhoneNumber: Bool {
-//      return lowercased().allSatisfy { !"abcdefghijklmnopqrstuvwxzy".contains($0) }
-//  }
-//
-//  var supValidateAsPhoneNumber: Validation {
-//      return isEmpty ? .none : supIsValidPhoneNumber ? .valid : .invalid(error: Locales.commonTextInputPhoneErrorInvalid )
-//  }
-//
-//  var supIsValidSmsVerificationCode: Bool {
-//      return count == 4
-//          && allSatisfy { "0123456789".contains($0) }
-//  }
-//
-//  var supValidateAsSmsVerificationCode: Validation {
-//      return isEmpty ? .none : supIsValidSmsVerificationCode ? .valid : .invalid(error: Locales.enterPhoneVerificationTextInputCodeErrorEnterFourNumbers)
-//  }
-
-
