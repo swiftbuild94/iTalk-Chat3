@@ -1,0 +1,13 @@
+{
+    "Simulator Target Bundle": "Notification.apns",
+    "aps": {
+        "alert": {
+            "title": "New Message",
+            "subtitle": "Patricio Benavente",
+            "body" : "Esto es un test de un mensaje",
+            "badge" : 9,
+            "sound" : "bingbong.aiff"
+        },
+    "category" : "GAME_INVITATION"
+    }
+}

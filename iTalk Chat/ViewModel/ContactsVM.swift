@@ -31,6 +31,11 @@ final class ContactsVM: ObservableObject {
 	var selectedUser: String?
     private var firestoreListener: ListenerRegistration?
     
+    init() {
+        getAllUsers()
+        getRecentMessagges()
+    }
+    
     deinit {
         firestoreListener?.remove()
     }
@@ -58,7 +63,7 @@ final class ContactsVM: ObservableObject {
                     print(">>>>FETCH ALL USERS<<<<")
                     DispatchQueue.main.async {
                         self.users.append(.init(data: data))
-                        print(self.users)
+                       // print(self.users)
                         self.usersDictionary[user.uid] = (.init(data: data))
                         self.unshownUsersDictionary[user.uid] = (.init(data: data))
                     }
@@ -106,13 +111,13 @@ final class ContactsVM: ObservableObject {
                                 self.unshownUsersDictionary.removeValue(forKey: rm.toId)
                                 
                                 let user = self.usersDictionary[rm.toId]
-                              //  NotificationManager().sendNotification(title: "iTalk", subtitle: user?.name, body: rm.text, launchIn: 1)
+                               NotificationManager().sendNotification(title: "iTalk", subtitle: user?.name, body: rm.text, launchIn: 1)
                             }
                         }
                         self.unshownUsers = Array(self.unshownUsersDictionary.values.map { $0 })
                         
                         self.recentMessages.sort(by: { $0.timestamp < $1.timestamp })
-                        print(String(describing: self.unshownUsers))
+                        print("Unshown Users: \(String(describing: self.unshownUsers))")
                     } catch {
                         print(error)
                     }

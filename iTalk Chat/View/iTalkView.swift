@@ -10,50 +10,20 @@ import SwiftUI
 
 struct iTalkView: View {
 	@ObservedObject private var vm = ContactsVM()
-    
-    init(){
-        vm.getAllUsers()
-        vm.getRecentMessagges()
-    }
 
 	var body: some View {
 		NavigationView {
             Text(vm.errorMessage)
                 .foregroundColor(Color.red)
             ScrollView {
-                    ForEach(vm.recentMessages, id:\.self) { recentMessage in
-                        let uid = recentMessage.toId
-                        let user = vm.usersDictionary[uid]
-
-                        NavigationLink(destination: ChatView(chatUser: user!)) {
-                            HistoryCell(contact: user!, recentMessage: recentMessage)
+                    ForEach(vm.users, id:\.self) { user in
+                        if let user = user {
+                            NavigationLink(destination: ChatView(chatUser: user)) {
+                                ContactCell(contact: user)
+                            }
                         }
                     }
 //                    if UIDevice.current.userInterfaceIdiom == .pad {
-//                        ForEach(vm.users, id:\.self) { contact in
-//                            NavigationLink(destination: ChatView(chatUser: contact)) {
-//                                ContactCell(contact: contact)
-//                            }
-//                        }
-//                    } else {
-//                        ForEach(vm.users, id:\.self) { contact in
-//                            Button {
-//                                vm.currentUser = contact
-//                                vm.isShowChat = true
-//                                print("Button Pressed for: \(String(describing: vm.currentUser?.name))")
-//                            } label: {
-//                                ContactCell(contact: contact)
-//                            }
-//                        }
-//                    }
-                    //			if $vm.contacts != [] {
-                    //				Grid(contacts!) { contact in
-                    //					 Text("Count: \(contacts.count)")
-                    //					NavigationLink(destination: ChatView(contact: contact)) {
-                    //						ContactsView(contact: contact)
-                    //					}
-                    //				}
-                    //			}
                 }
                 .navigationBarTitle(Text("iTalk"))
 		}
