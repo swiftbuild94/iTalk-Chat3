@@ -14,11 +14,6 @@ struct HistoryView: View {
 	@State private var shouldNavigateToChatView = false
 	@State private var userSelected: User?
     
-    init() {
-        vm.getAllUsers()
-        vm.getRecentMessagges()
-    }
-    
     var body: some View {
         NavigationView {
                 ScrollView {
