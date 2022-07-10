@@ -19,12 +19,12 @@ struct User: Identifiable, Codable, Hashable {
     var profileImageURL: String?
     
     init(data: [String:Any]){
-        self.uid = data["uid"] as? String ?? ""
-        self.name = data["name"] as? String ?? ""
-        self.email = data["email"] as? String
-        self.photo = data["photo"] as? String
-        self.profileImageURL = data["profileImageURL"] as? String
-        self.phoneNumber = data["phone"] as? String
+        self.uid = data[FirebaseConstants.uid] as? String ?? ""
+        self.name = data[FirebaseConstants.name] as? String ?? ""
+        self.email = data[FirebaseConstants.email] as? String
+        self.photo = data[FirebaseConstants.photo] as? String
+        self.profileImageURL = data[FirebaseConstants.profileImageUrl] as? String
+        self.phoneNumber = data[FirebaseConstants.phone] as? String
     }
     
     // MARK: - Mutating User Func
