@@ -207,6 +207,9 @@
 		1868DAD72832FA9D004B2BD9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				18068E26280F8057005460FB /* AudioRecorder.swift */,
+				184264D328332898004351E7 /* AudioPlayer.swift */,
+				18682205282160B400223C62 /* TimerManager.swift */,
 				18B6EAA427F1230300E15BDE /* ImagePicker.swift */,
 				18EE916A27F3A43000516D3C /* GridLayout.swift */,
 				18EE916827F3A3FF00516D3C /* Grid.swift */,
@@ -285,12 +288,9 @@
 		18F1BCF32804B5A800300591 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				18068E26280F8057005460FB /* AudioRecorder.swift */,
 				18B6EAB827F13C1500E15BDE /* ContactsVM.swift */,
 				18CC953B27F2665C008EAE87 /* ChatsVM.swift */,
 				18B6EAB027F12A3100E15BDE /* LogInSignInVM.swift */,
-				184264D328332898004351E7 /* AudioPlayer.swift */,
-				18682205282160B400223C62 /* TimerManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
