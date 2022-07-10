@@ -45,6 +45,7 @@
 		18B6EAB927F13C1500E15BDE /* ContactsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EAB827F13C1500E15BDE /* ContactsVM.swift */; };
 		18B6EABB27F13C6400E15BDE /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EABA27F13C6400E15BDE /* HistoryView.swift */; };
 		18BDC738287A8982000265A4 /* FirebaseDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BDC737287A8982000265A4 /* FirebaseDocument.swift */; };
+		18BDC73A287A8D11000265A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 18BDC739287A8D11000265A4 /* README.md */; };
 		18CC953427F2577B008EAE87 /* iTalkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953327F2577B008EAE87 /* iTalkView.swift */; };
 		18CC953627F2649D008EAE87 /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953527F2649D008EAE87 /* ContactsView.swift */; };
 		18CC953827F264B0008EAE87 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953727F264AF008EAE87 /* ContactCell.swift */; };
@@ -98,6 +99,7 @@
 		18B6EAB827F13C1500E15BDE /* ContactsVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsVM.swift; sourceTree = "<group>"; };
 		18B6EABA27F13C6400E15BDE /* HistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		18BDC737287A8982000265A4 /* FirebaseDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDocument.swift; sourceTree = "<group>"; };
+		18BDC739287A8D11000265A4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		18CC953327F2577B008EAE87 /* iTalkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTalkView.swift; sourceTree = "<group>"; };
 		18CC953527F2649D008EAE87 /* ContactsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		18CC953727F264AF008EAE87 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 		18B6EA6827F11F9900E15BDE = {
 			isa = PBXGroup;
 			children = (
+				18BDC739287A8D11000265A4 /* README.md */,
 				18B6EA7327F11F9900E15BDE /* iTalk Chat */,
 				18B6EA7227F11F9900E15BDE /* Products */,
 				183360ED2831835800F963DE /* Frameworks */,
@@ -386,6 +389,7 @@
 			files = (
 				18B6EA7C27F11F9A00E15BDE /* Preview Assets.xcassets in Resources */,
 				18B6EA7927F11F9A00E15BDE /* Assets.xcassets in Resources */,
+				18BDC73A287A8D11000265A4 /* README.md in Resources */,
 				18E6BB33283327B300350FA9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
