@@ -6,7 +6,7 @@ iTalk is a communications app.
 
 Can send audio chat, text chat, photos, videos, location, documentation, or contact info. Priority audio chat.
 
-![iTalk](images/iTalk.png) 
+![iTalk](Images/iTalk.png) 
 
 ## Topics
 
