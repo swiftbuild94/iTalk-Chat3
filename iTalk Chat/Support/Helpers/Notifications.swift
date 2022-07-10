@@ -8,12 +8,14 @@
 import NotificationCenter
 import UserNotifications
 
-class NotificationManager: ObservableObject {
+/// Manage the Notifications
+final class NotificationManager: ObservableObject {
     var notifications = [Notification]()
     
     init() {
         notificationsAllowed()
     }
+    
     func notificationsAllowed() {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
@@ -27,9 +29,14 @@ class NotificationManager: ObservableObject {
         }
     }
     
-    func sendNotification(title: String, subtitle: String?, body: String, launchIn: Double) {
+    func sendNotification(title: String, subtitle: String?, body: String, launchIn: Double, badge: Int = 0) {
+        print("Badge: \(badge)")
+        if badge > 0 {
+                UIApplication.shared.applicationIconBadgeNumber = badge
+        }
         let content = UNMutableNotificationContent()
         content.title = title
+        content.sound = UNNotificationSound.defaultCriticalSound(withAudioVolume: 1)
         if let subtitle = subtitle {
             content.subtitle = subtitle
         }
@@ -39,9 +46,16 @@ class NotificationManager: ObservableObject {
         guard let imageUrl = Bundle.main.url(forResource: imageName, withExtension: "jpg") else { return }
         let attachment = try! UNNotificationAttachment(identifier: imageName, url: imageUrl, options: .none)
         content.attachments = [attachment]
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: launchIn, repeats: false)
-        let request = UNNotificationRequest(identifier: "iTalk", content: content, trigger: trigger)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: launchIn, repeats: true)
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.add(request) { (error) in
+            if error != nil {
+                print("NOTIFICATION: Error")
+            }
+        }
     }
 }
 

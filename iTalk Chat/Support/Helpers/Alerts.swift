@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-class Alerts: ObservableObject {
+/// Shows Alerts
+final class Alerts: ObservableObject {
     @Published var title = ""
     @Published var message = ""
     @Published var isAlert = false

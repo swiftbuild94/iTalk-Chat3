@@ -10,21 +10,8 @@ import FirebaseFirestoreSwift
 import FirebaseStorage
 import FirebaseStorageSwift
 
-struct FirebaseDocument {
-	var firstCollection: String
-	var firstDocument: String
-	var secondCollection: String
-	var secondDocument: String?
-    
-    init(firstCollection: String, firstDocument: String, secondCollection: String, secondDocument: String?){
-        self.firstCollection = firstCollection
-        self.firstDocument = firstDocument
-        self.secondCollection = secondCollection
-        self.secondDocument = secondDocument
-    }
-}
-
-class FirebaseManager: NSObject {
+/// For managing Firebase
+final class FirebaseManager: NSObject {
 	
 	let auth: Auth
 	let storage: Storage
