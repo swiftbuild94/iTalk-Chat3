@@ -26,7 +26,7 @@ struct HistoryCell: View {
                 HStack(spacing: contactSpacing) {
                     if contact.profileImageURL != nil {
 //                        Text(contact.profileImageURL ?? "Empty")
-                        Image(contact.profileImageURL ?? "")
+                        //Image(contact.profileImageURL ?? "")
                         WebImage(url: URL(string: contact.profileImageURL ?? ""))
                             .resizable()
                             .scaledToFill()
@@ -43,15 +43,9 @@ struct HistoryCell: View {
 //                            .font(.system(size: contactSize, weight: .bold))
                             .dynamicTypeSize(.large)
                         Spacer()
-                        HStack {
-                            Text(recentMessage.text)
-                                .font(.subheadline)
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(recentMessage.timeAgo)
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
-                        }
+                        Text(contact.email ?? "")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                     }
                     Spacer()
                 }.padding(.horizontal)

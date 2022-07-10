@@ -13,21 +13,20 @@ struct iTalkView: View {
 
 	var body: some View {
 		NavigationView {
-            Text(vm.errorMessage)
-                .foregroundColor(Color.red)
             ScrollView {
-                    ForEach(vm.users, id:\.self) { user in
-                        if let user = user {
-                            NavigationLink(destination: ChatView(chatUser: user)) {
-                                ContactCell(contact: user)
-                            }
+                Text(vm.errorMessage)
+                    .foregroundColor(Color.red)
+                ForEach(vm.users, id:\.self) { user in
+                    if let user = user {
+                        NavigationLink(destination: ChatView(chatUser: user)) {
+                            ContactCell(contact: user)
                         }
                     }
-//                    if UIDevice.current.userInterfaceIdiom == .pad {
                 }
+//                    if UIDevice.current.userInterfaceIdiom == .pad {
+            }
                 .navigationBarTitle(Text("iTalk"))
-		}
-	
+        }
 	}
 }
 

@@ -22,8 +22,10 @@ struct HistoryView: View {
                     ForEach(vm.recentMessages, id:\.self) { recentMessage in
                         let uid = recentMessage.toId
                         let user = vm.usersDictionary[uid]
-                        NavigationLink(destination: ChatView(chatUser: user!)) {
-                            HistoryCell(contact: user!, recentMessage: recentMessage)
+                        if let user = user {
+                            NavigationLink(destination: ChatView(chatUser: user)) {
+                                HistoryCell(contact: user, recentMessage: recentMessage)
+                            }
                         }
                     }
                 }
@@ -31,8 +33,6 @@ struct HistoryView: View {
         }
     }
 }
-
-
 
 
 struct HistoryView_Previews: PreviewProvider {
