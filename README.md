@@ -1,4 +1,4 @@
 
 UNDER DEVELOPMENT
 
-![iTalk](docs/images/iTalk.png) 
+![iTalk](images/iTalk.png) 
