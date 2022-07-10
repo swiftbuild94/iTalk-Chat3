@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-class TimerManager: ObservableObject {
+/// Returns a Timer with second Elapsed
+final class TimerManager: ObservableObject {
     @Published var secondsElapsed = 0.0
     private var timer = Timer()
     

@@ -12,6 +12,9 @@ import FirebaseFirestoreSwift
 import FirebaseStorage
 import FirebaseStorageSwift
 
+/// To Get All Users and Recent Messages
+///
+/// Used in iTalkView and HistoryView
 final class ContactsVM: ObservableObject {
 	@Published var users = [User]()
     @Published var unshownUsers = [User]()
@@ -25,6 +28,7 @@ final class ContactsVM: ObservableObject {
 	@Published var errorMessage = ""
     @Published var count = 0
     @Published var isShowChat = false
+    @ObservedObject var notificationManager = NotificationManager()
 //    @Published var namesX = [String]()
 //	@Published var isUserLoggedOut = true
     @Published var recentMessages = [RecentMessage]()
@@ -61,14 +65,15 @@ final class ContactsVM: ObservableObject {
                 let user = User(data: data)
 				if user.uid != FirebaseManager.shared.auth.currentUser?.uid {
                     print(">>>>FETCH ALL USERS<<<<")
-                    DispatchQueue.main.async {
+                   // DispatchQueue.main.async {
                         self.users.append(.init(data: data))
-                       // print(self.users)
+                        //print("User: \(self.users)")
                         self.usersDictionary[user.uid] = (.init(data: data))
                         self.unshownUsersDictionary[user.uid] = (.init(data: data))
-                    }
+                    //}
 				}
 			})
+                print("Users Count: \(self.users.count)")
 		}
 	}
 	
@@ -80,6 +85,7 @@ final class ContactsVM: ObservableObject {
 	}
 	
 	private func fetchRecentMessages() {
+        var badge = 0
 		self.recentMessages.removeAll()
         self.firestoreListener?.remove()
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
@@ -105,14 +111,15 @@ final class ContactsVM: ObservableObject {
                     do {
                         if let rm = try change.document.data(as: RecentMessage?.self) {
                             print(">>>>>Fetch Recent Messages<<<<<")
-                            DispatchQueue.main.async { [self] in
-                                self.recentMessages.append(rm)
-                                //print("RecentMessages: \(self.recentMessages)")
-                                self.unshownUsersDictionary.removeValue(forKey: rm.toId)
-                                
-                                let user = self.usersDictionary[rm.toId]
-                               NotificationManager().sendNotification(title: "iTalk", subtitle: user?.name, body: rm.text, launchIn: 1)
-                            }
+                            badge += 1
+                            self.recentMessages.append(rm)
+                            //print("RecentMessages: \(self.recentMessages)")
+                            self.unshownUsersDictionary.removeValue(forKey: rm.fromId)
+                            
+                            let user = self.usersDictionary[rm.toId]
+                            
+                            self.notificationManager.sendNotification(title: "iTalk", subtitle: user?.name, body: rm.text, launchIn: 60, badge: badge)
+                            print("RecentMessages User: \(user?.name)")
                         }
                         self.unshownUsers = Array(self.unshownUsersDictionary.values.map { $0 })
                         

@@ -12,7 +12,12 @@ import FirebaseStorage
 import FirebaseStorageSwift
 import SwiftUI
 
-class ChatsVM: ObservableObject {
+/// Just for inside the ChatView
+///
+/// Includes Downloading Photo, Audio, Send Message, Send Audio
+///  and Save to Firebase
+///  Used only in ChatView
+final class ChatsVM: ObservableObject {
 	@Published var chatText = ""
 	@Published var errorMessage = ""
 	@Published var chatMessages = [Chat]()

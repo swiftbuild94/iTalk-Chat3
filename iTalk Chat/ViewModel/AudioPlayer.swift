@@ -11,7 +11,8 @@ import Combine
 import AVFoundation
 import AVKit
 
-class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
+/// Play Audio
+final class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
     private var audioSession = AVAudioSession.sharedInstance()
     @Published var audioPlayer = AVAudioPlayer()
     let objectWillChange = PassthroughSubject<AudioPlayer, Never>()

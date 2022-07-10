@@ -26,7 +26,7 @@ struct ContactCell: View {
 				HStack(spacing: contactSpacing) {
 					if contact.profileImageURL != nil {
 //                        Text(contact.profileImageURL ?? "Empty")
-                        Image(contact.profileImageURL ?? "")
+                        //Image(contact.profileImageURL ?? "")
 						WebImage(url: URL(string: contact.profileImageURL ?? ""))
 							.resizable()
 							.scaledToFill()

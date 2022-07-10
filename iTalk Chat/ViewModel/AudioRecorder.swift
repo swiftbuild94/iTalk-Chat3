@@ -11,7 +11,10 @@ import Combine
 import AVFoundation
 // import AVKit
 
-class AudioRecorder: ObservableObject {
+/// Record Audio
+///
+/// Gret Audio and delete recordings
+final class AudioRecorder: ObservableObject {
     @Published var audios = [URL]()
     private var audioRecorder: AVAudioRecorder!
     private var audioSession: AVAudioSession!
@@ -98,6 +101,7 @@ class AudioRecorder: ObservableObject {
     
 
     // MARK: - Delete Recordings
+    /// Delete Recordxings from the FileManager
     func deleteRecording(url : URL){
         do {
             try FileManager.default.removeItem(at: url)

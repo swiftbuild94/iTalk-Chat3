@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// For LogIn and SignIn
 final class LogInSignInVM: ObservableObject {
 	@Published var isLoginMode = true
 	@Published var isUserLoggedOut = false
