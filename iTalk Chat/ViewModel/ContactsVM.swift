@@ -28,6 +28,8 @@ final class ContactsVM: ObservableObject {
 	@Published var errorMessage = ""
     @Published var count = 0
     @Published var isShowChat = false
+    @Published var shouldShowLocation = false
+    @Published var location: String?
     @ObservedObject var notificationManager = NotificationManager()
 //    @Published var namesX = [String]()
 //	@Published var isUserLoggedOut = true
@@ -35,6 +37,7 @@ final class ContactsVM: ObservableObject {
 	var selectedUser: String?
     private var firestoreListener: ListenerRegistration?
     
+    /// On Init get all users andall recent messages
     init() {
         getAllUsers()
         getRecentMessagges()
@@ -49,6 +52,9 @@ final class ContactsVM: ObservableObject {
         self.fetchAllUsers()
 	}
 	
+    /// Connects to Firestore and get all users
+    ///
+    /// - Returns: all the users in 3 differents arrays
 	private func fetchAllUsers() {
         FirebaseManager.shared.firestore
             .collection(FirebaseConstants.users)
@@ -84,6 +90,7 @@ final class ContactsVM: ObservableObject {
 //		}
 	}
 	
+    /// - Returns: all recent Messages and an array if usersWithOutReccentMessages
 	private func fetchRecentMessages() {
         var badge = 0
 		self.recentMessages.removeAll()
@@ -114,11 +121,11 @@ final class ContactsVM: ObservableObject {
                             badge += 1
                             self.recentMessages.append(rm)
                             //print("RecentMessages: \(self.recentMessages)")
-                            self.unshownUsersDictionary.removeValue(forKey: rm.fromId)
+                            self.unshownUsersDictionary.removeValue(forKey: rm.toId)
                             
                             let user = self.usersDictionary[rm.toId]
                             
-                            self.notificationManager.sendNotification(title: "iTalk", subtitle: user?.name, body: rm.text, launchIn: 60, badge: badge)
+                            self.notificationManager.sendNotification(title: "iTalk", subtitle: user?.name, body: rm.text, launchIn: 1, badge: badge)
                             print("RecentMessages User: \(user?.name)")
                         }
                         self.unshownUsers = Array(self.unshownUsersDictionary.values.map { $0 })

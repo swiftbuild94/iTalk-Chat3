@@ -27,7 +27,6 @@ final class ChatsVM: ObservableObject {
     @Published var shouldShowImagePicker = false
     @Published var shouldShowCamara = false
     @Published var shouldShowContact = false
-    @Published var shouldShowLocation = false
     @Published var shouldShowDocument = false
     @Published var focus = false
     @Published var isShowAlert = false
@@ -35,6 +34,7 @@ final class ChatsVM: ObservableObject {
     @Published var alertMessage = ""
     @Published var image: UIImage?
     @Published var data: Data?
+    
     @State var bubbleColor: Color = Color.green
     
     private var url: URL?
