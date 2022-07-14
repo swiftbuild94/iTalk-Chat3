@@ -10,6 +10,7 @@ import SwiftUI
 struct PhotoView: View {
     var body: some View {
         Image(systemName: "ant.fill")
+            .edgesIgnoringSafeArea(.all)
     }
 }
 

@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct InputsButtons: View {
-//    @State private var shouldShowImagePicker = false
-//    @State private var shouldShowCamara = false
-//    @State private var shouldShowContact = false
-///Users/swiftbuild94/Documents/iTalk Chat/iTalk Chat/View/Chat/ChatTextBar.swift    @State private var shouldShowLocation = false
-//    @State private var shouldShowDocument = false
-//    @State var typeOfContent: TypeOfContent
+    // @State private var shouldShowImagePicker = false
+    // @State private var shouldShowCamara = false
+    // @State private var shouldShowContact = false
+    // @State private var shouldShowLocation = false
+    // @State private var shouldShowDocument = false
+    // @State var typeOfContent: TypeOfContent
     @ObservedObject var vm: ChatsVM
-    
+    @ObservedObject var vmContacts = ContactsVM()
     private let buttonsSize: CGFloat = 32
     
     var body: some View {
@@ -26,7 +26,7 @@ struct InputsButtons: View {
                     vm.focus = false
                     vm.typeOfContent = .audio
                 } label: {
-                    Image(systemName: "mic.circle")
+                    Image(systemName: "mic.square")
                 }
             } else {
                 Button {
@@ -37,31 +37,36 @@ struct InputsButtons: View {
                 }
             }
             Button {
-                vm.shouldShowLocation.toggle()
+                vmContacts.shouldShowLocation.toggle()
             } label: {
                 Image(systemName: "location.circle")
             }
             /*
-            Button {
-                vm.shouldShowDocument.toggle()
-            } label: {
-                Image(systemName: "doc.circle")
-            }
-            Button {
-                vm.shouldShowContact.toggle()
-            } label: {
-                Image(systemName: "person.crop.circle")
-            }
-            Button {
-                vm.shouldShowCamara.toggle()
-            } label: {
-                Image(systemName: "camera.on.rectangle")
-            }
-            */
+             Button {
+             vm.shouldShowDocument.toggle()
+             } label: {
+             Image(systemName: "doc.circle")
+             }
+             Button {
+             vm.shouldShowContact.toggle()
+             } label: {
+             Image(systemName: "person.crop.circle")
+             }
+             Button {
+                vm.shouldShowImagePicker.toggle()
+             } label: {
+             Image(systemName: "gift.circle")
+             }
+             Button {
+             vm.shouldShowCamara.toggle()
+             } label: {
+             Image(systemName: "camera.on.rectangle")
+             }
+             */
             Button {
                 vm.shouldShowImagePicker.toggle()
             } label: {
-                Image(systemName: "photo.on.rectangle")
+                Image(systemName: "photo.circle")
             }
             Spacer()
         }

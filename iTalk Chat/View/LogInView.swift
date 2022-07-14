@@ -16,6 +16,7 @@ struct LogInView: View {
 //    @State private var phoneNumber = ""
 //    @State private var errorMessage = "Error"
 //  @State private var isLoginMode = true
+    @State private var isUserLoggedOut = false
     @State private var shouldShowImagePicker = false
     @State private var image: UIImage?
     @Environment(\.presentationMode) var presentationMode

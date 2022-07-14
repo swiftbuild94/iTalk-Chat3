@@ -12,19 +12,21 @@ import SDWebImageSwiftUI
 struct ChatView: View {
 	@Environment(\.presentationMode) var chatMode
 //    @ObservedObject private var vmLogin = LogInSignInVM()
-    @ObservedObject fileprivate var vmChat: ChatsVM
+    @ObservedObject private var vmChat: ChatsVM
 	@State private var zoomed = false
 //	@State private var typeOfContent: TypeOfContent = .text
 //    @State private var image: UIImage?
     @State private var shouldShowImagePicker = false
-    @FocusState fileprivate var focus
+    @State private var shouldShowLocation = false
+    @FocusState private var focus
 	private var contact: User
 	private let topPadding: CGFloat = 8
-	
+    @ObservedObject private var vmContacts = ContactsVM()
 	init(chatUser: User){
 		self.contact = chatUser
 		self.vmChat = .init(chatUser: chatUser)
         self.focus = vmChat.focus
+        self.shouldShowLocation = vmContacts.shouldShowLocation
 	}
 	
 	var body: some View {
@@ -78,10 +80,22 @@ struct ChatView: View {
             }) {
                 ImagePicker(selectedImage: $vmChat.image, didSet: $shouldShowImagePicker)
 			}
+            .fullScreenCover(isPresented: $vmContacts.shouldShowLocation, onDismiss: {
+                if vmContacts.location != nil {
+                    vmChat.handleSend(.location)
+                    vmChat.count += 1
+                    vmChat.getMessages()
+                }
+            }) {
+                MapView()
+            }
 	}
 }
 
 
+
+// MARK: - ContactImage
+/// Shows the Contact Image
 struct ContactImage: View {
 	var contact: User
 	private let imageSize: CGFloat  = 38
@@ -113,7 +127,8 @@ struct ContactImage: View {
 }
 
 
-
+//  MARK: - Messages
+/// Show the list of messages
 struct MessagesView: View {
 	@ObservedObject var vm: ChatsVM
 	private let topPadding: CGFloat = 10
@@ -148,6 +163,9 @@ struct MessagesView: View {
 	}
 }
 
+
+// MARK: - MessageView
+/// Shows the message in bubbles incoming and outgoing
 struct MessageView: View {
     @ObservedObject var vm: ChatsVM
     
@@ -185,22 +203,27 @@ struct MessageView: View {
 	}
 }
 
+// MARK: - Bubble
+/// Show text, photo, audio in buble
 struct Bubble: View {
     @ObservedObject var vm: ChatsVM
     let message: Chat
     
     var body: some View {
         if message.photo != nil {
-            showPhoto(vm: vm, message: message)
+            ShowPhoto(vm: vm, message: message)
         }
         if message.audio != nil {
-            showAudio(vm: vm, message: message)
+            ShowAudio(vm: vm, message: message)
         }
-        showText(message: message)
+        ShowText(message: message)
     }
 }
 
-struct showText: View {
+
+// MARK: - ShowText
+/// Shows text in bubble if is url acts according
+struct ShowText: View {
     let message: Chat
     
     var body: some View {
@@ -229,7 +252,9 @@ struct showText: View {
     }
 }
 
-struct showPhoto: View {
+// MARK: - ShowPhoto
+/// Show Image in the bubble
+struct ShowPhoto: View {
     @ObservedObject var vm: ChatsVM
     let message: Chat
     
@@ -254,7 +279,10 @@ struct showPhoto: View {
     }
 }
 
-struct showAudio: View {
+
+// MARK: - ShowAudio
+    /// Show audio in buble and enable play
+struct ShowAudio: View {
     @ObservedObject var vm: ChatsVM
     @ObservedObject var vmAudio = AudioPlayer()
     @ObservedObject var timerManager = TimerManager()
@@ -288,12 +316,13 @@ struct showAudio: View {
 
 
 
+// MARK: - Preview
 let data: [String: Any] = ["name": "Test"]
 let userTest = User(data: data)
 
 struct ChatView_Previews: PreviewProvider {
 	static var previews: some View {
         ChatView(chatUser: userTest)
-//            .preferredColorScheme(.dark)
+            .preferredColorScheme(.dark)
 	}
 }
