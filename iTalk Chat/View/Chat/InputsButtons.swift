@@ -37,7 +37,7 @@ struct InputsButtons: View {
                 }
             }
             Button {
-                vmContacts.shouldShowLocation.toggle()
+                vmContacts.shouldShowLocation = true
             } label: {
                 Image(systemName: "location.circle")
             }

@@ -26,7 +26,6 @@ struct ChatView: View {
 		self.contact = chatUser
 		self.vmChat = .init(chatUser: chatUser)
         self.focus = vmChat.focus
-        self.shouldShowLocation = vmContacts.shouldShowLocation
 	}
 	
 	var body: some View {

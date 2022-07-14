@@ -32,19 +32,22 @@ struct MapView: View {
       }
       
     var body: some View {
-        Map(
-            coordinateRegion: $locationManager.region,
-            interactionModes: MapInteractionModes.all,
-            showsUserLocation: true,
-            userTrackingMode: $userTrackingMode,
-            annotationItems: homeLocation
-        ) {
-            MapPin(coordinate: $0.coordinate, tint: .red)
+        NavigationView{
+            Map(
+                coordinateRegion: $locationManager.region,
+                interactionModes: MapInteractionModes.all,
+                showsUserLocation: true,
+                userTrackingMode: $userTrackingMode,
+                annotationItems: homeLocation
+            ) {
+                MapPin(coordinate: $0.coordinate, tint: .red)
+            }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading ) {
+            ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    vmContacts.shouldShowLocation.toggle()
+                    vmContacts.shouldShowLocation = false
+                    self.presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Cancel")
                         .foregroundColor(Color.accentColor)
@@ -52,6 +55,8 @@ struct MapView: View {
                 }
             }
         }
+        .navigationTitle("Your location")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
