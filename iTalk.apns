@@ -1,0 +1,13 @@
+{
+    "Simulator Target Bundle": "swifbuild94.iTalk-Chat",
+    "aps": {
+        "alert": {
+            "title": "Testing",
+            "subtitle": "subtitle",
+            "body" : "body",
+            "badge" : 9,
+            "sound" : "bingbong.aiff"
+        },
+    "category" : "COMMUNICATIONS"
+    }
+}
