@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import "iTalk Chat"
+@testable import "iTalk"
 
 final class iTalkTests: XCTestCase {
 
