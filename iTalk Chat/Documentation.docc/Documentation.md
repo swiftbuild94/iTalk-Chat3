@@ -9,6 +9,6 @@ Can send audio chat, text chat, photos, videos, location, documentation, or cont
 
 ## Topics
 
-### Essentials
+### Essentials 
 
 - ``iTalk_Chat``
