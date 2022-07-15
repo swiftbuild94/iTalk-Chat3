@@ -21,6 +21,7 @@ struct FirebaseConstants {
 	static let profileImageUrl = "profileImageURL"
     static let photo = "photo"
     static let audio = "audio"
+    static let audioTimer = "audio_timer"
     
 	static let fromId = "fromId"
 	static let toId = "toID"
