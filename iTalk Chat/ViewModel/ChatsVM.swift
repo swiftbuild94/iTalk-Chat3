@@ -28,6 +28,9 @@ final class ChatsVM: ObservableObject {
     @Published var shouldShowCamara = false
     @Published var shouldShowContact = false
     @Published var shouldShowDocument = false
+    @Published var shouldShowLocation = false
+    @Published var shouldShowPhoto = false
+    @Published var location: String?
     @Published var focus = false
     @Published var isShowAlert = false
     @Published var alertTitle = ""
@@ -174,7 +177,6 @@ final class ChatsVM: ObservableObject {
         let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         
         let directoryContents = try? fileManager.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
-        #warning("TODO: If exist don't save")
         for audio in directoryContents! {
             audios.append(audio)
         }
@@ -202,7 +204,6 @@ final class ChatsVM: ObservableObject {
                 print("URL: \(downloadUrl!)")
                 print("Success storing audio with URL: \(String(describing: url?.absoluteString))")
                 guard let url = url else { return }
-                self.url = url
                 do {
                     try FileManager.default.removeItem(at: url)
                 } catch {
@@ -258,16 +259,17 @@ final class ChatsVM: ObservableObject {
         case .text:
             msg = Chat(id: nil, fromId: uid, toId: toId, text: self.chatText, photo: nil, audio: nil, audioTimer: nil, timestamp: Date())
         case .audio:
-            msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: nil, audio: self.url?.absoluteString ?? "", audioTimer: self.audioTimer, timestamp: Date())
+            let audioText = "Audio: \(String(describing: self.audioTimer))"
+            msg = Chat(id: nil, fromId: uid, toId: toId, text: audioText, photo: nil, audio: self.url?.absoluteString ?? "", audioTimer: self.audioTimer, timestamp: Date())
         case .photoalbum:
             msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: self.url?.absoluteString ?? "", audio: nil, audioTimer: nil, timestamp: Date())
         default:
             msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: nil, audio: self.url?.absoluteString ?? "", audioTimer: nil, timestamp: Date())
         }
-
-		saveToMessagesAndRecentMessages(msg)
         DispatchQueue.main.async {
+            self.saveToMessagesAndRecentMessages(msg)
             self.chatText = ""
+            self.getMessages()
             self.count += 1
         }
 	}

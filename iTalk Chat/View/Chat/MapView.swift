@@ -22,7 +22,7 @@ struct MapView: View {
         span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10)
     )
     @ObservedObject private var locationManager = LocationManager()
-    @ObservedObject private var vmContacts = ContactsVM()
+    @ObservedObject var vmChat: ChatsVM
     
     private var homeLocation : [AnnotationItem] {
           guard let location = locationManager.location?.coordinate else {
@@ -32,7 +32,7 @@ struct MapView: View {
       }
       
     var body: some View {
-        NavigationView{
+        NavigationView {
             Map(
                 coordinateRegion: $locationManager.region,
                 interactionModes: MapInteractionModes.all,
@@ -40,28 +40,37 @@ struct MapView: View {
                 userTrackingMode: $userTrackingMode,
                 annotationItems: homeLocation
             ) {
-                MapPin(coordinate: $0.coordinate, tint: .red)
+                MapPin(coordinate: $0.coordinate, tint: .blue)
             }
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    vmContacts.shouldShowLocation = false
-                    self.presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text("Cancel")
-                        .foregroundColor(Color.accentColor)
-                        .dynamicTypeSize(.xxxLarge)
+            .edgesIgnoringSafeArea(.all)
+            .navigationTitle("Your location")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        vmChat.shouldShowLocation = false
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .foregroundColor(Color.accentColor)
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        vmChat.shouldShowLocation = false
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Send Location")
+                            .foregroundColor(Color.accentColor)
+                    }
                 }
             }
         }
-        .navigationTitle("Your location")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView()
+        ChatView(chatUser: userTest)
     }
 }

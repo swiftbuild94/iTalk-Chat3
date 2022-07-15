@@ -6,16 +6,29 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ImageZoom: View {
+    @Environment(\.presentationMode) private var presentationMode
+    var photo: String
+    
     var body: some View {
-        Image(systemName: "ant.fill")
+        WebImage(url: URL(string: photo))
+            .resizable()
+            .scaledToFill()
+            .clipped()
             .edgesIgnoringSafeArea(.all)
+            .gesture(
+                TapGesture()
+                    .onEnded({ _ in
+                        self.presentationMode.wrappedValue.dismiss()
+                    })
+            )
     }
 }
 
 struct ImageZoom_Previews: PreviewProvider {
     static var previews: some View {
-        ImageZoom()
+        ImageZoom(photo: "SteveJobs")
     }
 }

@@ -68,7 +68,7 @@ struct ChatView: View {
 //                }
             }
 			.onDisappear {
-//                $vmChat.stopFirestoreListener()
+                
 			}
             .fullScreenCover(isPresented: $vmChat.shouldShowImagePicker, onDismiss: {
                 if vmChat.image != nil {
@@ -79,14 +79,14 @@ struct ChatView: View {
             }) {
                 ImagePicker(selectedImage: $vmChat.image, didSet: $shouldShowImagePicker)
 			}
-            .fullScreenCover(isPresented: $vmContacts.shouldShowLocation, onDismiss: {
-                if vmContacts.location != nil {
+            .fullScreenCover(isPresented: $vmChat.shouldShowLocation, onDismiss: {
+                if vmChat.location != nil {
                     vmChat.handleSend(.location)
                     vmChat.count += 1
                     vmChat.getMessages()
                 }
             }) {
-                MapView()
+                MapView(vmChat: vmChat)
             }
 	}
 }
@@ -214,8 +214,9 @@ struct Bubble: View {
         }
         if message.audio != nil {
             ShowAudio(vm: vm, message: message)
+        } else {
+            ShowText(message: message)
         }
-        ShowText(message: message)
     }
 }
 
@@ -240,7 +241,7 @@ struct ShowText: View {
                     Link(text, destination: URL(string: text)!)
                         .foregroundColor(.blue)
             } else if text.isPhone() {
-                Link(text, destination: URL(string: "phone://" + text)!)
+                Link(text, destination: URL(string: "phone:" + text)!)
                     .foregroundColor(.blue)
             } else {
                 Text(text)
@@ -259,7 +260,7 @@ struct ShowPhoto: View {
     
     var body: some View {
         Button {
-            print("Show Image")
+            vm.shouldShowPhoto = true
         } label: {
             if let photo = vm.downloadPhoto(message.photo!) {
                 Image(uiImage: photo)
