@@ -25,7 +25,6 @@
 		187F0BDB286ACB1000C08391 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 187F0BDA286ACB1000C08391 /* SDWebImageSwiftUI */; };
 		1888FA04287AB0EB00FDD5A7 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888FA03287AB0EA00FDD5A7 /* Persistence.swift */; };
 		1888FA07287AB18A00FDD5A7 /* iTalk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1888FA05287AB18900FDD5A7 /* iTalk.xcdatamodeld */; };
-		1888FA09287AB19D00FDD5A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1888FA08287AB19D00FDD5A7 /* Assets.xcassets */; };
 		1888FA0B287AB1AD00FDD5A7 /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888FA0A287AB1AC00FDD5A7 /* ContentView2.swift */; };
 		1888FA0E287AB1E200FDD5A7 /* iTalkTests in Resources */ = {isa = PBXBuildFile; fileRef = 1888FA0C287AB1DE00FDD5A7 /* iTalkTests */; };
 		1888FA0F287AB1E200FDD5A7 /* iTalkUITests in Resources */ = {isa = PBXBuildFile; fileRef = 1888FA0D287AB1E200FDD5A7 /* iTalkUITests */; };
@@ -60,8 +59,6 @@
 		18CC954027F26686008EAE87 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC953D27F26685008EAE87 /* Chat.swift */; };
 		18CC954327F266EC008EAE87 /* TypeOfContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CC954227F266EC008EAE87 /* TypeOfContent.swift */; };
 		18D1763F27FF868200EFFC63 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D1763E27FF868200EFFC63 /* Array+Extension.swift */; };
-		18DAFD752880FBFF006EB08E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183360EE2831835800F963DE /* MapKit.framework */; };
-		18DAFD762880FBFF006EB08E /* MapKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 183360EE2831835800F963DE /* MapKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		18E6BB2F283314EB00350FA9 /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6BB2E283314EB00350FA9 /* PhotoView.swift */; };
 		18E6BB312833151B00350FA9 /* ImageZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E6BB302833151B00350FA9 /* ImageZoom.swift */; };
 		18E6BB33283327B300350FA9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18E6BB32283327B300350FA9 /* GoogleService-Info.plist */; };
@@ -69,20 +66,6 @@
 		18EE916927F3A3FF00516D3C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE916827F3A3FF00516D3C /* Grid.swift */; };
 		18EE916B27F3A43000516D3C /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE916A27F3A43000516D3C /* GridLayout.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		18DAFD772880FBFF006EB08E /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				18DAFD762880FBFF006EB08E /* MapKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		18068E26280F8057005460FB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
@@ -108,7 +91,6 @@
 		18682205282160B400223C62 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		1888FA03287AB0EA00FDD5A7 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		1888FA06287AB18900FDD5A7 /* iTalk.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iTalk.xcdatamodel; sourceTree = "<group>"; };
-		1888FA08287AB19D00FDD5A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1888FA0A287AB1AC00FDD5A7 /* ContentView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
 		1888FA0C287AB1DE00FDD5A7 /* iTalkTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iTalkTests; sourceTree = "<group>"; };
 		1888FA0D287AB1E200FDD5A7 /* iTalkUITests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iTalkUITests; sourceTree = "<group>"; };
@@ -155,7 +137,6 @@
 				187F0BDB286ACB1000C08391 /* SDWebImageSwiftUI in Frameworks */,
 				18A163C7287FC2C500BE5093 /* FirebaseDatabaseSwift-Beta in Frameworks */,
 				18A163CB287FC2C500BE5093 /* FirebaseFirestoreSwift-Beta in Frameworks */,
-				18DAFD752880FBFF006EB08E /* MapKit.framework in Frameworks */,
 				18A163CD287FC2C500BE5093 /* FirebaseStorage in Frameworks */,
 				18A163CF287FC2C500BE5093 /* FirebaseStorageSwift-Beta in Frameworks */,
 				18A163C9287FC2C500BE5093 /* FirebaseFirestore in Frameworks */,
@@ -337,7 +318,6 @@
 				1888FA0A287AB1AC00FDD5A7 /* ContentView2.swift */,
 				18B6EAAA27F129D400E15BDE /* SettingsView.swift */,
 				18B6EAA827F127C200E15BDE /* ContentView.swift */,
-				1888FA08287AB19D00FDD5A7 /* Assets.xcassets */,
 				18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */,
 			);
 			path = View;
@@ -353,7 +333,6 @@
 				18B6EA6D27F11F9900E15BDE /* Sources */,
 				18B6EA6E27F11F9900E15BDE /* Frameworks */,
 				18B6EA6F27F11F9900E15BDE /* Resources */,
-				18DAFD772880FBFF006EB08E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -424,7 +403,6 @@
 				18B6EA7927F11F9A00E15BDE /* Assets.xcassets in Resources */,
 				18BDC73A287A8D11000265A4 /* README.md in Resources */,
 				18E6BB33283327B300350FA9 /* GoogleService-Info.plist in Resources */,
-				1888FA09287AB19D00FDD5A7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
