@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 
-struct Chat: Identifiable, Codable {
+struct Chat: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
     
     let fromId: String
