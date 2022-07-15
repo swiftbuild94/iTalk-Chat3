@@ -11,12 +11,12 @@ struct LogInView: View {
     @ObservedObject var vm = LogInSignInVM()
 //    @State private var name = ""
 //    @State private var email = ""
-//    @State private var password = ""
+//    @State private var password = "" 0
 //    @State private var passwordRetype = ""
 //    @State private var phoneNumber = ""
 //    @State private var errorMessage = "Error"
 //  @State private var isLoginMode = true
-    @State private var isUserLoggedOut = false
+    @Binding var isUserLoggedOut: Bool
     @State private var shouldShowImagePicker = false
     @State private var image: UIImage?
     @Environment(\.presentationMode) var presentationMode
@@ -188,8 +188,6 @@ struct LogInView: View {
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        LogInView(didCompleateLoginProcess: {
-            
-        })
+        ContentView()
     }
 }
