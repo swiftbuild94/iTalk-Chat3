@@ -61,7 +61,7 @@ struct ChatAudioBar: View {
                 Image(systemName: "mic.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 100)
+                    .frame(width: 150, height: 150)
                     .clipped()
                     .foregroundColor(.red)
                     .padding(.bottom, 40)

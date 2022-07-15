@@ -16,7 +16,7 @@ struct InputsButtons: View {
     // @State var typeOfContent: TypeOfContent
     @ObservedObject var vm: ChatsVM
     @ObservedObject var vmContacts = ContactsVM()
-    private let buttonsSize: CGFloat = 32
+    private let buttonsSize: CGFloat = 42
     
     var body: some View {
         HStack {
@@ -26,14 +26,14 @@ struct InputsButtons: View {
                     vm.focus = false
                     vm.typeOfContent = .audio
                 } label: {
-                    Image(systemName: "mic.square")
+                    Image(systemName: "mic.circle")
                 }
             } else {
                 Button {
                     vm.focus = true
                     vm.typeOfContent = .text
                 } label: {
-                    Image(systemName: "character.bubble")
+                    Image(systemName: "a.circle")
                 }
             }
             Button {
@@ -60,13 +60,18 @@ struct InputsButtons: View {
              Button {
              vm.shouldShowCamara.toggle()
              } label: {
-             Image(systemName: "camera.on.rectangle")
+             Image(systemName: "camera.circle")
              }
              */
             Button {
                 vm.shouldShowImagePicker.toggle()
             } label: {
                 Image(systemName: "photo.circle")
+            }
+            Button {
+               // vmContacts.shouldShowLocation = true
+            } label: {
+                Image(systemName: "flame.circle")
             }
             Spacer()
         }
