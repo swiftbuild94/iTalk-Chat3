@@ -43,7 +43,7 @@ struct HistoryCell: View {
 //                            .font(.system(size: contactSize, weight: .bold))
                             .dynamicTypeSize(.large)
                         Spacer()
-                        Text(contact.email ?? "")
+                        Text(recentMessage.text ?? "Photo")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
@@ -53,5 +53,13 @@ struct HistoryCell: View {
                 Divider()
                     .padding(.vertical, imagePadding)
             }
+    }
+}
+
+
+struct HistoryCell_Previews: PreviewProvider {
+    static var previews: some View {
+        HistoryView()
+            .preferredColorScheme(.dark)
     }
 }

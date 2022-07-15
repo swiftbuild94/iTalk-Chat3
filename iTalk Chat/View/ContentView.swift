@@ -43,12 +43,12 @@ struct ContentView: View {
             .tag(2)
         }
         .fullScreenCover(isPresented: $vmLogin.isUserLoggedOut) {
-            LogInView(didCompleateLoginProcess: {
-                self.vmLogin.isUserLoggedOut = true
+            LogInView(isUserLoggedOut: self.$vmLogin.isUserLoggedOut, didCompleateLoginProcess: {
+                self.vmLogin.isUserLoggedOut = false
                 self.vmLogin.getCurrentUser()
                 self.vmContacts.getAllUsers()
                 self.vmContacts.getRecentMessagges()
-              
+                
             })
         }
         .fullScreenCover(isPresented: $vmContacts.isShowChat) {
@@ -77,7 +77,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-//            ContentView()
             ContentView()
                 .preferredColorScheme(.dark)
         }

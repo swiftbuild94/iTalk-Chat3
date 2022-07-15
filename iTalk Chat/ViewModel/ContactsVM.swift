@@ -28,8 +28,6 @@ final class ContactsVM: ObservableObject {
 	@Published var errorMessage = ""
     @Published var count = 0
     @Published var isShowChat = false
-    @Published var shouldShowLocation = false
-    @Published var location: String?
     @ObservedObject var notificationManager = NotificationManager()
 //    @Published var namesX = [String]()
 //	@Published var isUserLoggedOut = true
@@ -101,7 +99,7 @@ final class ContactsVM: ObservableObject {
             .collection(FirebaseConstants.recentMessages)
             .document(uid)
             . collection(FirebaseConstants.messages)
-            .order(by: FirebaseConstants.timestamp, descending: false)
+            .order(by: FirebaseConstants.timestamp, descending: true)
             .addSnapshotListener { querySnapshot, error in
                 if let err = error {
                     self.errorMessage = "Failed to get all users: \(err)"
@@ -109,12 +107,12 @@ final class ContactsVM: ObservableObject {
                     return
                 }
                 querySnapshot?.documentChanges.forEach({ change in
-                    let docId = change.document.documentID
-                    if let index = self.recentMessages.firstIndex(where: { rm in
-                        return rm.id == docId
-                    }) {
-                        self.recentMessages.remove(at: index)
-                    }
+                    // let docId = change.document.documentID
+//                    if let index = self.recentMessages.firstIndex(where: {
+//                        $0.id == docId
+//                    }) {
+//                       //self.recentMessages.remove(at: index)
+//                    }
                     do {
                         if let rm = try change.document.data(as: RecentMessage?.self) {
                             print(">>>>>Fetch Recent Messages<<<<<")
@@ -125,12 +123,19 @@ final class ContactsVM: ObservableObject {
                             
                             let user = self.usersDictionary[rm.toId]
                             
-                            self.notificationManager.sendNotification(title: "iTalk", subtitle: user?.name, body: rm.text, launchIn: 1, badge: badge)
-                            print("RecentMessages User: \(user?.name)")
+                            var body = ""
+                            if rm.audioTimer == nil {
+                                body = rm.text ?? "Photo"
+                            } else {
+                                body = String("Audio: \(rm.audioTimer)")
+                            }
+                            
+                            self.notificationManager.sendNotification(title: "iTalk", subtitle: user?.name, body: body, launchIn: 1, badge: badge)
+                            print("RecentMessages User: \(String(describing: user?.name))")
                         }
                         self.unshownUsers = Array(self.unshownUsersDictionary.values.map { $0 })
                         
-                        self.recentMessages.sort(by: { $0.timestamp < $1.timestamp })
+                        self.recentMessages.sort(by: { $0.timestamp > $1.timestamp })
                         print("Unshown Users: \(String(describing: self.unshownUsers))")
                     } catch {
                         print(error)
