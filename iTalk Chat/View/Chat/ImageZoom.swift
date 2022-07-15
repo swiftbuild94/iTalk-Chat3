@@ -14,7 +14,7 @@ struct ImageZoom: View {
     
     var body: some View {
         WebImage(url: URL(string: photo))
-            .resizable()
+            .resizable()<.
             .scaledToFill()
             .clipped()
             .edgesIgnoringSafeArea(.all)

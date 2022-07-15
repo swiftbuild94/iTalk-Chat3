@@ -91,7 +91,7 @@ final class ContactsVM: ObservableObject {
     /// - Returns: all recent Messages and an array if usersWithOutReccentMessages
 	private func fetchRecentMessages() {
         var badge = 0
-		self.recentMessages.removeAll()
+		//self.recentMessages.removeAll()
         self.firestoreListener?.remove()
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
         //print(">>>>>>fetchRecentMessages")
