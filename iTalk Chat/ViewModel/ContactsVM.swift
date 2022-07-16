@@ -130,7 +130,7 @@ final class ContactsVM: ObservableObject {
                                 body = String("Audio: \(rm.audioTimer)")
                             }
                             
-                            self.notificationManager.sendNotification(title: "iTalk", subtitle: user?.name, body: body, launchIn: 1, badge: badge)
+                            self.notificationManager.sendNotification(title: "iTalk", subtitle: user?.name, body: body, launchIn: 5, badge: badge)
                             print("RecentMessages User: \(String(describing: user?.name))")
                         }
                         self.unshownUsers = Array(self.unshownUsersDictionary.values.map { $0 })

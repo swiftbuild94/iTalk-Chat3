@@ -19,7 +19,7 @@ struct MapView: View {
     @State private var userTrackingMode: MapUserTrackingMode = .follow
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: -34.603722, longitude: -58.381592),
-        span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10)
+        span: MKCoordinateSpan(latitudeDelta: 0.0001, longitudeDelta: 0.0001)
     )
     @ObservedObject private var locationManager = LocationManager()
     @ObservedObject var vmChat: ChatsVM

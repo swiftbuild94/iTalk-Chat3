@@ -33,12 +33,6 @@ struct ChatView: View {
                 VStack() {
                     MessagesView(vm: vmChat)
                         .padding(.bottom, topPadding)
-                        .gesture(
-                            TapGesture()
-                                .onEnded({ _ in
-                                    focus = false
-                                })
-                        )
                     InputsButtons(vm: vmChat)
                     if vmChat.typeOfContent == .text {
                         ChatTextBar(vm: vmChat)
