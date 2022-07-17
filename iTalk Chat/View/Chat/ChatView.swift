@@ -41,23 +41,21 @@ struct ChatView: View {
                     }
                 }
             }
-			.toolbar {
-                ToolbarItem(placement: .navigation ) {
+            .toolbar {
+                ToolbarItem(placement: .principal) {
                     Button {
-//                          chatMode.wrappedValue.dismiss()
+//                          chatMode.showUserDetails()
                     } label: {
+                        ContactImage(contact: contact)
                         Text(contact.name)
                             .foregroundColor(Color.accentColor)
                             .dynamicTypeSize(.xxxLarge)
-                        ContactImage(contact: contact)
                     }
                 }
 //                ToolbarItemGroup(placement: .navigationBarTrailing)  {
 //                    Image(systemName: "phone.fill")
-//                        .foregroundColor(Color.blue)
 //                        .dynamicTypeSize(/*@START_MENU_TOKEN@*/.xLarge/*@END_MENU_TOKEN@*/)
 //                    Image(systemName: "video.fill")
-//                        .foregroundColor(Color.blue)
 //                        .dynamicTypeSize(/*@START_MENU_TOKEN@*/.xLarge/*@END_MENU_TOKEN@*/)
 //                }
             }
@@ -91,7 +89,7 @@ struct ChatView: View {
 /// Shows the Contact Image
 struct ContactImage: View {
 	var contact: User
-	private let imageSize: CGFloat  = 38
+	private let imageSize: CGFloat  = 40
 	private let imagePadding: CGFloat = 8
 	private let shadowRadius: CGFloat = 15
 	private let circleLineWidth: CGFloat = 1
@@ -317,6 +315,7 @@ let userTest = User(data: data)
 struct ChatView_Previews: PreviewProvider {
 	static var previews: some View {
         ChatView(chatUser: userTest)
+            .previewDevice("iPhone 13 mini")
             .preferredColorScheme(.dark)
 	}
 }

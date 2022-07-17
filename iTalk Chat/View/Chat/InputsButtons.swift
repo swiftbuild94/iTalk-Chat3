@@ -51,12 +51,12 @@ struct InputsButtons: View {
              } label: {
                 Image(systemName: "gift.circle")
              }
+             */
              Button {
                 vm.shouldShowCamara.toggle()
              } label: {
                 Image(systemName: "camera.circle")
              }
-             */
             Button {
                 vm.shouldShowImagePicker.toggle()
             } label: {

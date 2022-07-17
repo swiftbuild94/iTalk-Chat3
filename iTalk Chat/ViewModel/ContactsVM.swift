@@ -37,8 +37,10 @@ final class ContactsVM: ObservableObject {
     
     /// On Init get all users andall recent messages
     init() {
-        getAllUsers()
-        getRecentMessagges()
+        DispatchQueue.main.async() {
+            self.getAllUsers()
+            self.getRecentMessagges()
+        }
     }
     
     deinit {

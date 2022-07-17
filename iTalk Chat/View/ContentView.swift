@@ -25,7 +25,7 @@ struct ContentView: View {
                     }
             }
             .tag(0)
-            HistoryView()
+           /* HistoryView()
                 .tabItem {
                     VStack {
                         Image(systemName: "clock.fill")
@@ -33,6 +33,7 @@ struct ContentView: View {
                     }
             }
             .tag(1)
+            */
             SettingsView()
                 .tabItem {
                     VStack {
@@ -52,7 +53,8 @@ struct ContentView: View {
             })
         }
         .fullScreenCover(isPresented: $vmContacts.isShowChat) {
-            ChatView(chatUser: vmContacts.currentUser!)
+            let selectedUser = vmContacts.usersDictionary[vmContacts.selectedUser!]
+            ChatView(chatUser: selectedUser!)
         }
         .alert(isPresented: $vmAlerts.isAlert) {
             if vmAlerts.showCancel {
