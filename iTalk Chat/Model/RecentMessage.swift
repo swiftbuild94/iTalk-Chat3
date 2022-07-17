@@ -21,7 +21,7 @@ struct RecentMessage: Identifiable, Codable, Hashable {
         formater.unitsStyle = .abbreviated
         return formater.localizedString(for: timestamp, relativeTo: Date())
     }
-    
+    /*
     init(data: [String:Any]){
         self.fromId = data[FirebaseConstants.fromId] as? String ?? ""
         self.toId = data[FirebaseConstants.toId] as? String ?? ""
@@ -30,4 +30,5 @@ struct RecentMessage: Identifiable, Codable, Hashable {
         self.text = data[FirebaseConstants.text] as? String ?? ""
         self.timestamp = data[FirebaseConstants.timestamp] as? Date ?? Date()
     }
+     */
 }
