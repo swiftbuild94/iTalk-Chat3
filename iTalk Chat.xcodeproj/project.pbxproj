@@ -35,6 +35,7 @@
 		18A163CB287FC2C500BE5093 /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 18A163CA287FC2C500BE5093 /* FirebaseFirestoreSwift-Beta */; };
 		18A163CD287FC2C500BE5093 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 18A163CC287FC2C500BE5093 /* FirebaseStorage */; };
 		18A163CF287FC2C500BE5093 /* FirebaseStorageSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 18A163CE287FC2C500BE5093 /* FirebaseStorageSwift-Beta */; };
+		18B0186E28842A4000FC12DB /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B0186D28842A4000FC12DB /* NotificationsView.swift */; };
 		18B6EA7927F11F9A00E15BDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7827F11F9A00E15BDE /* Assets.xcassets */; };
 		18B6EA7C27F11F9A00E15BDE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */; };
 		18B6EA8827F11FD800E15BDE /* FirebaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EA8627F11FD800E15BDE /* FirebaseConstants.swift */; };
@@ -94,6 +95,7 @@
 		1888FA0A287AB1AC00FDD5A7 /* ContentView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
 		1888FA0C287AB1DE00FDD5A7 /* iTalkTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iTalkTests; sourceTree = "<group>"; };
 		1888FA0D287AB1E200FDD5A7 /* iTalkUITests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iTalkUITests; sourceTree = "<group>"; };
+		18B0186D28842A4000FC12DB /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		18B6EA7127F11F9900E15BDE /* iTalk-Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTalk-Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B6EA7827F11F9A00E15BDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18B6EA7B27F11F9A00E15BDE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				18B6EAAA27F129D400E15BDE /* SettingsView.swift */,
 				18B6EAA827F127C200E15BDE /* ContentView.swift */,
 				18B6EAA627F1260100E15BDE /* iTalk_ChatApp.swift */,
+				18B0186D28842A4000FC12DB /* NotificationsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				18E6BB2F283314EB00350FA9 /* PhotoView.swift in Sources */,
 				18EE916B27F3A43000516D3C /* GridLayout.swift in Sources */,
 				1867C48F287A76DA00186B3A /* Documentation.docc in Sources */,
+				18B0186E28842A4000FC12DB /* NotificationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
