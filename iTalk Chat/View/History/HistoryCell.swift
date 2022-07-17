@@ -49,7 +49,7 @@ struct HistoryCell: View {
                         Spacer()
                         Text(recentMessage.timeAgo)
                             .font(.footnote)
-                            .foregroundColor(<#T##color: Color?##Color?#>)
+                            .foregroundColor(.secondary)
                     }
                 }.padding(.horizontal)
                 Spacer()
