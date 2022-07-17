@@ -24,6 +24,7 @@ struct ImageZoom: View {
                         self.presentationMode.wrappedValue.dismiss()
                     })
             )
+            .statusBar(hidden: true)
     }
 }
 

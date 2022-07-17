@@ -23,12 +23,46 @@ struct iTalkView: View {
                     let uid = recentMessage.toId
                     let user = vm.usersDictionary[uid]
                     if let user = user {
-                        NavigationLink(destination: ChatView(chatUser: user)) {
-                            HistoryCell(contact: user, recentMessage: recentMessage)
-                        }
+                      //  if UIDevice.current.userInterfaceIdiom == .pad {
+                            NavigationLink(destination: ChatView(chatUser: user)) {
+                                HistoryCell(contact: user, recentMessage: recentMessage)
+                                    .swipeActions(edge: .leading) {
+                                        Button {
+                                          print("Pinned")
+                                        } label: {
+                                            Label("Pin",systemImage: "pin")
+                                                .foregroundColor(Color(.blue))
+                                        }
+                                        .tint(.orange)
+                                    }
+                                    .swipeActions(edge: .trailing) {
+                                        Button {
+                                          print("UserDetails")
+                                        } label: {
+                                            Label("User Details",systemImage: "person.crop.circle.badge.questionmark")
+                                                .foregroundColor(Color(.blue))
+                                        }
+                                        .tint(.blue)
+                                        Button(role: .destructive) {
+                                          print("Archive")
+                                        } label: {
+                                            Label("Archive",systemImage: "archivebox")
+                                                .foregroundColor(Color(.blue))
+                                        }
+                                        .tint(.gray)
+                                    }
+                                }
+                     //   } else {
+//                            Button {
+//                                vm.selectedUser = user.uid
+//                                vm.isShowChat = true
+//                            } label : {
+//                                HistoryCell(contact: user, recentMessage: recentMessage)
+//                            }
+                      //  }
                     }
                 }
-                ForEach(vm.users, id:\.self) { user in
+                ForEach(vm.unshownUsers, id:\.self) { user in
                     if let user = user {
                         NavigationLink(destination: ChatView(chatUser: user)) {
                             ContactCell(contact: user)
@@ -38,29 +72,25 @@ struct iTalkView: View {
 //                    if UIDevice.current.userInterfaceIdiom == .pad {
             }
                 .navigationBarTitle(Text("iTalk"))
+//            
+//                .toolbar {
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        Button {
+//                            //                          chatMode.showUserDetails()
+//                        } label: {
+//                            Image(systemName: "person.crop.circle.badge.plus")
+//                        }
+//                    }
+//                }
         }
 	}
 }
 
-struct NotificationsView: View {
-	var chats: Int
-	var body: some View {
-		ZStack{
-			Text("\(chats) chats")
-				.font(.headline)
-				.bold()
-				.foregroundColor(Color.black)
-				.accentColor(Color.black)
-				.clipShape(Circle())
-		}
-//		.overlay(Circle().fill(Color.red))
-		.overlay(Circle().stroke(Color.black))
-		.shadow(radius: 20)
-	}
-}
 
 struct iTalk_Previews: PreviewProvider {
     static var previews: some View {
-		iTalkView()
+        iTalkView()
+            .preferredColorScheme(.dark)
+            .previewDevice("iPhone 13 mini")
     }
 }

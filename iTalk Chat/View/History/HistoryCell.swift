@@ -13,13 +13,13 @@ struct HistoryCell: View {
     var recentMessage: RecentMessage
     let shadowRadius: CGFloat = 5
     let circleLineWidth: CGFloat = 1
-    let imageSize: CGFloat  = 62
+    let imageSize: CGFloat  = 72
     let spacing: CGFloat = 4
     let contactSize: CGFloat = 16
     let ageOfMessageSize: CGFloat = 14
     let imagePadding: CGFloat = 8
     let contactSpacing: CGFloat = 16
-    let cornerRadius: CGFloat = 62
+    let cornerRadius: CGFloat = 72
     
     var body: some View {
         return VStack {
@@ -39,18 +39,36 @@ struct HistoryCell: View {
                     }
 //                    Spacer()
                     VStack(alignment: .leading) {
-                        Text(contact.name)
-//                            .font(.system(size: contactSize, weight: .bold))
-                            .dynamicTypeSize(.large)
-                        Spacer()
-                        Text(recentMessage.text ?? "Photo")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                        Spacer()
-                        Text(recentMessage.timeAgo)
-                            .font(.footnote)
-                            .foregroundColor(.secondary)
+                        HStack {
+                            Text(contact.name)
+                            //                            .font(.system(size: contactSize, weight: .bold))
+                                .dynamicTypeSize(.large)
+                            Spacer()
+                            NotificationsView(notifications: 1)
+                        }
+                        HStack {
+                            if recentMessage.audioTimer != nil {
+                                Image(systemName: "mic")
+                                Text(recentMessage.text!)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            } else if recentMessage.text == nil {
+                                Image(systemName: "photo")
+                                Text("Photo")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            } else {
+                                Text(recentMessage.text!)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                            Text(recentMessage.timeAgo)
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    Spacer()
                 }.padding(.horizontal)
                 Spacer()
                 Divider()
