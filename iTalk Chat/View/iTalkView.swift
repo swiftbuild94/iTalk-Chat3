@@ -62,7 +62,7 @@ struct iTalkView: View {
                       //  }
                     }
                 }
-                ForEach(vm.unshownUsers, id:\.self) { user in
+                ForEach(vm.users, id:\.self) { user in
                     if let user = user {
                         NavigationLink(destination: ChatView(chatUser: user)) {
                             ContactCell(contact: user)
