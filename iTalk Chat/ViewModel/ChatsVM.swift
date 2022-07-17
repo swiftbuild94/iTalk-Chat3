@@ -114,7 +114,8 @@ final class ChatsVM: ObservableObject {
         let storageRef = Storage.storage().reference()
         let photoRef = storageRef.child(photo)
         print("===Photo: \(photoRef.fullPath)")
-        photoRef.getData(maxSize: 2 * 1024 * 1024) { data, error in
+        let maxSize = 2 * 1024 * 1024
+        photoRef.getData(maxSize: Int64(maxSize)) { data, error in
             if let error = error {
                 print("Error downloading \(error)")
             } else {
@@ -259,7 +260,8 @@ final class ChatsVM: ObservableObject {
         case .text:
             msg = Chat(id: nil, fromId: uid, toId: toId, text: self.chatText, photo: nil, audio: nil, audioTimer: nil, timestamp: Date())
         case .audio:
-            let audioText = "Audio: \(String(describing: self.audioTimer))"
+            let audio = Int(self.audioTimer!)
+            let audioText = "Audio: \(String(describing: audio))"
             msg = Chat(id: nil, fromId: uid, toId: toId, text: audioText, photo: nil, audio: self.url?.absoluteString ?? "", audioTimer: self.audioTimer, timestamp: Date())
         case .photoalbum:
             msg = Chat(id: nil, fromId: uid, toId: toId, text: nil, photo: self.url?.absoluteString ?? "", audio: nil, audioTimer: nil, timestamp: Date())
