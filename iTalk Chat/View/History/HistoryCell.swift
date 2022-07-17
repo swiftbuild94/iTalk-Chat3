@@ -46,8 +46,11 @@ struct HistoryCell: View {
                         Text(recentMessage.text ?? "Photo")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
+                        Spacer()
+                        Text(recentMessage.timeAgo)
+                            .font(.footnote)
+                            .foregroundColor(<#T##color: Color?##Color?#>)
                     }
-                    Spacer()
                 }.padding(.horizontal)
                 Spacer()
                 Divider()

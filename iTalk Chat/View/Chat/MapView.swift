@@ -43,7 +43,7 @@ struct MapView: View {
                 MapPin(coordinate: $0.coordinate, tint: .blue)
             }
             .edgesIgnoringSafeArea(.all)
-            .navigationTitle("Your location")
+            //.navigationTitle("Your location")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
