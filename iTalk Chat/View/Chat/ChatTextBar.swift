@@ -20,25 +20,42 @@ struct ChatTextBar: View {
     var body: some View {
 //        Text(vm.errorMessage)
         HStack {
-//            DescriptionPlaceholder()
-        //      TextField("", text: $vmChat.chatText, axis: .vertical)
-            TextField("", text: $vmChat.chatText)
-                .lineLimit(5)
-                .focused($focus)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.top)
-                .opacity(vmChat.chatText.isEmpty ? 0.5 : 1)
-                .foregroundColor(Color.accentColor)
-                .border(.blue)
-                .accessibilityLabel("Message")
-                .onAppear {
-                    focus = true
-                }
-                .onSubmit {
-                    vmChat.handleSend(.text)
-//                    vmChat.focus = false
-                }
-                .submitLabel(.send)
+            if #available(iOS 16.0, *) {
+                TextField("", text: $vmChat.chatText, axis: .vertical)
+                    .lineLimit(5)
+                    .focused($focus)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.top)
+                    .opacity(vmChat.chatText.isEmpty ? 0.5 : 1)
+                    .foregroundColor(Color.accentColor)
+                    .border(.blue)
+                    .accessibilityLabel("Message")
+                    .onAppear {
+                        focus = true
+                    }
+                    .onSubmit {
+                        vmChat.handleSend(.text)
+    //                    vmChat.focus = false
+                    }
+                    .submitLabel(.send)
+            } else {
+                TextField("", text: $vmChat.chatText)
+                    .focused($focus)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.top)
+                    .opacity(vmChat.chatText.isEmpty ? 0.5 : 1)
+                    .foregroundColor(Color.accentColor)
+                    .border(.blue)
+                    .accessibilityLabel("Message")
+                    .onAppear {
+                        focus = true
+                    }
+                    .onSubmit {
+                        vmChat.handleSend(.text)
+    //                    vmChat.focus = false
+                    }
+                    .submitLabel(.send)
+            }
             Button {
                 vmChat.handleSend(.text)
 //                vmChat.focus = false
