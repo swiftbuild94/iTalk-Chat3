@@ -292,11 +292,16 @@ struct ShowAudio: View {
         } else {
             Button {
                 timerManager.startTimer()
-                if let audio = vm.downloadAudio(message.audio!) {
-                    vmAudio.playAudio(audio)
+                DispatchQueue.global(qos: .background).async {
+                    if let audio = message.audio {
+                        if let audioDownloaded = vm.downloadAudio(audio) {
+                            vmAudio.playAudio(audioDownloaded)
+                        }
+                    }
                 }
             } label: {
                 Image(systemName: "play.fill")
+                Text(String(describing: message.audio))
                 if let audioTimer = message.audioTimer {
                     let trimedAudio = String(audioTimer).prefix(2)
                     Text(trimedAudio)

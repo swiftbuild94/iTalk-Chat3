@@ -2,7 +2,7 @@
 //  RecentMessage.swift
 //  iTalk Chat
 //
-//  Created by Patricio Benavente on 16/02/22.
+//  Created bxy Patricio Benavente on 16/02/22.
 //
 
 import Foundation

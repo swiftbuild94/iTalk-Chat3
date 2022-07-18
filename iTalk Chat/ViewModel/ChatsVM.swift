@@ -111,39 +111,44 @@ final class ChatsVM: ObservableObject {
     // MARK: - Download Photo
     func downloadPhoto(_ photo: String) -> UIImage? {
         var image: UIImage?
+        print("===Photo")
         let storageRef = Storage.storage().reference()
         let photoRef = storageRef.child(photo)
         print("===Photo: \(photoRef.fullPath)")
-        let maxSize = 2 * 1024 * 1024
-        photoRef.getData(maxSize: Int64(maxSize)) { data, error in
+        photoRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
             if let error = error {
-                print("Error downloading \(error)")
+                print("====Error downloading \(error)")
             } else {
                 image = UIImage(data: data!)
-                print("Image NOT Error")
+                print("====Image NOT Error: \(String(describing: data!))")
             }
         }
-        print("-----Image Returned----")
+        print("====Image Returned===")
         return image
     }
     
     
     // MARK: - Download Audio
     func downloadAudio(_ audio: String) -> URL? {
+        print("----DOWNLOAD AUDIO")
+        //guard let uid = Auth.auth().currentUser?.uid else { return nil }
+        print("---AUDIO DOWNLOADING: \(audio)" )
         let storageRef = Storage.storage()
         let audioRef = storageRef.reference(forURL: audio)
+        let finalRef = audioRef.child(FirebaseConstants.audios)
         let fileName = URL(string: audio)?.pathComponents.last?.description
-        print("FileName: \(String(describing: fileName))")
+        print("----DOWNLOAD AUDIO -> FileName: \(String(describing: fileName))")
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        print("----Filepath: \(String(describing: url))")
         let audioFileURL = url.appendingPathComponent(fileName ?? "")
-        audioRef.write(toFile: audioFileURL) { audioUrl, error in
+        finalRef.write(toFile: audioFileURL) { audioUrl, error in
             if let err = error {
-                print("Error downloading audio: \(err)")
+                print("----Error downloading audio: \(err)")
             } else {
-                print("Write Compleate: \(String(describing: audioUrl))")
+                print("----Write Compleate: \(String(describing: audioUrl))")
             }
         }
-        print("====Audio: \(String(describing: audioFileURL))")
+        print("----Audio: \(String(describing: audioFileURL))")
         return audioFileURL
     }
     
@@ -193,7 +198,7 @@ final class ChatsVM: ObservableObject {
         let spaceRef = audioRef.child(fileName)
         spaceRef.putFile(from: url, metadata: metaData) { metadata, error in
             if let err = error {
-                self.errorMessage = "Fail to save image: \(err)"
+                self.errorMessage = "Fail to save audio: \(err)"
                 return
             }
             spaceRef.downloadURL { url, error in

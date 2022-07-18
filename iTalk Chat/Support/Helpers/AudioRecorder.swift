@@ -29,27 +29,23 @@ final class AudioRecorder: ObservableObject {
         var isAllowed = false
         do {
             let recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(.record, mode: .spokenAudio)
+            try recordingSession.setCategory(.playAndRecord, mode: .spokenAudio)
             try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission() { allowed in
-                if allowed {
-                    isAllowed = true
-                    print("Audio -> Allowed to Record")
-                } else {
-                    let vmAlerts = Alerts()
-                    vmAlerts.showCancel = true
-                    vmAlerts.title = "Audio Recording"
-                    vmAlerts.message = "Audio recording not allowed please change settings in Settings"
-                    vmAlerts.defaultText = "Go to Settings"
-                    vmAlerts.okHandler = {
-                        print("Go to Settings")
-                    }
-                    vmAlerts.isAlert = true
-                    print("Error Session Recording")
-                }
+            recordingSession.requestRecordPermission() { grant in
+                isAllowed = grant
+                print("Audio -> Allowed to Record")
             }
         } catch {
-            print("Error not allowed to record: \(error)")
+            let vmAlerts = Alerts()
+            vmAlerts.showCancel = true
+            vmAlerts.title = "Audio Recording"
+            vmAlerts.message = "Audio recording not allowed please change settings in Settings"
+            vmAlerts.defaultText = "Go to Settings"
+            vmAlerts.okHandler = {
+                print("Go to Settings")
+            }
+            vmAlerts.isAlert = true
+            print("Audio -> Error not allowed to record: \(error)")
         }
         return isAllowed
     }
@@ -60,12 +56,11 @@ final class AudioRecorder: ObservableObject {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let audioFileName = Date().toString(dateFormat: "YY-MM-dd_HH-mm-ss") + ".m4a"
         let audioFileURL = paths.appendingPathComponent(audioFileName)
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
+        let settings =  [AVFormatIDKey: kAudioFormatMPEG4AAC,
+              AVEncoderAudioQualityKey:AVAudioQuality.max.rawValue,
+              AVEncoderBitRateKey:320000,
+              AVNumberOfChannelsKey:1,
+              AVSampleRateKey:44100.0 ] as [String : Any]
         print("Audio -> Start Record")
         do {
             audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: settings)
